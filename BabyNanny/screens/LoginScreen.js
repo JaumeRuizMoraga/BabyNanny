@@ -13,10 +13,9 @@ export const LoginScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Bienvenido</Text>
-
             <TextInput
                 label="Email o Usuario" 
-                mode="outlined"
+                mode='outlined'
                 value={usuario}
                 onChangeText={setUsuario}
                 style={styles.input}
@@ -24,7 +23,7 @@ export const LoginScreen = () => {
 
             <TextInput
                 label="Contraseña"
-                mode="outlined"
+                mode='outlined'
                 value={contrasenya}
                 onChangeText={setContrasenya}
                 style={styles.input}
@@ -32,7 +31,7 @@ export const LoginScreen = () => {
 
             <Button
                 mode="contained"
-                onPress={handleLogin}
+                onPress={login}
                 style={styles.button}
             >
                 Iniciar Sesión
@@ -45,18 +44,21 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: 20,
-        backgroundColor: '#fff',
+        paddingHorizontal: 40,
+        backgroundColor: '#E6E6FA',
     },
     title: {
         textAlign: 'center',
         marginBottom: 20,
         fontWeight: 'bold',
+        color: '#D88FD8',
+        fontSize: 40
     },
     input: {
-        marginBottom: 12,
+        marginBottom: 12
     },
     button: {
         marginTop: 10,
+        backgroundColor:'#DA70D6'
     },
 });
