@@ -2,47 +2,81 @@ import { Text, TextInput, Button, HelperText } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useState } from "react";
 
-export const SelectorSleepToma = () => {
+export const SelectorSleepToma = (props) => {
     const [toma, setToma] = useState("")
     const [sleep, setSleep] = useState("")
-    const [tomaIncorrecta,setTomaIncorrecta] = useState(false);
-    const [sleepIncorrecto,setSleepIncorrecto] = useState(false);
+    const [tomaIncorrecta, setTomaIncorrecta] = useState(true);
+    const [sleepIncorrecto, setSleepIncorrecto] = useState(true);
 
-    const formatoToma = /^(\d+)$|^(\d*\.\d+)$|/gm;
-    const formatoSleep = 0;
+    const formatoToma = /^(\d+)$|^(\d*\.\d+)$/;
+    const formatoSleep = /^(\d+)$/;
 
 
-    const comprobarDatos = (toma,sleep) => {
+    const comprobarDatos = (toma, sleep) => {
+        if (formatoToma.test(toma)) {
+            setTomaIncorrecta(false);
 
+        } else {
+            setTomaIncorrecta(true);
+
+        }
+        if (formatoSleep.test(sleep)) {
+            setSleepIncorrecto(false)
+
+        } else {
+
+
+            setSleepIncorrecto(true);
+        }
+    }
+    const cambiarToma = (newToma)=>{
+        setToma(newToma)
+        comprobarDatos(newToma,sleep)
+    }
+    const cambiarSleep = (newSleep)=>{
+        setSleep(newSleep)
+        comprobarDatos(toma,newSleep)
     }
 
-    const enviarDatos = () =>{
-        console.log("Enviando nuevo registro: "+toma+", "+sleep)
+    const enviarDatos = () => {
+        const date = new Date();
+        let entradaToma = {
+            date: (date.getHours()+":"+date.getMinutes()+"/"+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()),
+            type: "Toma",
+            descrip: toma
+        }
+        console.log(entradaToma)
+        let entradaSleep = {
+            date: (date.getHours()+":"+date.getMinutes()+"/"+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()),
+            type: "Sueño",
+            descrip: sleep
+        }
+        console.log(entradaSleep)
+        props.salir(false);
     }
 
     return (
-        <View style={styles.container}>
-            <TextInput
+        <View style={styles.container}>            <TextInput
                 label={"Toma"}
                 value={toma}
-                onChangeText={(newToma) => setToma(newToma)}
+                onChangeText={(newToma) => cambiarToma(newToma)}
                 style={styles.textInput}
                 right={<TextInput.Affix text=".ml" />}
                 mode="flat"
             ></TextInput>
             <HelperText type="error" visible={tomaIncorrecta}>
-        Email address is invalid!
-      </HelperText>
+                Formato de toma incorrecto
+            </HelperText>
             <TextInput
                 label={"Sueño"}
                 value={sleep}
-                onChangeText={(newSleep) => setSleep(newSleep)}
+                onChangeText={(newSleep) => cambiarSleep(newSleep)}
                 style={styles.textInput}
-                right={<TextInput.Affix text=".h" />}
+                right={<TextInput.Affix text=".min" />}
             ></TextInput>
-                        <HelperText type="error" visible={sleepIncorrecto}>
-        Email address is invalid!
-      </HelperText>
+            <HelperText type="error" visible={sleepIncorrecto}>
+                Formato de sueño incorrecto
+            </HelperText>
             <Button onPress={enviarDatos} textColor="white" style={styles.botonManual}>Guardar</Button>
         </View>
     );

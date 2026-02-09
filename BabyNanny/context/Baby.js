@@ -28,6 +28,8 @@ export const BabyProvider = ({ children }) => {
             altura: 60,
             peso: 7,
             edad: 4,
+            tomaPre: 17.5,
+            sleepPre: 200,
         },
         //Importante: Altura(cm), peso(kg), edad(meses)
         eventos:[{
