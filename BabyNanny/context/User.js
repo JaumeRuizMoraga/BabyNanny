@@ -5,6 +5,7 @@ export const UserProvider = ({ children }) => {
         bebes: [],
         usuario: "Usuario_Ejemplo",
         pasw: "Pasword_Ejemplo",
+        correo: "jaumerumoraga@gmail.com",
         config: {
             idioma: "en",
         },
