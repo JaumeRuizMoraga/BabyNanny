@@ -28,8 +28,13 @@ export const BabyProvider = ({ children }) => {
             altura: 60,
             peso: 7,
             edad: 4,
-        }
+        },
         //Importante: Altura(cm), peso(kg), edad(meses)
+        eventos:[{
+            fecha: "13/04/2025",
+            descrip: "Vacuna contra el papiloma humano",
+            hora: "03:30"
+        }]
 
     });
     return (

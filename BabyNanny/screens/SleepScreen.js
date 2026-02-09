@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import {View,Text} from 'react-native';
-
-export const SleepScreen = () =>{
-    return(
-    <View>
-        <Text>SleepScreen</Text>
-    </View>
-    );
-}
-=======
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { IconButton, Button, Surface, Modal, PaperProvider } from 'react-native-paper';
 import { useState } from 'react';
@@ -147,4 +136,3 @@ const styles = StyleSheet.create({
         borderColor: "#DA70D6"
     },
 });
->>>>>>> Screens

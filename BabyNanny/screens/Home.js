@@ -2,9 +2,9 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text,Avatar,FAB,Divider } from 'react-native-paper';
 import { useState } from 'react';
 
-export const Home = () => {
+export const Home = (props) => {
 
-    const [bebe,setBebe] = useState(require('../assets/icon.png')) //Debe ser un use context y un objeto bebe
+    const [bebe,setBebe] = useState(require('../assets/icon.png')) 
     return (
         <View style={styles.container}>
             <FAB
@@ -13,19 +13,20 @@ export const Home = () => {
                 onPress={() => console.log('Pressed')}
             />
              <Avatar.Image size={200} source={bebe} />
-             <Divider/>
-             <Button>AA</Button>
-             <Divider/>
+             <Divider style={styles.divider} />
+             <Button onPress={()=>props.navigation.navigate('SleepScreen')}
+            >SleepSreen</Button>
+             <Divider style={styles.divider} />
              <Button >AA</Button>
-             <Divider/>
+             <Divider style={styles.divider} />
              <Button>AA</Button>
-             <Divider/>
+             <Divider style={styles.divider} />
              <Button>AA</Button>
-             <Divider/>
+             <Divider style={styles.divider} />
              <Button>AA</Button>
-             <Divider/>
+             <Divider style={styles.divider} />
              <Button>AA</Button>
-             <Divider/>
+             <Divider style={styles.divider} />
              <Button>AA</Button>
         </View>
     );
@@ -59,4 +60,10 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 630,
   },
+  divider: {
+    width: '130%',
+    height: 1,
+    backgroundColor: '#000',
+    marginVertical: 10,
+},
 });
