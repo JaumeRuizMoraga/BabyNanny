@@ -5,7 +5,8 @@ import {
     Avatar,
     FAB,
     Divider,
-    Surface
+    Surface,
+    SegmentedButtons
 } from 'react-native-paper';
 import { useState, useContext } from 'react';
 import { BabyCard } from '../components/DatosBebe';
@@ -14,6 +15,7 @@ import Baby from '../context/Baby';
 
 export const Home = () => {
     const [bebe] = useState(require('../assets/icon.png'));
+    const [tipo, setTipo] = useState();
     const { baby, setBaby } = useContext(Baby);
 
     return (
