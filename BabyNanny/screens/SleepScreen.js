@@ -5,46 +5,40 @@ import { SelectorSleepToma } from '../components/SelectorSleepToma';
 import { useContext } from 'react';
 import { Audio } from 'expo-av';
 import User from '../context/User';
+import Baby from '../context/Baby';
+import { enviarSleep,enviarToma } from '../utils/utils';
 
 export const SleepScreen = (props) => {
     const [manual, setManual] = useState(false)
     const [playing, setPlaying] = useState(false)
     const [song, setSong] = useState();
     const { user, setUser } = useContext(User);
+    const {baby, setBaby}  = useContext(Baby);
 
-    const postSleep = (sleep) => {
-        if (sleep === undefined) {
-            console.log('Post predefinido')
-        } else {
-            console.log('Post cantidad fijada: ' + sleep)
-        }
+
+
+    const postSleep = () => {
+        enviarSleep(baby.caracteristicas.sleepPre);
     }
-    const postToma = (toma) => {
-        if (toma === undefined) {
-            console.log('Post predefinido')
-        } else {
-            console.log('Post cantidad fijada: ' + toma)
-        }
+    const postToma = () => {
+        enviarToma(baby.caracteristicas.tomaPre);
     }
     const playAudio = async () => {
         if (!playing) {
             const { sound } = await Audio.Sound.createAsync(
-                (user.cancionesFav)[1].uri
+                (user.cancionesFav)[0].uri
             );
-            console.log("Playing sound")
             setSong(sound);
             setPlaying(true)
             await sound.playAsync();
         } else {
             await song.stopAsync();
-                        console.log("Stoping sound")
             setPlaying(false)
         }
     };
 
     return (
         <PaperProvider>
-            {console.log((user.cancionesFav)[0].uri)}
             <ImageBackground
                 source={require("../assets/img/FondoBabyNanny.png")}
                 resizeMode='cover'
@@ -82,7 +76,7 @@ export const SleepScreen = (props) => {
                 </Surface>
                 <Modal visible={manual} onDismiss={() => setManual(false)}
                     contentContainerStyle={styles.modal}>
-                    <SelectorSleepToma></SelectorSleepToma>
+                    <SelectorSleepToma salir={(valor)=>setManual(valor)}></SelectorSleepToma>
                 </Modal>
             </ImageBackground>
         </PaperProvider>

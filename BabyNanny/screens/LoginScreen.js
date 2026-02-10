@@ -8,7 +8,7 @@ export const LoginScreen = (props) => {
     const [error,SetError] = useState(false)
 
     const login = () => {
-        const data = false;
+        const data = true;
         ///Aqui iria la funcion getData que devolvera un Codigo http dependiendo de si se ha encontrado o no el usuario
         if (data) {
             props.navigation.navigate('SleepScreen')

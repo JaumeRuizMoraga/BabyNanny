@@ -2,7 +2,7 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Text,Avatar,FAB,Divider } from 'react-native-paper';
 import { useState } from 'react';
 
-export const Home = (props) => {
+export const Home = () => {
 
     const [bebe,setBebe] = useState(require('../assets/icon.png')) 
     return (
