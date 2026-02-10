@@ -11,7 +11,7 @@ export const BabyRecordsList = (props) => {
 
   const data = useMemo(() => {
     switch (selected) {
-      case 'Sueno':
+      case 'Sueño':
         return props.registroSueño;
       case 'Medico':
         return props.registroMedico;
@@ -57,7 +57,7 @@ export const BabyRecordsList = (props) => {
         onValueChange={setSelected}
         buttons={[
           { value: 'Tomas', label: 'Tomas', icon: 'baby-bottle' },
-          { value: 'Sueno', label: 'Sueño', icon: 'sleep' },
+          { value: 'Sueño', label: 'Sueño', icon: 'sleep' },
           { value: 'Medico', label: 'Médico', icon: 'medical-bag' },
         ]}
         style={styles.segment}
@@ -65,7 +65,7 @@ export const BabyRecordsList = (props) => {
         
       <FlatList
         data={data}
-        keyExtractor={(index) => index.toString()}
+        keyExtractor={(_ ,index) => index.toString()}
         renderItem={renderItem}
        
         showsVerticalScrollIndicator={false}
