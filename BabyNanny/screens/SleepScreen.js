@@ -40,7 +40,7 @@ export const SleepScreen = (props) => {
     return (
         <PaperProvider>
             <ImageBackground
-                source={require("../assets/img/FondoBabyNanny.png")}
+                source={require("../assets/img/FondoBabyNannyStars.png")}
                 resizeMode='cover'
                 style={styles.container}>
                 <Surface style={{ borderRadius: 240, margin: 10 }}>

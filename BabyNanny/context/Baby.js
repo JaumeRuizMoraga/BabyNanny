@@ -14,6 +14,7 @@ duracion de tratamiento en horas
 */
 export const BabyProvider = ({ children }) => {
     const [baby, setBaby] = useState({
+        id: "idMongo",
         madre:'Usuario_Ejemplo',
         padre:undefined,
         registroTomas:[{date:'13/04/2025',tipo:'Toma',data:150},{date:'14/04/2025',tipo:'Toma',data:140},{date:'15/04/2025',tipo:'Toma',data:160}],
