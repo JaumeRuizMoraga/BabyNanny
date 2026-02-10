@@ -1,5 +1,4 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { SleepScreen } from "./screens/SleepScreen.js";
 import { LoginScreen } from "./screens/LoginScreen.js";
 import { Home } from "./screens/Home.js";
 import { RegisterScreen } from "./screens/RegisterScreen.js";
