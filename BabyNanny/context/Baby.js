@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+
 const Baby = createContext();
 /*
 Explicación del objeto "baby":
@@ -17,7 +18,7 @@ export const BabyProvider = ({ children }) => {
         madre:'Usuario_Ejemplo',
         padre:undefined,
         registroTomas:[{date:'13/04/2025',tipo:'Toma',data:150},{date:'14/04/2025',tipo:'Toma',data:140},{date:'15/04/2025',tipo:'Toma',data:160}],
-        registroSueño:[{date:'13/04/2025',tipo:'Sueño',data:160},{date:'13/04/2025',tipo:'Sueño',data:200},{date:'14/04/2025',tipo:'Sueño',data:90},{date:'14/04/2025',tipo:'Sueño',data:230}],
+        registroSueño:[{date:'13/04/2025',tipo:'Sueno',data:160},{date:'13/04/2025',tipo:'Sueno',data:200},{date:'14/04/2025',tipo:'Sueno',data:90},{date:'14/04/2025',tipo:'Sueno',data:230}],
 //        RegistroAlimentacion:[],
         registroMedico:[{date:'13/04/2025',tipo:'Medico',receta:{
             medicamento: 'Paracetamol',
