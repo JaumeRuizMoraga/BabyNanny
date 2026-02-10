@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView,FlatList } from 'react-native';
 import {
     Button,
     Text,
@@ -10,6 +10,7 @@ import {
 } from 'react-native-paper';
 import { useState, useContext } from 'react';
 import { BabyCard } from '../components/DatosBebe';
+import { EntradaBebe } from '../components/EntradaBebe';
 import Baby from '../context/Baby';
 
 
@@ -17,6 +18,7 @@ export const Home = () => {
     const [bebe] = useState(require('../assets/icon.png'));
     const [tipo, setTipo] = useState();
     const { baby, setBaby } = useContext(Baby);
+    const [entradas, setEntradas] = useState(baby.registroTomas);
 
     return (
         <View style={styles.root}>
@@ -39,6 +41,30 @@ export const Home = () => {
                 </Surface>
                 <View flex={{ flex: 1 }}>
                     <BabyCard sleepPre={baby.caracteristicas.sleepPre} tomaPre={baby.caracteristicas.tomaPre} edad={baby.caracteristicas.edad} peso={baby.caracteristicas.peso} altura={baby.caracteristicas.altura} />
+                </View>
+                <SegmentedButtons
+                    value={entradas}
+                    onValueChange={setEntradas}
+                    buttons={[
+                        {
+                            value: baby.registroTomas,
+                            label: 'Tomas',
+                        },
+                        {
+                            value: baby.registroSueño,
+                            label: 'Sueño',
+                        },
+                        { value: baby.registroMedico, label: 'Medico' },
+                    ]}
+                />
+                <View flex={{ flex: 1 }}>
+                    <FlatList
+                    data={entradas}
+                    keyExtractor={(item, index) => item + index.toString()}
+                    renderItem={({ item }) => (
+                        <EntradaBebe entry={item}></EntradaBebe>
+                    )}
+                />
                 </View>
             </View>
         </View>
