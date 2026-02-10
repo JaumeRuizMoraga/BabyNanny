@@ -41,7 +41,7 @@ export const BabyRecordsList = (props) => {
           <Text variant="titleMedium">{item.tipo}</Text>
           <Text>Fecha: {item.date}</Text>
           <Text>
-            {item.tipo === 'Toma' ? 'Cantidad' : 'Duración'}: {item.data}
+            {item.tipo === 'Toma' ? 'Cantidad' : 'Duración'}:{item.data}
             {item.tipo === 'Toma' ? ' ml' : ' min'}
           </Text>
         </Card.Content>
@@ -70,7 +70,7 @@ export const BabyRecordsList = (props) => {
        
         showsVerticalScrollIndicator={false}
       />
-     
+    
     </View>
   );
 };
