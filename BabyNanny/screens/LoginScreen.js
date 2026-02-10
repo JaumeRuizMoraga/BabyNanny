@@ -45,7 +45,7 @@ export const LoginScreen = (props) => {
     return (
         <PaperProvider>
             <ImageBackground
-                source={require("../assets/img/FondoBabyNanny.png")}
+                source={require("../assets/img/FondoBabyNannyMoons.png")}
                 resizeMode='cover' style={styles.container}>
                 <Text style={styles.title}>Bienvenido</Text>
                 <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
