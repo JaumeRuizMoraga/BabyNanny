@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView,FlatList } from 'react-native';
+import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
 import {
     Button,
     Text,
@@ -10,8 +10,10 @@ import {
 } from 'react-native-paper';
 import { useState, useContext } from 'react';
 import { BabyCard } from '../components/DatosBebe';
-import { EntradaBebe } from '../components/EntradaBebe';
+import { RegistroToma } from '../components/RegistroToma';
+import { RegistroSueño } from '../components/RegistroSueño';
 import Baby from '../context/Baby';
+import { RegistroMedico } from '../components/RegistroMedico';
 
 
 export const Home = () => {
@@ -22,15 +24,18 @@ export const Home = () => {
 
     return (
         <View style={styles.root}>
-            <FAB
-                icon="baby-bottle-outline"
-                style={styles.fab}
-                onPress={() => console.log('Pressed')}
-            />
-            <View contentContainerStyle={styles.container}>
-
-                {console.log(baby.registroMedico)}
+            <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
+                    <FAB
+                        icon={() => (
+                            <Avatar.Image
+                                size={35}
+                                source={bebe}
+                                style={{ margin: 0, padding: 0, alignItems: 'center',justifyContent: 'center', }}
+                            />)}
+                        style={styles.fab}
+                        onPress={() => console.log('Pressed')}
+                    />
                     <Avatar.Image size={140} source={bebe} />
                     <Text variant="headlineMedium" style={styles.title}>
                         Mi Bebé
@@ -39,9 +44,7 @@ export const Home = () => {
                         Panel principal
                     </Text>
                 </Surface>
-                <View flex={{ flex: 1 }}>
-                    <BabyCard sleepPre={baby.caracteristicas.sleepPre} tomaPre={baby.caracteristicas.tomaPre} edad={baby.caracteristicas.edad} peso={baby.caracteristicas.peso} altura={baby.caracteristicas.altura} />
-                </View>
+                <BabyCard sleepPre={baby.caracteristicas.sleepPre} tomaPre={baby.caracteristicas.tomaPre} edad={baby.caracteristicas.edad} peso={baby.caracteristicas.peso} altura={baby.caracteristicas.altura} />
                 <SegmentedButtons
                     value={entradas}
                     onValueChange={setEntradas}
@@ -57,16 +60,24 @@ export const Home = () => {
                         { value: baby.registroMedico, label: 'Medico' },
                     ]}
                 />
-                <View flex={{ flex: 1 }}>
-                    <FlatList
-                    data={entradas}
-                    keyExtractor={(item, index) => item + index.toString()}
-                    renderItem={({ item }) => (
-                        <EntradaBebe entry={item}></EntradaBebe>
-                    )}
-                />
-                </View>
             </View>
+            <FlatList
+                data={entradas}
+                keyExtractor={(item, index) => item + index.toString()}
+                renderItem={({ item }) => {
+                    switch (item.tipo) {
+                        case "Medico":
+                            return <RegistroMedico entry={item} />;
+                        case "Toma":
+                            return <RegistroToma entry={item} />;
+                        case "Sueño":
+                            return <RegistroSueño entry={item} />;
+                        default:
+                            return;
+                    }
+                }
+                }
+            />
         </View>
     );
 };
@@ -77,15 +88,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#E6E6FA',
     },
     container: {
-        padding: 20,
-        paddingBottom: 80,
+        margin: 20
     },
     header: {
         alignItems: 'center',
         padding: 20,
         borderRadius: 20,
         backgroundColor: '#FFF',
-        marginBottom: 25,
     },
     title: {
         marginTop: 10,
@@ -95,18 +104,15 @@ const styles = StyleSheet.create({
     subtitle: {
         color: '#777',
     },
-    menu: {
-        gap: 12,
-    },
-    button: {
-        borderRadius: 12,
-        paddingVertical: 6,
-        backgroundColor: '#DA70D6',
-    },
     fab: {
         position: 'absolute',
-        right: 16,
-        bottom: 16,
+        right: 10,
+        top: 10,
         backgroundColor: '#6A1B9A',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+        margin: 0
+
     },
 });

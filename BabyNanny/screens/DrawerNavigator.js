@@ -8,7 +8,6 @@ export default function App() {
             <Drawer.Navigator useLegacyImplementation={false} initialRouteName="Home">
                 <Drawer.Screen name="Home" component={Home} />
                 <Drawer.Screen name="SleepScreen" component={SleepScreen} />
-                
             </Drawer.Navigator>
     );
 }

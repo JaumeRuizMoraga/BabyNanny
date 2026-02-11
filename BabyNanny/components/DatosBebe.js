@@ -11,8 +11,8 @@ export const BabyCard = (props) => {
                 </Text>
 
                 <Divider style={styles.divider} />
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={{ flex: 1, flexDirection: 'column' }}>
+                <View style={{flexDirection: 'row' }}>
+                    <View style={{flexDirection: 'column' }}>
 
                         <Text style={styles.label}>Edad {props.edad} meses</Text>
 
@@ -22,7 +22,7 @@ export const BabyCard = (props) => {
 
                     </View>
 
-                    <View style={{ flex: 1, flexDirection: 'column' }}>
+                    <View style={{flexDirection: 'column' }}>
                         <Text style={styles.label}>Tomas promedio {props.tomaPre} oz</Text>
 
                         <Text style={styles.label}>Sueño promedio  {props.sleepPre} min</Text>
