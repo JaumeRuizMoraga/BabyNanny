@@ -14,18 +14,18 @@ export const BabyCard = (props) => {
                 <View style={{flexDirection: 'row' }}>
                     <View style={{flexDirection: 'column' }}>
 
-                        <Text style={styles.label}>Edad {props.edad} meses</Text>
+                        <Text style={styles.label}>Edad: <Text style={{color:"#DA70D6"}}>{props.edad} meses</Text></Text>
 
-                        <Text style={styles.label}>Altura  {props.altura} cm</Text>
+                        <Text style={styles.label}>Altura:  <Text style={{color:"#DA70D6"}}>{props.altura} cm</Text></Text>
 
-                        <Text style={styles.label}>Peso  {props.peso} kg</Text>
+                        <Text style={styles.label}>Peso:  <Text style={{color:"#DA70D6"}}>{props.peso} kg</Text></Text>
 
                     </View>
 
                     <View style={{flexDirection: 'column' }}>
-                        <Text style={styles.label}>Tomas promedio {props.tomaPre} oz</Text>
+                        <Text style={styles.label}>Tomas promedio: <Text style={{color:"#DA70D6"}}>{props.tomaPre} .mil</Text></Text>
 
-                        <Text style={styles.label}>Sueño promedio  {props.sleepPre} min</Text>
+                        <Text style={styles.label}>Sueño promedio:  <Text style={{color:"#DA70D6"}}>{props.sleepPre} .min</Text></Text>
 
                     </View>
                 </View>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        color: '#6A1B9A',
+        color: '#DA70D6',
         marginBottom: 6,
     },
     divider: {

@@ -6,39 +6,54 @@ import {
     FAB,
     Divider,
     Surface,
-    SegmentedButtons
+    SegmentedButtons,
+    Modal
 } from 'react-native-paper';
 import { useState, useContext } from 'react';
 import { BabyCard } from '../components/DatosBebe';
 import { RegistroToma } from '../components/RegistroToma';
 import { RegistroSueño } from '../components/RegistroSueño';
 import Baby from '../context/Baby';
+import User from '../context/User';
 import { RegistroMedico } from '../components/RegistroMedico';
+import { CambioBebe } from '../components/CambioBebe';
+
 
 
 export const Home = () => {
-    const [bebe] = useState(require('../assets/icon.png'));
     const [tipo, setTipo] = useState();
     const { baby, setBaby } = useContext(Baby);
+    const {user,setUser} = useContext(User);
+    const [mostrarModal,setMostrarModal] = useState(false);
     const [entradas, setEntradas] = useState(baby.registroTomas);
+
+    const openModal = () =>{
+        setMostrarModal(true)
+    }
+    const cambiarBebe = (bebe) =>{
+        console.log("Cambiando a bebe: "+bebe.nombre)
+    }
 
     return (
         <View style={styles.root}>
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
+
                     <FAB
                         icon={() => (
                             <Avatar.Image
-                                size={35}
-                                source={bebe}
-                                style={{ margin: 0, padding: 0, alignItems: 'center',justifyContent: 'center', }}
+                                size={40}
+                                source={baby.icon}
+                                style={{ margin: -6.7, padding: 0}}
                             />)}
                         style={styles.fab}
-                        onPress={() => console.log('Pressed')}
+                        onPress={() => openModal()}
                     />
-                    <Avatar.Image size={140} source={bebe} />
+                    <Avatar.Image size={140} source={baby.icon} />
+
+
                     <Text variant="headlineMedium" style={styles.title}>
-                        Mi Bebé
+                        {baby.nombre}
                     </Text>
                     <Text variant="bodyMedium" style={styles.subtitle}>
                         Panel principal
@@ -51,13 +66,17 @@ export const Home = () => {
                     buttons={[
                         {
                             value: baby.registroTomas,
+                            labelStyle:{color:"#DA70D6"},
                             label: 'Tomas',
+                            style:{backgroundColor:"white"},
                         },
                         {
                             value: baby.registroSueño,
+                            labelStyle:{color:"#DA70D6"},
                             label: 'Sueño',
+                            style:{backgroundColor:"white"},
                         },
-                        { value: baby.registroMedico, label: 'Medico' },
+                        { value: baby.registroMedico, label: 'Medico',labelStyle:{color:"#DA70D6"},style:{backgroundColor:"white"}, },
                     ]}
                 />
             </View>
@@ -78,6 +97,10 @@ export const Home = () => {
                 }
                 }
             />
+            <Modal visible={mostrarModal} onDismiss={()=>setMostrarModal(false)} 
+            contentContainerStyle={styles.modal}>
+                <CambioBebe bebes={user.bebes} funCom={cambiarBebe}></CambioBebe>
+            </Modal>
         </View>
     );
 };
@@ -99,7 +122,7 @@ const styles = StyleSheet.create({
     title: {
         marginTop: 10,
         fontWeight: 'bold',
-        color: '#6A1B9A',
+        color: '#DA70D6',
     },
     subtitle: {
         color: '#777',
@@ -108,11 +131,20 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 10,
         top: 10,
-        backgroundColor: '#6A1B9A',
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: '#E6E6FA',
         padding: 0,
+        borderRadius: 180,
         margin: 0
 
+    },
+    modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '60%',
+        backgroundColor: 'white',
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: "#DA70D6"
     },
 });

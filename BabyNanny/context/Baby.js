@@ -16,8 +16,10 @@ duracion de tratamiento en horas
 export const BabyProvider = ({ children }) => {
     const [baby, setBaby] = useState({
         id: "idMongo",
+        nombre: "nombreBebe",
         madre:'Usuario_Ejemplo',
         padre:undefined,
+        icon: require('../assets/img/baby_icon.png'),
         registroTomas:[{date:'13/04/2025',tipo:'Toma',data:150},{date:'14/04/2025',tipo:'Toma',data:140},{date:'15/04/2025',tipo:'Toma',data:160}],
         registroSueño:[{date:'13/04/2025',tipo:'Sueño',data:160},{date:'13/04/2025',tipo:'Sueño',data:200},{date:'14/04/2025',tipo:'Sueño',data:90},{date:'14/04/2025',tipo:'Sueño',data:230},{date:'14/04/2025',tipo:'Sueño',data:230},{date:'14/04/2025',tipo:'Sueño',data:230},{date:'14/04/2025',tipo:'Sueño',data:230}],
 //        RegistroAlimentacion:[],
