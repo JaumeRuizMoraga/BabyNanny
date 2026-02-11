@@ -20,7 +20,7 @@ export const LoginScreen = (props) => {
     const login = () => {
         const response  = {status: 204};
         if (response.status === 204) {
-            props.navigation.navigate('Home')
+            props.navigation.navigate('DrawerNavigator')
         }
         else {
             SetError(true);

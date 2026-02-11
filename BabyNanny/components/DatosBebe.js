@@ -9,7 +9,6 @@ export const BabyCard = (props) => {
                 <Text variant="titleMedium" style={styles.title}>
                     Características del bebé
                 </Text>
-
                 <Divider style={styles.divider} />
                 <View style={{flexDirection: 'row' }}>
                     <View style={{flexDirection: 'column' }}>

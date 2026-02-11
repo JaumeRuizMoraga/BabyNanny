@@ -1,13 +1,12 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import SleepScreen from './SleepScreen';
-
-import Home from './src/screens/Home';
+import { SleepScreen } from './SleepScreen';
+import { Home } from './Home.js';
 const Drawer = createDrawerNavigator();
-export default function App() {
+export const DrawerNavigator = () => {
     return (
-            <Drawer.Navigator useLegacyImplementation={false} initialRouteName="Home">
-                <Drawer.Screen name="Home" component={Home} />
-                <Drawer.Screen name="SleepScreen" component={SleepScreen} />
-            </Drawer.Navigator>
+        <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Screen name="Home" options={{headerShown: true}} component={Home} />
+            <Drawer.Screen name="SleepScreen" options={{headerShown: true}} component={SleepScreen} />
+        </Drawer.Navigator>
     );
 }
