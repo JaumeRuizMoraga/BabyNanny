@@ -18,15 +18,7 @@ import babbynannyapi.repository.UsuarioRepository;
 import java.io.*;
 import java.util.ArrayList;
 
-/**
- * 
- */
-/**
- * 
- */
-/**
- * 
- */
+
 @RestController
 public class Controlador {
 
@@ -45,8 +37,9 @@ public class Controlador {
 	 * @return ResponseEntity<?>
 	 */
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody Usuario usuario){
-		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getContraseña());
+
+	public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
+		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword());
 		if (existe) {
 			Token token = new Token(usuario.getNombre());
 			tokenRepository.save(token);
@@ -62,7 +55,7 @@ public class Controlador {
 	 */
 	@PostMapping("/register")
 	ResponseEntity<?> registro(@RequestBody Usuario usuario){
-		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getContraseña()
+		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword()
 				,usuario.getCorreo());
 		if (existe) {
 			Token token = new Token(usuario.getNombre());

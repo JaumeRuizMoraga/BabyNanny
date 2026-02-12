@@ -17,67 +17,15 @@ public class Usuario {
 	private Config config;
 	private String [] canciones;
 
+	public Usuario() {}
 
-	public Usuario(String nombre, ArrayList<Bebe> bebes, String contraseña, String correo, Config config,
-			ArrayList<Cancion> canciones) {
+	public Usuario(String id, String nombre, String[] bebes, String password, String correo, Config config, String[] canciones) {
+		this.id = id;
 		this.nombre = nombre;
 		this.bebes = bebes;
-		this.contraseña = contraseña;
+		this.password = password;
 		this.correo = correo;
 		this.config = config;
-		this.canciones = canciones;
-	}
-
-	public Usuario() {
-
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public ArrayList<Bebe> getBebes() {
-		return bebes;
-	}
-
-	public void setBebes(ArrayList<Bebe> bebes) {
-		this.bebes = bebes;
-	}
-
-	public String getContraseña() {
-		return contraseña;
-	}
-
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
-	}
-
-	public String getCorreo() {
-		return correo;
-	}
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public Config getConfig() {
-		return config;
-	}
-
-	public void setConfig(Config config) {
-		this.config = config;
-	}
-
-	public ArrayList<Cancion> getCanciones() {
-		return canciones;
-	}
-
-	public void setCanciones(ArrayList<Cancion> canciones) {
 		this.canciones = canciones;
 	}
 
@@ -89,4 +37,51 @@ public class Usuario {
 		this.id = id;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String[] getBebes() {
+		return bebes;
+	}
+
+	public void setBebes(String[] bebes) {
+		this.bebes = bebes;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String[] getCanciones() {
+		return canciones;
+	}
+
+	public void setCanciones(String[] canciones) {
+		this.canciones = canciones;
+	}
+
+	public Config getConfig() {
+		return config;
+	}
+
+	public void setConfig(Config config) {
+		this.config = config;
+	}
 }
