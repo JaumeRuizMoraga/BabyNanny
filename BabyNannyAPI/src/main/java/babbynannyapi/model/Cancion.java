@@ -1,8 +1,14 @@
 package babbynannyapi.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "cancion")
 public class Cancion {
+	@Id
+	private String id;
+	private String nombre;
+	private String uri;
 
 	public Cancion(String nombre, String uri) {
 		this.nombre = nombre;
@@ -13,10 +19,7 @@ public class Cancion {
 
 	}
 
-	@Id
-	private String id;
-	private String nombre;
-	private String uri;
+
 
 	public String getNombre() {
 		return nombre;

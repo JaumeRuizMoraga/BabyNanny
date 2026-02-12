@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
-@Document(collection = "Bebe")
+@Document(collection = "bebe")
 public class Bebe {
 
     @Id

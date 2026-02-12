@@ -15,11 +15,6 @@ import java.util.ArrayList;
 
 @RestController
 public class Controlador {
-	@RequestMapping("/BabyNanny")
-
-	String home() {
-		return "Hola món!";
-	}
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -38,4 +33,5 @@ public class Controlador {
 		JSONObject obj = new JSONObject(cuerpoPeticion);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
+
 }
