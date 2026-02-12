@@ -19,6 +19,11 @@ public class Usuario {
 
 	public Usuario() {}
 
+	public Usuario(String nombre, String password) {
+		this.nombre = nombre;
+		this.password = password;
+	}
+
 	public Usuario(String id, String nombre, String[] bebes, String password, String correo, Config config, String[] canciones) {
 		this.id = id;
 		this.nombre = nombre;
