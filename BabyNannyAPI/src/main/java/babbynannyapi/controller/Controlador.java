@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import babbynannyapi.model.Token;
 import babbynannyapi.model.Usuario;
+import babbynannyapi.repository.TokenRepository;
 import babbynannyapi.repository.UsuarioRepository;
 
 import java.io.*;
@@ -18,11 +20,16 @@ public class Controlador {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private TokenRepository tokenRepository;
 
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
 		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getContraseña());
 		if (existe) {
+			Token token = new Token(usuario.getNombre());
+			tokenRepository.save(token);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Token {
 	
 	public Token(String nombreUsuario) {
-		
 		String uuid = UUID.randomUUID().toString();
 		this.nombreUsuario = nombreUsuario;
 		this.fecha = Date.from(Instant.now());
