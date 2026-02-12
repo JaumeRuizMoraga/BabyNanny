@@ -11,15 +11,16 @@ import java.util.ArrayList;
 
 @RestController
 public class Controlador {
-    @RequestMapping("/APIpelis")
+    @RequestMapping("/babynanny")
         //PLANTILLAS
     String home() {
         return "Hola món!";
     }
 
-    @PostMapping("verne/registro")
+    @PostMapping("babynanny/registro")
     ResponseEntity<Object> registro(@RequestBody String cuerpoPeticion) throws JSONException, IOException {
         JSONObject obj = new JSONObject(cuerpoPeticion);
+
 
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

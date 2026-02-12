@@ -6,8 +6,17 @@ import java.util.ArrayList;
 
 import org.springframework.data.annotation.Id;
 
-@Document(collection = "Usuario")
+@Document(collection = "usuario")
 public class Usuario {
+	@Id
+	private String id;
+	private String nombre;
+	private ArrayList<Bebe> bebes;
+	private String contraseña;
+	private String correo;
+	private Config config;
+	private ArrayList<Cancion> canciones;
+
 
 	public Usuario(String nombre, ArrayList<Bebe> bebes, String contraseña, String correo, Config config,
 			ArrayList<Cancion> canciones) {
@@ -23,14 +32,6 @@ public class Usuario {
 
 	}
 
-	@Id
-	private String id;
-	private String nombre;
-	private ArrayList<Bebe> bebes;
-	private String contraseña;
-	private String correo;
-	private Config config;
-	private ArrayList<Cancion> canciones;
 
 	public String getNombre() {
 		return nombre;
