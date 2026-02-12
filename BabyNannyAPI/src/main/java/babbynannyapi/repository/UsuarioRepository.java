@@ -1,5 +1,4 @@
-/*
-package babbynannyapi.repository;
+/* package babbynannyapi.repository;
 
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -11,4 +10,4 @@ public interface UsuarioRepository extends MongoRepository<Record, String> {
     List<Record> buscarDificultat(int valor);
 
 }
- cambio3*/
+*/
