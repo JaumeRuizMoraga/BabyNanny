@@ -44,7 +44,7 @@ public class Controlador {
 
 		System.out.println(usuario.getNombre());
 		System.out.println(usuario.getPassword());
-		Optional<Usuario> user = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword());
+		Optional<Usuario> user = usuarioRepository.findByNombreAndPassword(usuario.getNombre(), usuario.getPassword());
 		if (user.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
