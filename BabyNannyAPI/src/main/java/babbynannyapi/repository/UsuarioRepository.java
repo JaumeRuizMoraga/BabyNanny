@@ -11,4 +11,4 @@ public interface UsuarioRepository extends MongoRepository<Record, String> {
     List<Record> buscarDificultat(int valor);
 
 }
-*/
+ cambio3*/
