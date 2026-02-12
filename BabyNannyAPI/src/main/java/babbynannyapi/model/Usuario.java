@@ -11,11 +11,11 @@ public class Usuario {
 	@Id
 	private String id;
 	private String nombre;
-	private ArrayList<Bebe> bebes;
-	private String contraseña;
+	private String [] bebes;
+	private String password;
 	private String correo;
 	private Config config;
-	private ArrayList<Cancion> canciones;
+	private String [] canciones;
 
 
 	public Usuario(String nombre, ArrayList<Bebe> bebes, String contraseña, String correo, Config config,

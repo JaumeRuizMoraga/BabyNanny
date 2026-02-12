@@ -7,8 +7,9 @@ import babbynannyapi.model.Usuario;
 
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
-	@Query(value = "{ 'name': ?0, 'pwss': ?1 }", exists = true)
-    boolean buscarUsuario(String name, String pwss);
-    
+    @Query(value = "{ 'nombre': ?0, 'password': ?1 }", exists = true)
+    boolean buscarUsuario(String nombre, String password);
+
+
 }
 

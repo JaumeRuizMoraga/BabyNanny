@@ -16,7 +16,7 @@ public class Token {
 		String uuid = UUID.randomUUID().toString();
 		this.nombreUsuario = nombreUsuario;
 		this.fecha = Date.from(Instant.now());
-		this.token = uuid.split("-")[0]; 
+		this.token = uuid.split("-")[0];
 	}
 	
 	public Token() {
