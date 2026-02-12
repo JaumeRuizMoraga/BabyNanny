@@ -1,14 +1,15 @@
-/*
+
 package babbynannyapi.repository;
 
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-public interface UsuarioRepository extends MongoRepository<Record, String> {
+import babbynannyapi.model.Usuario;
 
-    @Query(value = "{ 'dificultad': ?0 }")
-    List<Record> buscarDificultat(int valor);
+public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
+	@Query(value = "{ 'name': ?0, 'pwss': ?1 }", exists = true)
+    boolean buscarUsuario(String name, String pwss);
+    
 }
- cambio3*/
