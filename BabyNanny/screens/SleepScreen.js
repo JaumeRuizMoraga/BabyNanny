@@ -6,14 +6,14 @@ import { useContext } from 'react';
 import { Audio } from 'expo-av';
 import User from '../context/User';
 import Baby from '../context/Baby';
-import { enviarSleep,enviarToma } from '../utils/utils';
+import { enviarSleep, enviarToma } from '../utils/utils';
 
 export const SleepScreen = (props) => {
     const [manual, setManual] = useState(false)
     const [playing, setPlaying] = useState(false)
     const [song, setSong] = useState();
     const { user, setUser } = useContext(User);
-    const {baby, setBaby}  = useContext(Baby);
+    const { baby, setBaby } = useContext(Baby);
 
 
 
@@ -76,7 +76,7 @@ export const SleepScreen = (props) => {
                 </Surface>
                 <Modal visible={manual} onDismiss={() => setManual(false)}
                     contentContainerStyle={styles.modal}>
-                    <SelectorSleepToma salir={(valor)=>setManual(valor)}></SelectorSleepToma>
+                    <SelectorSleepToma salir={(valor) => setManual(valor)}></SelectorSleepToma>
                 </Modal>
             </ImageBackground>
         </PaperProvider>
@@ -111,9 +111,10 @@ const styles = StyleSheet.create({
         width: '100%',
         borderWidth: 2,
         borderColor: "#DA70D6",
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        marginBottom: 10
     },
-    botonSong:{
+    botonSong: {
         backgroundColor: '#5353f9',
         borderWidth: 2,
         padding: 7,
