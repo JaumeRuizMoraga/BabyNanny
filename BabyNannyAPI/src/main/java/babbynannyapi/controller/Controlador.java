@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import babbynannyapi.model.Usuario;
 import babbynannyapi.repository.UsuarioRepository;
 
 import java.io.*;
@@ -24,9 +25,8 @@ public class Controlador {
 	private UsuarioRepository usuarioRepository;
 
 	@PostMapping("/login")
-	public ResponseEntity<Object> login(@RequestBody String cuerpoPeticion) throws JSONException {
-		JSONObject obj = new JSONObject(cuerpoPeticion);
-		boolean existe = usuarioRepository.buscarUsuario(obj.getString("name"), obj.getString("pwss"));
+	public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
+		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getContraseña());
 		if (existe) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
