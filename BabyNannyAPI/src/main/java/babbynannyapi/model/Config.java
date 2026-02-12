@@ -1,22 +1,20 @@
 package babbynannyapi.model;
 
 public class Config {
+    private String idioma;
 
-	public Config(String idioma) {
-		this.idioma = idioma;
-	}
+    public Config(String idioma) {
+        this.idioma = idioma;
+    }
 
-	public Config() {
+    public Config() {
+    }
 
-	}
+    public String getIdioma() {
+        return idioma;
+    }
 
-	private String idioma;
-
-	public String getIdioma() {
-		return idioma;
-	}
-
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
-	}
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
 }

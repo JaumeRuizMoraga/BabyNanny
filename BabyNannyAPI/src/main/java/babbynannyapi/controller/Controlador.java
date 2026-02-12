@@ -26,13 +26,13 @@ public class Controlador {
 
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
-		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getContraseña());
+		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword());
 		if (existe) {
 			Token token = new Token(usuario.getNombre());
 			tokenRepository.save(token);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
 	@PostMapping("/register")

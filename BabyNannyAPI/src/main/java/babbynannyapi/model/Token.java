@@ -10,6 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "tokens")
 public class Token {
+	@Id
+	private String id;
+	private String token;
+	private String nombreUsuario;
+	private Date fecha;
 	
 	public Token(String nombreUsuario) {
 		String uuid = UUID.randomUUID().toString();
@@ -19,14 +24,8 @@ public class Token {
 	}
 	
 	public Token() {
-		
 	}
-	
-	@Id
-	private String id;
-	private String token;
-	private String nombreUsuario;
-	private Date fecha;
+
 
 	public String getId() {
 		return id;

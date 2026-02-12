@@ -12,24 +12,22 @@ public class Bebe {
     @Id
     private String id;
     private String nombre;
-    private String madre;
-    private String padre;
+    private String [] tutores;
     private String imagen;
     private Byte [] icon;
-    private String registroTomas;
-    private String registroSueño;
-    private String registroMedico;
+    private String [] registroTomas;
+    private String [] registroSueño;
+    private String [] registroMedico;
     private JsonObject caracteristicas;
-    private String eventos;
+    private String [] eventos;
 
     public Bebe() {
     }
 
-    public Bebe(String id, String nombre, String madre, String padre, String imagen, Byte[] icon, String registroTomas, String registroSueño, String registroMedico, JsonObject caracteristicas, String eventos) {
+    public Bebe(String id, String nombre, String[] tutores, String imagen, Byte[] icon, String[] registroTomas, String[] registroSueño, String[] registroMedico, JsonObject caracteristicas, String[] eventos) {
         this.id = id;
         this.nombre = nombre;
-        this.madre = madre;
-        this.padre = padre;
+        this.tutores = tutores;
         this.imagen = imagen;
         this.icon = icon;
         this.registroTomas = registroTomas;
@@ -55,20 +53,12 @@ public class Bebe {
         this.nombre = nombre;
     }
 
-    public String getMadre() {
-        return madre;
+    public String[] getTutores() {
+        return tutores;
     }
 
-    public void setMadre(String madre) {
-        this.madre = madre;
-    }
-
-    public String getPadre() {
-        return padre;
-    }
-
-    public void setPadre(String padre) {
-        this.padre = padre;
+    public void setTutores(String[] tutores) {
+        this.tutores = tutores;
     }
 
     public String getImagen() {
@@ -87,27 +77,27 @@ public class Bebe {
         this.icon = icon;
     }
 
-    public String getRegistroTomas() {
+    public String[] getRegistroTomas() {
         return registroTomas;
     }
 
-    public void setRegistroTomas(String registroTomas) {
+    public void setRegistroTomas(String[] registroTomas) {
         this.registroTomas = registroTomas;
     }
 
-    public String getRegistroSueño() {
+    public String[] getRegistroSueño() {
         return registroSueño;
     }
 
-    public void setRegistroSueño(String registroSueño) {
+    public void setRegistroSueño(String[] registroSueño) {
         this.registroSueño = registroSueño;
     }
 
-    public String getRegistroMedico() {
+    public String[] getRegistroMedico() {
         return registroMedico;
     }
 
-    public void setRegistroMedico(String registroMedico) {
+    public void setRegistroMedico(String[] registroMedico) {
         this.registroMedico = registroMedico;
     }
 
@@ -119,11 +109,11 @@ public class Bebe {
         this.caracteristicas = caracteristicas;
     }
 
-    public String getEventos() {
+    public String[] getEventos() {
         return eventos;
     }
 
-    public void setEventos(String eventos) {
+    public void setEventos(String[] eventos) {
         this.eventos = eventos;
     }
 }
