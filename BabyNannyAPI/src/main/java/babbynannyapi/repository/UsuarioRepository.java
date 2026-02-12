@@ -5,10 +5,12 @@ import org.springframework.data.mongodb.repository.Query;
 
 import babbynannyapi.model.Usuario;
 
+import java.util.Optional;
+
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
-    @Query(value = "{ 'nombre': ?0, 'password': ?1 }", exists = true)
-    boolean buscarUsuario(String nombre, String password);
+    @Query("{ 'nombre': ?0, 'password': ?1 }")
+    Optional<Usuario> buscarUsuario(String nombre, String password);
     
     @Query(value = "{ 'nombre': ?0, 'password': ?1, 'mail': ?2 }", exists = true)
     boolean buscarUsuario(String nombre, String password, String mail);

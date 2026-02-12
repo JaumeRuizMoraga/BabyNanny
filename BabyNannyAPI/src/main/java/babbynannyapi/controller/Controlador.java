@@ -17,6 +17,7 @@ import babbynannyapi.repository.UsuarioRepository;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 @RestController
@@ -39,12 +40,12 @@ public class Controlador {
 	 */
 	@PostMapping("/login")
 
-	public ResponseEntity<Object> login(@RequestBody String user) throws JSONException {
-		JSONObject obj = new JSONObject(user);
-		boolean existe = usuarioRepository.buscarUsuario(obj.getString("nombre"), obj.getString("password"));
+	public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
 
-		if (existe) {
-
+		System.out.println(usuario.getNombre());
+		System.out.println(usuario.getPassword());
+		Optional<Usuario> user = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword());
+		if (user.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
