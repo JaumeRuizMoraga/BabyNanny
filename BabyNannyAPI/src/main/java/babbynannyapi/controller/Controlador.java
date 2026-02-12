@@ -1,5 +1,6 @@
 package babbynannyapi.controller;
 
+import org.bson.json.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 @RestController
+@RequestMapping("/BabyNanny")
 public class Controlador {
 
 	@Autowired
@@ -25,11 +27,11 @@ public class Controlador {
 	private TokenRepository tokenRepository;
 
 	@PostMapping("/login")
-	public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
-		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword());
+	public ResponseEntity<Object> login(@RequestBody String user) throws JSONException {
+		JSONObject obj = new JSONObject(user);
+		boolean existe = usuarioRepository.buscarUsuario(obj.getString("nombre"), obj.getString("password"));
 		if (existe) {
-			Token token = new Token(usuario.getNombre());
-			tokenRepository.save(token);
+
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
