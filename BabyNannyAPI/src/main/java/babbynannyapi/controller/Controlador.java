@@ -1,5 +1,6 @@
 package babbynannyapi.controller;
 
+import org.bson.json.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,14 +8,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import babbynannyapi.model.Bebe;
 import babbynannyapi.model.Token;
 import babbynannyapi.model.Usuario;
+import babbynannyapi.repository.BebeRepository;
 import babbynannyapi.repository.TokenRepository;
 import babbynannyapi.repository.UsuarioRepository;
 
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * 
+ */
+/**
+ * 
+ */
+/**
+ * 
+ */
 @RestController
 public class Controlador {
 
@@ -23,22 +35,55 @@ public class Controlador {
 	
 	@Autowired
 	private TokenRepository tokenRepository;
+	
+	@Autowired
+	private BebeRepository bebeRepository;
 
+	/**
+	 * Función utilitzada para que un usuario haga login y se le genere un token
+	 * @param usuario
+	 * @return ResponseEntity<?>
+	 */
 	@PostMapping("/login")
-	public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
+	public ResponseEntity<?> login(@RequestBody Usuario usuario){
 		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getContraseña());
 		if (existe) {
 			Token token = new Token(usuario.getNombre());
 			tokenRepository.save(token);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
-
+	
+	/**
+	 * Función utilitzada pera registrar un usuario en la base de datos
+	 * @param usuario
+	 * @return ResponseEntity<?>
+	 */
 	@PostMapping("/register")
-	ResponseEntity<Object> registro(@RequestBody String cuerpoPeticion) throws JSONException, IOException {
-		JSONObject obj = new JSONObject(cuerpoPeticion);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	ResponseEntity<?> registro(@RequestBody Usuario usuario){
+		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getContraseña()
+				,usuario.getCorreo());
+		if (existe) {
+			Token token = new Token(usuario.getNombre());
+			tokenRepository.save(token);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
-
+	
+	/**
+	 * Función utilitzada para guardar un bebe en la base de datos
+	 * @param bebe
+	 * @return ResponseEntity<?>
+	 */
+	@PostMapping("/newBaby")
+	ResponseEntity<Object> registro(@RequestBody Bebe bebe, @RequestHeader String token ){
+		boolean existe = tokenRepository.buscarToken(token);
+		if (existe) {
+			bebeRepository.save(bebe);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
 }
