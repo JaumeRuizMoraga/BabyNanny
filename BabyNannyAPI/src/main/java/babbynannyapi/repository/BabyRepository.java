@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import babbynannyapi.model.Bebe;
 
-public interface BebeRepository extends MongoRepository<Bebe, String> {
+public interface BabyRepository extends MongoRepository<Bebe, String> {
 	
 	 @Query(value = "{ 'tutores': ?0}")
-	 List<Bebe> buscarBebes(String tutores);
+	 List<Bebe> searchBabies(String tutores);
 }
