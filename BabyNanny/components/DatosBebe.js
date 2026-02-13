@@ -5,31 +5,31 @@ import { EditarDatos } from './EditarDatos';
 
 export const BabyCard = (props) => {
 
-    const [editar,setEditar] = useState(false);
+    const [edit,setEdit] = useState(false);
 
     return (
         <Card style={styles.card} mode="elevated">
             <Card.Content>
                 <Text variant="titleMedium" style={styles.title}>
-                    Características del bebé
+                    Baby data
                 </Text>
             
                 <Divider style={styles.divider} />
                 <View style={{flexDirection: 'row',justifyContent: "space-between" }}>
                     <View style={{flexDirection: 'column' }}>
 
-                        <Text style={styles.label}>Edad: <Text style={{color:"#DA70D6"}}>{props.bebe.edad} meses</Text></Text>
+                        <Text style={styles.label}>Age: <Text style={{color:"#DA70D6"}}>{props.bebe.edad} months</Text></Text>
 
-                        <Text style={styles.label}>Altura:  <Text style={{color:"#DA70D6"}}>{props.bebe.altura} cm</Text></Text>
+                        <Text style={styles.label}>Height:  <Text style={{color:"#DA70D6"}}>{props.bebe.altura} cm</Text></Text>
 
-                        <Text style={styles.label}>Peso:  <Text style={{color:"#DA70D6"}}>{props.bebe.peso} kg</Text></Text>
+                        <Text style={styles.label}>Weight:  <Text style={{color:"#DA70D6"}}>{props.bebe.peso} kg</Text></Text>
 
                     </View>
 
                     <View style={{flexDirection: 'column'}}>
-                        <Text style={styles.label}>Tomas promedio: <Text style={{color:"#DA70D6"}}>{props.bebe.tomaPre} .mil</Text></Text>
+                        <Text style={styles.label}>Average intake: <Text style={{color:"#DA70D6"}}>{props.bebe.tomaPre} .mil</Text></Text>
 
-                        <Text style={styles.label}>Sueño promedio:  <Text style={{color:"#DA70D6"}}>{props.bebe.sleepPre} .min</Text></Text>
+                        <Text style={styles.label}>Average sleep:  <Text style={{color:"#DA70D6"}}>{props.bebe.sleepPre} .min</Text></Text>
 
                     </View>
                 </View>
