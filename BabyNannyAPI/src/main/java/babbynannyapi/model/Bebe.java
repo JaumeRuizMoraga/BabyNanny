@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
+import java.util.Map;
 
 @Document(collection = "bebe")
 public class Bebe {
@@ -12,19 +13,19 @@ public class Bebe {
     @Id
     private String id;
     private String nombre;
-    private String [] tutores;
+    private List<String> tutores;
     private String imagen;
-    private Byte [] icon;
-    private String [] registroTomas;
-    private String [] registroSueño;
-    private String [] registroMedico;
-    private JsonObject caracteristicas;
-    private String [] eventos;
+    private List<Byte> icon;
+    private List<String> registroTomas;
+    private List<String> registroSueño;
+    private List<String> registroMedico;
+    private Map<String, Object> caracteristicas;
+    private List<String> eventos;
 
     public Bebe() {
     }
 
-    public Bebe(String id, String nombre, String[] tutores, String imagen, Byte[] icon, String[] registroTomas, String[] registroSueño, String[] registroMedico, JsonObject caracteristicas, String[] eventos) {
+    public Bebe(String id, String nombre, List<String> tutores, String imagen, List<Byte> icon, List<String> registroTomas, List<String> registroSueño, List<String> registroMedico, Map<String, Object> caracteristicas, List<String> eventos) {
         this.id = id;
         this.nombre = nombre;
         this.tutores = tutores;
@@ -53,11 +54,11 @@ public class Bebe {
         this.nombre = nombre;
     }
 
-    public String[] getTutores() {
+    public List<String> getTutores() {
         return tutores;
     }
 
-    public void setTutores(String[] tutores) {
+    public void setTutores(List<String> tutores) {
         this.tutores = tutores;
     }
 
@@ -69,51 +70,51 @@ public class Bebe {
         this.imagen = imagen;
     }
 
-    public Byte[] getIcon() {
+    public List<Byte> getIcon() {
         return icon;
     }
 
-    public void setIcon(Byte[] icon) {
+    public void setIcon(List<Byte> icon) {
         this.icon = icon;
     }
 
-    public String[] getRegistroTomas() {
+    public List<String> getRegistroTomas() {
         return registroTomas;
     }
 
-    public void setRegistroTomas(String[] registroTomas) {
+    public void setRegistroTomas(List<String> registroTomas) {
         this.registroTomas = registroTomas;
     }
 
-    public String[] getRegistroSueño() {
+    public List<String> getRegistroSueño() {
         return registroSueño;
     }
 
-    public void setRegistroSueño(String[] registroSueño) {
+    public void setRegistroSueño(List<String> registroSueño) {
         this.registroSueño = registroSueño;
     }
 
-    public String[] getRegistroMedico() {
+    public List<String> getRegistroMedico() {
         return registroMedico;
     }
 
-    public void setRegistroMedico(String[] registroMedico) {
+    public void setRegistroMedico(List<String> registroMedico) {
         this.registroMedico = registroMedico;
     }
 
-    public JsonObject getCaracteristicas() {
+    public Map<String, Object> getCaracteristicas() {
         return caracteristicas;
     }
 
-    public void setCaracteristicas(JsonObject caracteristicas) {
+    public void setCaracteristicas(Map<String, Object> caracteristicas) {
         this.caracteristicas = caracteristicas;
     }
 
-    public String[] getEventos() {
+    public List<String> getEventos() {
         return eventos;
     }
 
-    public void setEventos(String[] eventos) {
+    public void setEventos(List<String> eventos) {
         this.eventos = eventos;
     }
 }
