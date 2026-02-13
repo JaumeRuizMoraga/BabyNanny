@@ -7,11 +7,11 @@ import babbynannyapi.model.Usuario;
 
 import java.util.Optional;
 
-public interface UsuarioRepository extends MongoRepository<Usuario, String> {
+public interface UserRepository extends MongoRepository<Usuario, String> {
 
     @Query
     Optional<Usuario> findByNombreAndPassword(String nombre, String password);
 
     @Query(value = "{ 'nombre': ?0, 'password': ?1, 'correo': ?2 }")
-    Optional<Usuario> buscarUserPassEmail(String nombre, String password, String correo);
+    Optional<Usuario> searchUserPassEmail(String nombre, String password, String correo);
 }

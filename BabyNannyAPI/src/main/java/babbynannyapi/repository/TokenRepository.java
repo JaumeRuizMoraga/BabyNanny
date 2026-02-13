@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface TokenRepository extends MongoRepository<Token, String> {
 	
 	@Query(value = "{ 'token': ?0}")
-    Optional<Token> buscarToken(String token);
+    Optional<Token> searchToken(String token);
 
     @Query(value = "{ 'nombreUsuario': ?0}")
-    Optional<Token> buscarUsuarioToken(String nombreUsuario);
+    Optional<Token> searchUserToken(String nombreUsuario);
 }
