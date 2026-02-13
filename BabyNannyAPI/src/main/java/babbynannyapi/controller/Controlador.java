@@ -47,6 +47,7 @@ public class Controlador {
 		Optional<Usuario> user = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword());
 		if (user.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
