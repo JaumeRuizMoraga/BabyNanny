@@ -78,3 +78,14 @@ export const comprobarDatosCompleto = (toma, sleep, age, height, weight) => {
     return errores;
 
 }
+export const getAgeMonth = (stringDate) => {
+    let date = new Date();
+    let bornDate = new Date(stringDate);
+    const yearDiff = (date.getFullYear() - bornDate.getFullYear())
+    const monthDiff = date.getMonth() - bornDate.getMonth()
+    var monthAge = (yearDiff * 12) + (monthDiff)
+    if (date.getDay() - bornDate.getDay() <= 0) {
+        monthAge--;
+    }
+    return monthAge
+}

@@ -41,6 +41,9 @@ export const Home = () => {
         bebe.caracteristicas = newChars
         console.log(bebe)
     }
+    const deleteBaby = () =>{
+        console.log("Removing: baby:"+baby.id)
+    }
 
     return (
         <View style={styles.root}>
@@ -112,6 +115,13 @@ export const Home = () => {
                 onPress={() => setEditar(true)}
                 animated={true}
             />
+            <FAB
+                icon="delete"
+                style={styles.fabDelete}
+                size='small'
+                onPress={() => deleteBaby()}
+                animated={true}
+            />
             <Modal visible={editar} onDismiss={() => setEditar(false)} contentContainerStyle={styles.modal}>
                 <EditarDatos bebe={baby.caracteristicas} save={(newChars)=>save(newChars)}></EditarDatos>
             </Modal>
@@ -160,6 +170,12 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 20,
         top: 270,
+    },
+    fabDelete:{
+        position: 'absolute',
+        margin: 16,
+        right: 20,
+        top: 190,
     },
     modal: {
         justifyContent: 'center',

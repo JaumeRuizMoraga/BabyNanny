@@ -35,7 +35,7 @@ export const SleepScreen = (props) => {
             await song.stopAsync();
             setPlaying(false)
         }
-    };
+    }
 
     return (
         <PaperProvider>

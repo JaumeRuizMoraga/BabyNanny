@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon, FAB } from 'react-native-paper';
-export const NoBaby = () => {
+export const NoBaby = (props) => {
     return (
         <View style={styles.layout}>
             <Text style={styles.title}>Vaya! Parace que no tienes ningún bebé registrado</Text>
@@ -13,7 +13,7 @@ export const NoBaby = () => {
                 icon="plus"
                 style={styles.fab}
                 size='large'
-                onPress={() => console.log('Pressed')}
+                onPress={() => props.navigation.navigate("NewBaby")}
             />
         </View>
     );

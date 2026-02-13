@@ -1,10 +1,16 @@
 import { Text, View, FlatList, StyleSheet } from "react-native"
 import { useState } from "react";
 import { TarjetaBebe } from "./TarjetaBebe";
+import { Button } from "react-native-paper";
 
 
 export const CambioBebe = (props) => {
     const [bebes,setBebes] = useState(props.bebes);
+
+    const pressLogout = () =>{
+        console.log("Logout")
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Seleccione otro bebé</Text>
@@ -16,6 +22,7 @@ export const CambioBebe = (props) => {
                 }
                 }
             />
+            <Button textColor="#DA70D6" onPress={()=>pressLogout()} style={styles.button}>Logout</Button>
         </View>
     );
 }
@@ -30,5 +37,11 @@ const styles = StyleSheet.create({
         margin: 10,
         justifyContent: "center",
         alignItems: "center",
+    },
+    button:{
+        borderColor: '#DA70D6',
+        borderWidth: 2,
+        margin: 10,
+        
     }
 })

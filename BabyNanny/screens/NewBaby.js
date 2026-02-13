@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View, Image, Animated, FlatList, ScrollView } from 'react-native';
 import { Icon, FAB, TextInput, Surface, HelperText, Button } from 'react-native-paper';
 import { RulerPicker } from 'react-native-ruler-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState, useContext } from 'react'
+import { getAgeMonth } from '../utils/utils';
+
 import User from '../context/User';
 
-export const NewBaby = () => {
+export const NewBaby = (props) => {
     const [altura, setAltura] = useState();
     const { user, setUser } = useContext(User)
     const [peso, setPeso] = useState(0);
@@ -14,10 +17,20 @@ export const NewBaby = () => {
     const [sleepPre, setSleepPre] = useState(0);
     const [errorSleep, SetErrorSleep] = useState(false)
     const [errorToma, SetErrorToma] = useState(false)
-    const [date,setNewDate] = useState(new Date);
+    const [date, setDate] = useState(new Date);
+    const [showDate, setShowDate] = useState(false)
+
 
     const formatoToma = /^(\d+)$|^(\d*\.\d+)$/;
     const formatoSleep = /^(\d+)$/;
+
+    const changeDate = (date) => {
+        setShowDate(false)
+        let tempData = new Date(date.nativeEvent.timestamp)
+        setEdad(getAgeMonth(tempData))
+        setDate(tempData)
+
+    }
 
     const montarBebe = () => {
         let bebe = {
@@ -38,6 +51,7 @@ export const NewBaby = () => {
             eventos: []
         }
         console.log(bebe)
+        props.navigation.navigate("Home")
     }
 
     const comprobarDatos = (toma, sleep) => {
@@ -72,10 +86,17 @@ export const NewBaby = () => {
 
     return (
         <View style={styles.layout}>
+            {console.log(edad)}
             <ScrollView>
                 <Surface elevation={2} style={styles.container}>
                     <Text style={styles.title}>Datos de tu bebé</Text>
                     <TextInput style={styles.input} onChangeText={(text) => cambiarNombre(text)} label={"Nombre del bebé"}></TextInput>
+                    <TextInput style={styles.input} mode='outlined' right={<TextInput.Icon icon="calendar" />} placeholder={date.toDateString()}
+                        onPress={() => setShowDate(true)}></TextInput>
+                    {
+                        showDate && <DateTimePicker onChange={(date) => changeDate(date)} value={date} mode='date' display='calendar' />
+
+                    }
 
                 </Surface>
                 <Surface elevation={2} style={styles.container}>
@@ -92,7 +113,7 @@ export const NewBaby = () => {
 
                     </View>
                 </Surface>
-                <View style={{backgroundColor: '#DA70D6',borderRadius: 10, margin: 10}}>
+                <View style={{ backgroundColor: '#DA70D6', borderRadius: 10, margin: 10 }}>
 
                     <Text style={styles.title2}>Indica la altura del bebe</Text>
                 </View>
@@ -116,7 +137,7 @@ export const NewBaby = () => {
                         shortStepColor='#c9c9db'
                     />
                 </View>
-                <View style={{backgroundColor: '#DA70D6',borderRadius: 10, margin: 10}}>
+                <View style={{ backgroundColor: '#DA70D6', borderRadius: 10, margin: 10 }}>
 
                     <Text style={styles.title2}>Indica el peso</Text>
                 </View>
@@ -141,31 +162,6 @@ export const NewBaby = () => {
                         shortStepColor='#c9c9db'
                     />
                 </View>
-                <View style={{backgroundColor: '#DA70D6',borderRadius: 10, margin: 10}}>
-                    <Text style={styles.title2}>Indica la edad</Text>
-                </View>
-
-                <View style={styles.rotate}>
-                    <RulerPicker
-                        width={'99%'}
-                        height={80}
-                        indicatorHeight={90}
-                        valueTextStyle={{ color: 'gray', fontSize: 25 }}
-                        unitTextStyle={{ color: 'gray' }}
-                        min={0}
-                        max={70}
-                        step={1}
-                        fractionDigits={0}
-                        initialValue={0}
-                        onValueChange={(number) => setEdad(number)}
-                        onValueChangeEnd={(number) => setEdad(number)}
-                        unit="meses"
-                        longStepColor='#DA70D6'
-                        indicatorColor='#DA70D6'
-                        shortStepColor='#c9c9db'
-                    />
-                </View>
-
                 <Button mode='outlined' textColor='#DA70D6'
                     style={styles.boton} onPress={() => montarBebe()}>Guardar</Button>
             </ScrollView>
@@ -209,6 +205,7 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         width: "100%",
+        margin: 10,
     },
     rotate: {
         borderWidth: 2,
