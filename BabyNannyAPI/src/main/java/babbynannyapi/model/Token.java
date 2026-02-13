@@ -13,12 +13,12 @@ public class Token {
 	@Id
 	private String id;
 	private String token;
-	private String nombreUsuario;
+	private String user;
 	private Date fecha;
 	
-	public Token(String nombreUsuario) {
+	public Token(String user) {
 		String uuid = UUID.randomUUID().toString();
-		this.nombreUsuario = nombreUsuario;
+		this.user = user;
 		this.fecha = Date.from(Instant.now());
 		this.token = uuid.split("-")[0];
 	}
@@ -39,11 +39,11 @@ public class Token {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public String getNombreUsuario() {
-		return nombreUsuario;
+	public String getUser() {
+		return user;
 	}
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
+	public void setUser(String user) {
+		this.user = user;
 	}
 	public Date getFecha() {
 		return fecha;
