@@ -48,6 +48,18 @@ public class Controlador {
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
+	
+	@DeleteMapping("/deleteBaby/{id}")
+    public ResponseEntity<Void> deleteBaby(@PathVariable String id, @RequestHeader String token) {
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if(t.isPresent()){
+			babyRepository.deleteById(id);
+	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+    }
 
 
 	@PutMapping("/newEntry/{id}")
@@ -97,7 +109,10 @@ public class Controlador {
 
 
             }
-
+			List<Bebe> listaBebes = babyRepository.searchBabies(t.get().getUser());
+		    Map<String, List<Bebe>> response = new HashMap<>();
+		    
+		    response.put("bebes", listaBebes);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -109,7 +124,7 @@ public class Controlador {
      * @return ResponseEntity<?>
      */
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
+    public ResponseEntity<Object> login(@RequestBody Usuario usuario){
         Optional<Usuario> user = userRepository.findByNombreAndPassword(usuario.getNombre(), usuario.getPassword());
         Optional<Token> usertoken = tokenRepository.searchUserToken(usuario.getNombre());
         if (user.isPresent()) {
@@ -126,7 +141,7 @@ public class Controlador {
     }
     
     @PostMapping("/newBaby")
-    public ResponseEntity<Object> newBaby(@RequestBody Bebe bebe, @RequestHeader String token) throws JSONException {
+    public ResponseEntity<Object> newBaby(@RequestBody Bebe bebe, @RequestHeader String token){
     	Optional<Token> t = tokenRepository.searchToken(token);
     	if (t.isPresent()) {
     		babyRepository.save(bebe);
@@ -138,7 +153,6 @@ public class Controlador {
 
     /**
      * Función utilitzada pera registrar un usuario en la base de datos
-     *
      * @param user
      * @return ResponseEntity<?>
      */
@@ -152,6 +166,5 @@ public class Controlador {
         	userRepository.save(user);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
-
     }
 }
