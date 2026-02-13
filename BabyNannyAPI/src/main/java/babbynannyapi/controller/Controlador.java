@@ -1,5 +1,7 @@
 package babbynannyapi.controller;
 
+import babbynannyapi.model.*;
+import babbynannyapi.repository.*;
 import org.bson.json.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,19 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import babbynannyapi.model.Bebe;
-import babbynannyapi.model.Token;
-import babbynannyapi.model.Usuario;
-import babbynannyapi.repository.BabyRepository;
-import babbynannyapi.repository.TokenRepository;
-import babbynannyapi.repository.UserRepository;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
@@ -36,6 +27,15 @@ public class Controlador {
 	@Autowired
 	private BabyRepository babyRepository;
 
+    @Autowired
+    private IntakeRecordRepository intakeRecordRepository;
+
+    @Autowired
+    private SleepRecordRepository sleepRecordRepository;
+
+    @Autowired
+    private MedicalRecordRepository medicalRecordRepository;
+
 
 	@GetMapping("/babys")
 	ResponseEntity<Object> buscarBebes(@RequestParam(name = "token") String token){
@@ -49,13 +49,55 @@ public class Controlador {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
-	@PutMapping("/newEntry")
-	ResponseEntity<Object> newEntry(@RequestParam(name = "id") String token){
+
+	@PutMapping("/newEntry/{id}")
+	ResponseEntity<Object> newEntry(@PathVariable String id, @RequestHeader String token, @RequestBody Map<String, Object> obj) throws JSONException {
 		Optional<Token> t = tokenRepository.searchToken(token);
+
 		if (t.isPresent()) {
-			List<Bebe> listaBebes = babyRepository.searchBabies(t.get().getUser());
-		    Map<String, List<Bebe>> response = new HashMap<>();
-		    response.put("bebes", listaBebes);
+			Optional<Bebe> b = babyRepository.findById(id);
+            List<String> babyList = new ArrayList<>();
+
+            if (b.isPresent()) {
+                String type = (String) obj.get("type");
+
+                switch (type) {
+                    case "intakerecord" : {
+                        IntakeRecord irecord = new IntakeRecord();
+                        irecord.setDate(new Date());
+                        irecord.setIntakeAmount(Double.parseDouble(obj.get("amount").toString()));
+                        intakeRecordRepository.save(irecord);
+                        babyList= b.get().getIntakeRecord();
+                        babyList.add(irecord.getId());
+                        b.get().setIntakeRecord(babyList);
+                        babyRepository.save(b.get());
+                        return ResponseEntity.status(HttpStatus.OK).build();
+
+                    }
+                    case "medicalrecord" : {
+                        MedicalRecord mrecord = new MedicalRecord();
+                        Recipe recipe = new Recipe();
+                        recipe.setDosisTime(obj.getInt(obj.getString("dosistime")));
+                        recipe.setDosis(Double.parseDouble(obj.getString("dosis")));
+                        recipe.setMedicine(obj.getString("medicine"));
+                        mrecord.setDate(new Date());
+                        mrecord.setRecipe(recipe);
+                        babyList= b.get().getMedicalRecord();
+                        babyList.add(mrecord.getId());
+                        break;
+                    }
+                    case "sleeprecord" : {
+                        SleepRecord srecord = new SleepRecord();
+                        srecord.setDate(new Date());
+                        srecord.setTimeSleep(Double.parseDouble(obj.getString("timesleep")));
+                        sleepRecordRepository.save(srecord);
+                        break;
+                    }
+                }
+
+
+            }
+
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

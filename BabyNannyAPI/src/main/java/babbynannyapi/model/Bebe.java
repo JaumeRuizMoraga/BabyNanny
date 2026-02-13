@@ -1,6 +1,5 @@
 package babbynannyapi.model;
 
-import org.bson.json.JsonObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
@@ -16,24 +15,24 @@ public class Bebe {
     private List<String> tutores;
     private String imagen;
     private List<Byte> icon;
-    private List<String> registroTomas;
-    private List<String> registroSueño;
-    private List<String> registroMedico;
+    private List<String> intakeRecord;
+    private List<String> sleeprecord;
+    private List<String> medicalRecord;
     private Map<String, Object> caracteristicas;
     private List<String> eventos;
 
     public Bebe() {
     }
 
-    public Bebe(String id, String nombre, List<String> tutores, String imagen, List<Byte> icon, List<String> registroTomas, List<String> registroSueño, List<String> registroMedico, Map<String, Object> caracteristicas, List<String> eventos) {
+    public Bebe(String id, String nombre, List<String> tutores, String imagen, List<Byte> icon, List<String> intakeRecord, List<String> sleeprecord, List<String> medicalRecord, Map<String, Object> caracteristicas, List<String> eventos) {
         this.id = id;
         this.nombre = nombre;
         this.tutores = tutores;
         this.imagen = imagen;
         this.icon = icon;
-        this.registroTomas = registroTomas;
-        this.registroSueño = registroSueño;
-        this.registroMedico = registroMedico;
+        this.intakeRecord = intakeRecord;
+        this.sleeprecord = sleeprecord;
+        this.medicalRecord = medicalRecord;
         this.caracteristicas = caracteristicas;
         this.eventos = eventos;
     }
@@ -78,28 +77,28 @@ public class Bebe {
         this.icon = icon;
     }
 
-    public List<String> getRegistroTomas() {
-        return registroTomas;
+    public List<String> getIntakeRecord() {
+        return intakeRecord;
     }
 
-    public void setRegistroTomas(List<String> registroTomas) {
-        this.registroTomas = registroTomas;
+    public void setIntakeRecord(List<String> intakeRecord) {
+        this.intakeRecord = intakeRecord;
     }
 
-    public List<String> getRegistroSueño() {
-        return registroSueño;
+    public List<String> getSleeprecord() {
+        return sleeprecord;
     }
 
-    public void setRegistroSueño(List<String> registroSueño) {
-        this.registroSueño = registroSueño;
+    public void setSleeprecord(List<String> sleeprecord) {
+        this.sleeprecord = sleeprecord;
     }
 
-    public List<String> getRegistroMedico() {
-        return registroMedico;
+    public List<String> getMedicalRecord() {
+        return medicalRecord;
     }
 
-    public void setRegistroMedico(List<String> registroMedico) {
-        this.registroMedico = registroMedico;
+    public void setMedicalRecord(List<String> medicalRecord) {
+        this.medicalRecord = medicalRecord;
     }
 
     public Map<String, Object> getCaracteristicas() {
