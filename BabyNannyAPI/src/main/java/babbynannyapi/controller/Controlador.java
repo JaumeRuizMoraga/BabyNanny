@@ -49,14 +49,12 @@ public class Controlador {
         Optional<Token> usertoken = tokenRepository.buscarUsuarioToken(usuario.getNombre());
         if (user.isPresent()) {
             if (usertoken.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).build();
-
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
             } else {
-				Token token = new Token(usuario.getNombre());
-				tokenRepository.save(token);
+                Token token = new Token(usuario.getNombre());
+                tokenRepository.save(token);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
-
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -70,29 +68,14 @@ public class Controlador {
      */
     @PostMapping("/register")
     ResponseEntity<?> registro(@RequestBody Usuario usuario) {
-        boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword()
-                , usuario.getCorreo());
-        if (existe) {
-            Token token = new Token(usuario.getNombre());
-            tokenRepository.save(token);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        Optional<Usuario> userPassEmail = usuarioRepository.buscarUserPassEmail(usuario.getNombre(), usuario.getPassword(), usuario.getCorreo());
+        if (userPassEmail.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
+        else {
+            usuarioRepository.save(usuario);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
 
-    /**
-     * Función utilitzada para guardar un bebe en la base de datos
-     *
-     * @param bebe
-     * @return ResponseEntity<?>
-     */
-    @PostMapping("/newBaby")
-    ResponseEntity<Object> registro(@RequestBody Bebe bebe, @RequestHeader String token) {
-        boolean existe = tokenRepository.buscarToken(token);
-        if (existe) {
-            bebeRepository.save(bebe);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
