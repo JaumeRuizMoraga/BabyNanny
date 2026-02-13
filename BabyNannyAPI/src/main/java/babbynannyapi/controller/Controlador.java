@@ -17,6 +17,9 @@ import babbynannyapi.repository.UsuarioRepository;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -24,75 +27,88 @@ import java.util.Optional;
 @RequestMapping("/BabyNanny")
 public class Controlador {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private TokenRepository tokenRepository;
+	
+	@Autowired
+	private BebeRepository bebeRepository;
 
-    @Autowired
-    private TokenRepository tokenRepository;
+	/**
+	 * Función utilitzada para que un usuario haga login y se le genere un token
+	 * @param usuario
+	 * @return ResponseEntity<?>
+	 */
+	@PostMapping("/login")
 
-    @Autowired
-    private BebeRepository bebeRepository;
+	public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
 
-    /**
-     * Función utilitzada para que un usuario haga login y se le genere un token
-     *
-     * @param usuario
-     * @return ResponseEntity<?>
-     */
-    @PostMapping("/login")
-
-    public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
-
-        System.out.println(usuario.getNombre());
-        System.out.println(usuario.getPassword());
-        Optional<Usuario> user = usuarioRepository.findByNombreAndPassword(usuario.getNombre(), usuario.getPassword());
-        Optional<Token> usertoken = tokenRepository.buscarUsuarioToken(usuario.getNombre());
-        if (user.isPresent()) {
-            if (usertoken.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).build();
-
-            } else {
-				Token token = new Token(usuario.getNombre());
-				tokenRepository.save(token);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
-
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
-
-    /**
-     * Función utilitzada pera registrar un usuario en la base de datos
-     *
-     * @param usuario
-     * @return ResponseEntity<?>
-     */
-    @PostMapping("/register")
-    ResponseEntity<?> registro(@RequestBody Usuario usuario) {
-        boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword()
-                , usuario.getCorreo());
-        if (existe) {
-            Token token = new Token(usuario.getNombre());
-            tokenRepository.save(token);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-
-    /**
-     * Función utilitzada para guardar un bebe en la base de datos
-     *
-     * @param bebe
-     * @return ResponseEntity<?>
-     */
-    @PostMapping("/newBaby")
-    ResponseEntity<Object> registro(@RequestBody Bebe bebe, @RequestHeader String token) {
-        boolean existe = tokenRepository.buscarToken(token);
-        if (existe) {
-            bebeRepository.save(bebe);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
+		System.out.println(usuario.getNombre());
+		System.out.println(usuario.getPassword());
+		Optional<Usuario> user = usuarioRepository.findByNombreAndPassword(usuario.getNombre(), usuario.getPassword());
+		if (user.isPresent()) {
+			Token token = new Token(usuario.getNombre());
+			tokenRepository.save(token);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+	/**
+	 * Función utilitzada pera registrar un usuario en la base de datos
+	 * @param usuario
+	 * @return ResponseEntity<?>
+	 */
+	@PostMapping("/register")
+	ResponseEntity<?> registro(@RequestBody Usuario usuario){
+		boolean existe = usuarioRepository.buscarUsuario(usuario.getNombre(), usuario.getPassword()
+				,usuario.getCorreo());
+		if (existe) {
+			Token token = new Token(usuario.getNombre());
+			tokenRepository.save(token);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+	/**
+	 * Función utilitzada para guardar un bebe en la base de datos
+	 * @param bebe
+	 * @return ResponseEntity<?>
+	 */
+	@PostMapping("/newBaby")
+	ResponseEntity<Object> registro(@RequestBody Bebe bebe, @RequestHeader String token ){
+		Optional<Token> t = tokenRepository.buscarToken(token);
+		if (t.isPresent()) {
+			bebeRepository.save(bebe);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+	@PostMapping("/babys")
+	ResponseEntity<Object> buscarBebes(@RequestParam(name = "token") String token){
+		Optional<Token> t = tokenRepository.buscarToken(token);
+		if (t.isPresent()) {
+			List<Bebe> listaBebes = bebeRepository.buscarBebes(t.get().getNombreUsuario());
+		    Map<String, List<Bebe>> response = new HashMap<>();
+		    response.put("bebes", listaBebes);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+	@PutMapping("/newEntry")
+	ResponseEntity<Object> newEntry(@RequestParam(name = "id") String token){
+		Optional<Token> t = tokenRepository.buscarToken(token);
+		if (t.isPresent()) {
+			List<Bebe> listaBebes = bebeRepository.buscarBebes(t.get().getNombreUsuario());
+		    Map<String, List<Bebe>> response = new HashMap<>();
+		    response.put("bebes", listaBebes);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
 }
