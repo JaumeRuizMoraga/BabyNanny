@@ -69,7 +69,7 @@ public class Controlador {
     @PostMapping("/login")
 
     public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
-        Optional<Usuario> user = userRepository.findByNameAndPassword(usuario.getNombre(), usuario.getPassword());
+        Optional<Usuario> user = userRepository.findByNombreAndPassword(usuario.getNombre(), usuario.getPassword());
         Optional<Token> usertoken = tokenRepository.searchUserToken(usuario.getNombre());
         if (user.isPresent()) {
             if (usertoken.isPresent()) {
