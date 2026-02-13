@@ -46,9 +46,9 @@ public class Controlador {
         System.out.println(usuario.getNombre());
         System.out.println(usuario.getPassword());
         Optional<Usuario> user = usuarioRepository.findByNombreAndPassword(usuario.getNombre(), usuario.getPassword());
-        Optional<Token> usertoken = tokenRepository.buscarUsuarioToken(usuario.getNombre());
+        Optional<Token> nombreusertoken = tokenRepository.buscarUsuarioToken(usuario.getNombre());
         if (user.isPresent()) {
-            if (usertoken.isPresent()) {
+            if (nombreusertoken.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             } else {
                 Token token = new Token(usuario.getNombre());
