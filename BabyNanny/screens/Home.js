@@ -17,21 +17,29 @@ import Baby from '../context/Baby';
 import User from '../context/User';
 import { RegistroMedico } from '../components/RegistroMedico';
 import { CambioBebe } from '../components/CambioBebe';
+import { EditarDatos } from '../components/EditarDatos';
 
 
 
 export const Home = () => {
     const [tipo, setTipo] = useState();
     const { baby, setBaby } = useContext(Baby);
-    const {user,setUser} = useContext(User);
-    const [mostrarModal,setMostrarModal] = useState(false);
+    const { user, setUser } = useContext(User);
+    const [mostrarModal, setMostrarModal] = useState(false);
     const [entradas, setEntradas] = useState(baby.registroTomas);
+    const [editar, setEditar] = useState(false);
 
-    const openModal = () =>{
+
+    const openModal = () => {
         setMostrarModal(true)
     }
-    const cambiarBebe = (bebe) =>{
-        console.log("Cambiando a bebe: "+bebe.nombre)
+    const cambiarBebe = (bebe) => {
+        console.log("Cambiando a bebe: " + bebe.nombre)
+    }
+        const save = (newChars) => {
+        let bebe = baby;
+        bebe.caracteristicas = newChars
+        console.log(bebe)
     }
 
     return (
@@ -44,7 +52,7 @@ export const Home = () => {
                             <Avatar.Image
                                 size={40}
                                 source={baby.icon}
-                                style={{ margin: -6.7, padding: 0}}
+                                style={{ margin: -6.7, padding: 0 }}
                             />)}
                         style={styles.fab}
                         onPress={() => openModal()}
@@ -59,24 +67,24 @@ export const Home = () => {
                         Panel principal
                     </Text>
                 </Surface>
-                <BabyCard sleepPre={baby.caracteristicas.sleepPre} tomaPre={baby.caracteristicas.tomaPre} edad={baby.caracteristicas.edad} peso={baby.caracteristicas.peso} altura={baby.caracteristicas.altura} />
+                <BabyCard bebe={baby.caracteristicas} />
                 <SegmentedButtons
                     value={entradas}
                     onValueChange={setEntradas}
                     buttons={[
                         {
                             value: baby.registroTomas,
-                            labelStyle:{color:"#DA70D6"},
+                            labelStyle: { color: "#DA70D6" },
                             label: 'Tomas',
-                            style:{backgroundColor:"white"},
+                            style: { backgroundColor: "white" },
                         },
                         {
                             value: baby.registroSueño,
-                            labelStyle:{color:"#DA70D6"},
+                            labelStyle: { color: "#DA70D6" },
                             label: 'Sueño',
-                            style:{backgroundColor:"white"},
+                            style: { backgroundColor: "white" },
                         },
-                        { value: baby.registroMedico, label: 'Medico',labelStyle:{color:"#DA70D6"},style:{backgroundColor:"white"}, },
+                        { value: baby.registroMedico, label: 'Medico', labelStyle: { color: "#DA70D6" }, style: { backgroundColor: "white" }, },
                     ]}
                 />
             </View>
@@ -97,8 +105,18 @@ export const Home = () => {
                 }
                 }
             />
-            <Modal visible={mostrarModal} onDismiss={()=>setMostrarModal(false)} 
-            contentContainerStyle={styles.modal}>
+            <FAB
+                icon="pencil"
+                style={styles.fabEdit}
+                size='small'
+                onPress={() => setEditar(true)}
+                animated={true}
+            />
+            <Modal visible={editar} onDismiss={() => setEditar(false)} contentContainerStyle={styles.modal}>
+                <EditarDatos bebe={baby.caracteristicas} save={(newChars)=>save(newChars)}></EditarDatos>
+            </Modal>
+            <Modal visible={mostrarModal} onDismiss={() => setMostrarModal(false)}
+                contentContainerStyle={styles.modal}>
                 <CambioBebe bebes={user.bebes} funCom={cambiarBebe}></CambioBebe>
             </Modal>
         </View>
@@ -137,11 +155,17 @@ const styles = StyleSheet.create({
         margin: 0
 
     },
+    fabEdit: {
+        position: 'absolute',
+        margin: 16,
+        right: 20,
+        top: 270,
+    },
     modal: {
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        height: '60%',
+        height: '65%',
         backgroundColor: 'white',
         borderWidth: 2,
         borderRadius: 10,

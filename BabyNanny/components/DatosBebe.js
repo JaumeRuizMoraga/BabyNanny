@@ -1,7 +1,11 @@
 import { StyleSheet, View } from 'react-native';
-import { Card, Text, Divider } from 'react-native-paper';
+import { Card, Text, Divider, FAB, Modal } from 'react-native-paper';
+import { useState } from 'react';
+import { EditarDatos } from './EditarDatos';
 
 export const BabyCard = (props) => {
+
+    const [editar,setEditar] = useState(false);
 
     return (
         <Card style={styles.card} mode="elevated">
@@ -9,22 +13,23 @@ export const BabyCard = (props) => {
                 <Text variant="titleMedium" style={styles.title}>
                     Características del bebé
                 </Text>
+            
                 <Divider style={styles.divider} />
-                <View style={{flexDirection: 'row' }}>
+                <View style={{flexDirection: 'row',justifyContent: "space-between" }}>
                     <View style={{flexDirection: 'column' }}>
 
-                        <Text style={styles.label}>Edad: <Text style={{color:"#DA70D6"}}>{props.edad} meses</Text></Text>
+                        <Text style={styles.label}>Edad: <Text style={{color:"#DA70D6"}}>{props.bebe.edad} meses</Text></Text>
 
-                        <Text style={styles.label}>Altura:  <Text style={{color:"#DA70D6"}}>{props.altura} cm</Text></Text>
+                        <Text style={styles.label}>Altura:  <Text style={{color:"#DA70D6"}}>{props.bebe.altura} cm</Text></Text>
 
-                        <Text style={styles.label}>Peso:  <Text style={{color:"#DA70D6"}}>{props.peso} kg</Text></Text>
+                        <Text style={styles.label}>Peso:  <Text style={{color:"#DA70D6"}}>{props.bebe.peso} kg</Text></Text>
 
                     </View>
 
-                    <View style={{flexDirection: 'column' }}>
-                        <Text style={styles.label}>Tomas promedio: <Text style={{color:"#DA70D6"}}>{props.tomaPre} .mil</Text></Text>
+                    <View style={{flexDirection: 'column'}}>
+                        <Text style={styles.label}>Tomas promedio: <Text style={{color:"#DA70D6"}}>{props.bebe.tomaPre} .mil</Text></Text>
 
-                        <Text style={styles.label}>Sueño promedio:  <Text style={{color:"#DA70D6"}}>{props.sleepPre} .min</Text></Text>
+                        <Text style={styles.label}>Sueño promedio:  <Text style={{color:"#DA70D6"}}>{props.bebe.sleepPre} .min</Text></Text>
 
                     </View>
                 </View>
@@ -55,6 +60,12 @@ const styles = StyleSheet.create({
     label: {
         color: '#555',
         margin: '5',
+    },
+        fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 107,
     },
 
 });
