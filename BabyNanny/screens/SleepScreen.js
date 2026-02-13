@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { Audio } from 'expo-av';
 import User from '../context/User';
 import Baby from '../context/Baby';
-import { enviarSleep, enviarToma } from '../utils/utils';
+import { sendSleep, sendIntake } from '../utils/utils';
 
 export const SleepScreen = (props) => {
     const [manual, setManual] = useState(false)
@@ -18,15 +18,15 @@ export const SleepScreen = (props) => {
 
 
     const postSleep = () => {
-        enviarSleep(baby.caracteristicas.sleepPre);
+        sendSleep(baby.assets.sleepPre);
     }
-    const postToma = () => {
-        enviarToma(baby.caracteristicas.tomaPre);
+    const postIntake = () => {
+        sendIntake(baby.assets.intakePre);
     }
     const playAudio = async () => {
         if (!playing) {
             const { sound } = await Audio.Sound.createAsync(
-                (user.cancionesFav)[0].uri
+                (user.favSongs)[0].uri
             );
             setSong(sound);
             setPlaying(true)
@@ -48,15 +48,15 @@ export const SleepScreen = (props) => {
                         icon="baby-bottle"
                         size={200}
                         iconColor='white'
-                        style={styles.botonToma}
-                        onPress={() => postToma()}
+                        style={styles.butonIntake}
+                        onPress={() => postIntake()}
                     ></IconButton>
                 </Surface>
                 <IconButton
                     icon="music-note"
                     size={50}
                     iconColor='white'
-                    style={styles.botonSong}
+                    style={styles.butonSong}
                     onPress={() => playAudio()}
                 ></IconButton>
                 <Surface style={{ borderRadius: 240, margin: 10 }}>
@@ -64,7 +64,7 @@ export const SleepScreen = (props) => {
                         icon="weather-night"
                         size={200}
                         iconColor='white'
-                        style={styles.botonSleep}
+                        style={styles.butonSleep}
                         onPress={() => postSleep()}
                     ></IconButton>
                 </Surface>
@@ -72,11 +72,11 @@ export const SleepScreen = (props) => {
                     <Button onPress={() => setManual(true)}
                         textColor='#DA70D6'
                         labelStyle={{ fontSize: 20 }}
-                        style={styles.botonManual}>M A N U A L</Button>
+                        style={styles.butonManual}>M A N U A L</Button>
                 </Surface>
                 <Modal visible={manual} onDismiss={() => setManual(false)}
                     contentContainerStyle={styles.modal}>
-                    <SelectorSleepToma salir={(valor) => setManual(valor)}></SelectorSleepToma>
+                    <SelectorSleepToma exit={(value) => setManual(value)}></SelectorSleepToma>
                 </Modal>
             </ImageBackground>
         </PaperProvider>
@@ -90,20 +90,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    botonToma: {
+    butonIntake: {
         margin: 10,
         borderWidth: 2,
         borderColor: 'black',
         padding: 15,
         backgroundColor: '#DA70D6',
     },
-    botonSleep: {
+    butonSleep: {
         margin: 10,
         borderWidth: 2,
         borderColor: 'black',
         backgroundColor: '#b8b8f7',
     },
-    botonManual: {
+    butonManual: {
         flex: 1,
         borderRadius: 10,
         alignItems: 'center',
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginBottom: 10
     },
-    botonSong: {
+    butonSong: {
         backgroundColor: '#5353f9',
         borderWidth: 2,
         padding: 7,

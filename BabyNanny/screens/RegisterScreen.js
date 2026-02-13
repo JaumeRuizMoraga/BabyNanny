@@ -3,9 +3,9 @@ import { TextInput, Button, Text, HelperText, PaperProvider } from 'react-native
 import { useState, useRef } from 'react';
 
 export const RegisterScreen = (props) => {
-    const [usuario, setUsuario] = useState('');
-    const [contrasenya, setContrasenya] = useState('');
-    const [gmail, setGmail] = useState('');
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+    const [mail, setMail] = useState('');
     const [error, SetError] = useState(false)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
 
@@ -29,22 +29,22 @@ export const RegisterScreen = (props) => {
         }
     };
 
-    const actualizarUsuario = (usuario) => {
-        setUsuario(usuario);
+    const updateUser = (user) => {
+        setUser(user);
         if (error) {
             SetError(false);
         }
     };
 
-    const actualizarContrasenya = (contrasenya) => {
-        setContrasenya(contrasenya);
+    const updatePassword = (password) => {
+        setPassword(password);
         if (error) {
             SetError(false);
         }
     };
 
-    const actualizarGmail = (gmail) => {
-        setGmail(gmail);
+    const updateMail = (mail) => {
+        setMail(mail);
         if (error) {
             SetError(false);
         }
@@ -60,9 +60,9 @@ export const RegisterScreen = (props) => {
                     <TextInput
                         label="Usuario"
                         mode='outlined'
-                        value={usuario}
-                        onChangeText={(usuario) => {
-                            actualizarUsuario(usuario);
+                        value={user}
+                        onChangeText={(user) => {
+                            updateUser(user);
                         }}
                         style={styles.input}
                         outlineColor={error ? 'red' : '#DA70D6'}
@@ -73,9 +73,9 @@ export const RegisterScreen = (props) => {
                     <TextInput
                         label="Contraseña"
                         mode='outlined'
-                        value={contrasenya}
-                        onChangeText={(contrasenya) => {
-                            actualizarContrasenya(contrasenya);
+                        value={password}
+                        onChangeText={(password) => {
+                            updatePassword(password);
                         }}
                         outlineColor={error ? 'red' : '#DA70D6'}
                         activeOutlineColor={error ? 'red' : '#DA70D6'}
@@ -86,9 +86,9 @@ export const RegisterScreen = (props) => {
                     <TextInput
                         label="Gmail"
                         mode='outlined'
-                        value={gmail}
-                        onChangeText={(gmail) => {
-                            actualizarGmail(gmail);
+                        value={mail}
+                        onChangeText={(mail) => {
+                            updateMail(mail);
                         }}
                         outlineColor={error ? 'red' : '#DA70D6'}
                         activeOutlineColor={error ? 'red' : '#DA70D6'}

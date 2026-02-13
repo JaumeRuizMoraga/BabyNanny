@@ -16,30 +16,31 @@ duracion de tratamiento en horas
 export const BabyProvider = ({ children }) => {
     const [baby, setBaby] = useState({
         id: "idMongo",
-        nombre: "nombreBebe",
-        madre:'Usuario_Ejemplo',
-        padre:undefined,
+        name: "nombreBebe",
+        tutors: [],
         icon: require('../assets/img/baby_icon.png'),
-        registroTomas:[{date:'13/04/2025',tipo:'Toma',data:150},{date:'14/04/2025',tipo:'Toma',data:140},{date:'15/04/2025',tipo:'Toma',data:160}],
-        registroSueño:[{date:'13/04/2025',tipo:'Sueño',data:160},{date:'13/04/2025',tipo:'Sueño',data:200},{date:'14/04/2025',tipo:'Sueño',data:90},{date:'14/04/2025',tipo:'Sueño',data:230},{date:'14/04/2025',tipo:'Sueño',data:230},{date:'14/04/2025',tipo:'Sueño',data:230},{date:'14/04/2025',tipo:'Sueño',data:230}],
+        intakeRecord:[{date:'13/04/2025',type:'Toma',data:150},{date:'14/04/2025',type:'Toma',data:140},{date:'15/04/2025',type:'Toma',data:160}],
+        sleepRecord:[{date:'13/04/2025',type:'Sueño',data:160},{date:'13/04/2025',type:'Sueño',data:200},
+            {date:'14/04/2025',type:'Sueño',data:90},{date:'14/04/2025',type:'Sueño',data:230},{date:'14/04/2025',type:'Sueño',data:230},
+            {date:'14/04/2025',type:'Sueño',data:230},{date:'14/04/2025',type:'Sueño',data:230}],
 //        RegistroAlimentacion:[],
-        registroMedico:[{date:'13/04/2025',tipo:'Medico',receta:{
-            medicamento: 'Paracetamol',
+        medicalRecord:[{date:'13/04/2025',type:'Medico',recipe:{
+            medicine: 'Paracetamol',
             dosis: 50,
-            duracion: 72
+            dosisTime: 72
         }}],
-        caracteristicas:{
-            altura: 60,
-            peso: 7,
-            edad: 4,
-            tomaPre: 17.5,
+        assets:{
+            height: 60,
+            weight: 7,
+            age: 4,
+            intakePre: 17.5,
             sleepPre: 200,
         },
         //Importante: Altura(cm), peso(kg), edad(meses)
-        eventos:[{
-            fecha: "13/04/2025",
-            descrip: "Vacuna contra el papiloma humano",
-            hora: "03:30"
+        events:[{
+            date: "13/04/2025",
+            description: "Vacuna contra el papiloma humano",
+            hour: "03:30"
         }]
 
     });

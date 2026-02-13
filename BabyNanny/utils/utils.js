@@ -1,81 +1,78 @@
-export const enviarToma = (toma) => {
+export const sendIntake = (intake) => {
     const date = new Date();
-    let entradaToma = {
+    let intakeEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
         type: "Toma",
-        descrip: toma
+        description: intake
     }
-    console.log(entradaToma)
+    console.log(intakeEntry)
 }
-export const enviarSleep = (sleep) => {
+export const sendSleep = (sleep) => {
     const date = new Date();
-    let entradaSleep = {
+    let sleepEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
         type: "Sueño",
-        descrip: sleep
+        description: sleep
     }
-    console.log(entradaSleep)
+    console.log(sleepEntry)
 }
 
-const formatoToma = /^(\d+)$|^(\d*\.(\d|\d\d))$/;
-const formatoSleep = /^(\d+)$/;
-const formatoAge = /^(\d\d)$|^(\d)$/
-const formadtoHeight = /^(\d+)$|^(\d*\.(\d|\d\d))$/
-const formatoWeight = /^(\d+)$|^(\d*\.(\d|\d\d|\d\d\d))$/
+const intakeFormat = /^(\d+)$|^(\d*\.(\d|\d\d))$/;
+const sleepFormat = /^(\d+)$/;
+const ageFormat = /^(\d\d)$|^(\d)$/
+const heightFormat = /^(\d+)$|^(\d*\.(\d|\d\d))$/
+const weightFormat = /^(\d+)$|^(\d*\.(\d|\d\d|\d\d\d))$/
 
 
-export const comprobarDatos = (toma, sleep) => {
-    if (formatoToma.test(toma)) {
-        setTomaIncorrecta(false);
+// export const comprobarDatos = (intake, sleep) => {
+//     if (intakeFormat.test(intake)) {
+//         setTomaIncorrecta(false);
+//     } else {
+//         setTomaIncorrecta(true);
+//     }
+//     if (sleepFormat.test(sleep)) {
+//         setSleepIncorrecto(false)
 
-    } else {
-        setTomaIncorrecta(true);
+//     } else {
+//         setSleepIncorrecto(true);
+//     }
+// }
 
-    }
-    if (formatoSleep.test(sleep)) {
-        setSleepIncorrecto(false)
-
-    } else {
-
-
-        setSleepIncorrecto(true);
-    }
-}
-export const comprobarDatosCompleto = (toma, sleep, age, height, weight) => {
-    const errores = { toma: false, sleep: false, height: false, weight: false, age: false };
-    if (!formatoToma.test(toma)) {
-        if (!(toma === '')) {
-            errores.toma = (true);
+export const comprobarDatosCompleto = (intake, sleep, age, height, weight) => {
+    const errors = { intake: false, sleep: false, height: false, weight: false, age: false };
+    if (!intakeFormat.test(intake)) {
+        if (!(intake === '')) {
+            errors.intake = (true);
         }
 
     }
-    if (!formatoSleep.test(sleep)) {
+    if (!sleepFormat.test(sleep)) {
         if (!(sleep === '')) {
 
-            errores.sleep = (true)
+            errors.sleep = (true)
         }
     }
-    if (!formatoAge.test(age)) {
+    if (!ageFormat.test(age)) {
         if (!(age === '')) {
 
-            errores.age = (true)
+            errors.age = (true)
         }
     }
-    if (!formatoWeight.test(weight)) {
+    if (!weightFormat.test(weight)) {
         if (!(weight === '')) {
 
-            errores.weight = (true)
+            errors.weight = (true)
         }
 
     }
-    if (!formadtoHeight.test(height)) {
+    if (!heightFormat.test(height)) {
         if (!(height === '')) {
 
-            errores.height = (true)
+            errors.height = (true)
         }
 
     }
-    return errores;
+    return errors;
 
 }
 export const getAgeMonth = (stringDate) => {

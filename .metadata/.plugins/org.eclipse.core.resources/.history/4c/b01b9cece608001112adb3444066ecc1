@@ -1,0 +1,87 @@
+package babbynannyapi.model;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
+import java.util.Map;
+import org.springframework.data.annotation.Id;
+
+@Document(collection = "usuario")
+public class Usuario {
+	
+	@Id
+	private String id;
+	private String nombre;
+	private List<String> bebes;
+	private String password;
+	private String correo;
+	private Map<String, Object> config;
+	private List<String> canciones;
+
+	public Usuario() {}
+
+<<<<<<< HEAD
+	public Usuario(String id, String nombre, List<String> bebes, String password, String correo, Map<String, Object> config, List<String> canciones) {
+		this.id = id;
+		this.nombre = nombre;
+		this.bebes = bebes;
+		this.password = password;
+		this.correo = correo;
+		this.config = config;
+		this.canciones = canciones;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public List<String> getBebes() {
+		return bebes;
+	}
+
+	public void setBebes(List<String> bebes) {
+		this.bebes = bebes;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public List<String> getCanciones() {
+		return canciones;
+	}
+
+	public void setCanciones(List<String> canciones) {
+		this.canciones = canciones;
+	}
+
+	public Map<String, Object> getConfig() {
+		return config;
+	}
+	public void setConfig(Map<String, Object> config) {
+		this.config = config;
+	}
+}
