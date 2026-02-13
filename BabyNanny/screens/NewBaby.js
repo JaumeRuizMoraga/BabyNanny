@@ -8,80 +8,80 @@ import { getAgeMonth } from '../utils/utils';
 import User from '../context/User';
 
 export const NewBaby = (props) => {
-    const [altura, setAltura] = useState();
+    const [height, setHeight] = useState();
     const { user, setUser } = useContext(User)
-    const [peso, setPeso] = useState(0);
-    const [edad, setEdad] = useState(0);
-    const [nombre, setNombre] = useState("Nombreejemplo");
-    const [tomaPre, setTomaPre] = useState(0);
+    const [weight, setWeight] = useState(0);
+    const [age, setAge] = useState(0);
+    const [name, setName] = useState("Nombreejemplo");
+    const [intakePre, setIntakePre] = useState(0);
     const [sleepPre, setSleepPre] = useState(0);
-    const [errorSleep, SetErrorSleep] = useState(false)
-    const [errorToma, SetErrorToma] = useState(false)
+    const [errorSleep, setErrorSleep] = useState(false)
+    const [errorIntake, setErrorIntake] = useState(false)
     const [date, setDate] = useState(new Date);
     const [showDate, setShowDate] = useState(false)
 
 
-    const formatoToma = /^(\d+)$|^(\d*\.\d+)$/;
-    const formatoSleep = /^(\d+)$/;
+    const intakeFormat = /^(\d+)$|^(\d*\.\d+)$/;
+    const sleepFormat = /^(\d+)$/;
 
     const changeDate = (date) => {
         setShowDate(false)
         let tempData = new Date(date.nativeEvent.timestamp)
-        setEdad(getAgeMonth(tempData))
+        setAge(getAgeMonth(tempData))
         setDate(tempData)
 
     }
 
-    const montarBebe = () => {
-        let bebe = {
+    const assembleBaby = () => {
+        let baby = {
             id: "idMongo",
-            nombre: nombre,
-            tutores: [user.usuario],
+            name: name,
+            tutors: [user.user],
             icon: require('../assets/img/baby_icon.png'),
-            registroTomas: [],
-            registroSueño: [],
-            registroMedico: [],
-            caracteristicas: {
-                altura: altura,
-                peso: peso,
-                edad: edad,
-                tomaPre: tomaPre,
+            intakeRecord: [],
+            sleepRecord: [],
+            medicalRecord: [],
+            assets: {
+                height: height,
+                weight: weight,
+                age: age,
+                intakePre: intakePre,
                 sleepPre: sleepPre,
             },
-            eventos: []
+            events: []
         }
-        console.log(bebe)
+        console.log(baby)
         props.navigation.navigate("Home")
     }
 
-    const comprobarDatos = (toma, sleep) => {
-        if (formatoToma.test(toma)) {
-            SetErrorToma(false);
+    const checkData = (intake, sleep) => {
+        if (intakeFormat.test(intake)) {
+            setErrorIntake(false);
 
         } else {
-            SetErrorToma(true);
+            setErrorIntake(true);
 
         }
-        if (formatoSleep.test(sleep)) {
-            SetErrorSleep(false)
+        if (sleepFormat.test(sleep)) {
+            setErrorSleep(false)
 
         } else {
 
 
-            SetErrorSleep(true);
+            setErrorSleep(true);
         }
     }
-    const cambiarToma = (newToma) => {
-        setTomaPre(newToma)
-        comprobarDatos(newToma, sleepPre)
+    const changeIntake = (newIntake) => {
+        setIntakePre(newIntake)
+        checkData(newIntake, sleepPre)
     }
-    const cambiarSleep = (newSleep) => {
+    const changeSleep = (newSleep) => {
         setSleepPre(newSleep)
-        comprobarDatos(tomaPre, newSleep)
+        checkData(intakePre, newSleep)
     }
 
-    const cambiarNombre = (newName) => {
-        setNombre(newName)
+    const changeName = (newName) => {
+        setName(newName)
     }
 
     return (
@@ -90,7 +90,7 @@ export const NewBaby = (props) => {
             <ScrollView>
                 <Surface elevation={2} style={styles.container}>
                     <Text style={styles.title}>Datos de tu bebé</Text>
-                    <TextInput style={styles.input} onChangeText={(text) => cambiarNombre(text)} label={"Nombre del bebé"}></TextInput>
+                    <TextInput style={styles.input} onChangeText={(text) => changeName(text)} label={"Baby's name"}></TextInput>
                     <TextInput style={styles.input} mode='outlined' right={<TextInput.Icon icon="calendar" />} placeholder={date.toDateString()}
                         onPress={() => setShowDate(true)}></TextInput>
                     {
@@ -104,12 +104,12 @@ export const NewBaby = (props) => {
                     <Text style={styles.helper}>(Estos campos no son obligatorios)</Text>
                     <View style={{ flexDirection: "column" }}>
                         <TextInput style={styles.input} label={"Sueño predeterminado"}
-                            onChangeText={(text) => cambiarSleep(text)}></TextInput>
+                            onChangeText={(text) => changeSleep(text)}></TextInput>
                         <HelperText type='error' visible={errorSleep}>Formato de sueño incorrecto</HelperText>
 
                         <TextInput style={styles.input} label={"Toma predeterminada"}
-                            onChangeText={(text) => cambiarToma(text)}></TextInput>
-                        <HelperText type='error' visible={errorToma}>Formato de toma incorrecto</HelperText>
+                            onChangeText={(text) => changeIntake(text)}></TextInput>
+                        <HelperText type='error' visible={errorIntake}>Formato de toma incorrecto</HelperText>
 
                     </View>
                 </Surface>
@@ -129,8 +129,8 @@ export const NewBaby = (props) => {
                         step={1}
                         fractionDigits={0}
                         initialValue={0}
-                        onValueChange={(number) => setAltura(number)}
-                        onValueChangeEnd={(number) => setAltura(number)}
+                        onValueChange={(number) => setHeight(number)}
+                        onValueChangeEnd={(number) => setHeight(number)}
                         unit="cm"
                         longStepColor='#DA70D6'
                         indicatorColor='#DA70D6'
@@ -154,8 +154,8 @@ export const NewBaby = (props) => {
                         step={1}
                         fractionDigits={1}
                         initialValue={0}
-                        onValueChange={(number) => setPeso(number)}
-                        onValueChangeEnd={(number) => setPeso(number)}
+                        onValueChange={(number) => setWeight(number)}
+                        onValueChangeEnd={(number) => setWeight(number)}
                         unit="kg"
                         longStepColor='#DA70D6'
                         indicatorColor='#DA70D6'
@@ -163,7 +163,7 @@ export const NewBaby = (props) => {
                     />
                 </View>
                 <Button mode='outlined' textColor='#DA70D6'
-                    style={styles.boton} onPress={() => montarBebe()}>Guardar</Button>
+                    style={styles.boton} onPress={() => assembleBaby()}>Guardar</Button>
             </ScrollView>
         </View>
     );

@@ -3,7 +3,7 @@ import { Icon, FAB } from 'react-native-paper';
 export const NoBaby = (props) => {
     return (
         <View style={styles.layout}>
-            <Text style={styles.title}>Vaya! Parace que no tienes ningún bebé registrado</Text>
+            <Text style={styles.title}>Oh...! Seems like you don't have any baby registered</Text>
 
             <View style={{ flexDirection: "row" }}>
                 <Icon source={"baby-face-outline"} color='gray' size={170}></Icon>
