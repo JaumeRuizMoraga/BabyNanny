@@ -37,7 +37,7 @@ public class Controlador {
 	private BabyRepository babyRepository;
 
 
-	@PostMapping("/babys")
+	@GetMapping("/babys")
 	ResponseEntity<Object> buscarBebes(@RequestParam(name = "token") String token){
 		Optional<Token> t = tokenRepository.searchToken(token);
 		if (t.isPresent()) {
