@@ -44,7 +44,7 @@ public class Controlador {
 			List<Bebe> babyList = babyRepository.searchBabies(t.get().getUser());
 		    Map<String, List<Bebe>> response = new HashMap<>();
 		    response.put("bebes", babyList);
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
@@ -67,7 +67,6 @@ public class Controlador {
      * @return ResponseEntity<?>
      */
     @PostMapping("/login")
-
     public ResponseEntity<Object> login(@RequestBody Usuario usuario) throws JSONException {
         Optional<Usuario> user = userRepository.findByNombreAndPassword(usuario.getNombre(), usuario.getPassword());
         Optional<Token> usertoken = tokenRepository.searchUserToken(usuario.getNombre());
@@ -79,6 +78,17 @@ public class Controlador {
                 tokenRepository.save(token);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+    
+    @PostMapping("/newBaby")
+    public ResponseEntity<Object> newBaby(@RequestBody Bebe bebe, @RequestHeader String token) throws JSONException {
+    	Optional<Token> t = tokenRepository.searchToken(token);
+    	if (t.isPresent()) {
+    		babyRepository.save(bebe);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
