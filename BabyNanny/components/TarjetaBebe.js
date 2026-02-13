@@ -3,10 +3,10 @@ import { Avatar, Surface } from 'react-native-paper';
 
 export const TarjetaBebe = (props) => {
     return (
-        <Pressable onLongPress={()=>props.funCom(props.bebe)}>
+        <Pressable onLongPress={()=>props.funCom(props.baby)}>
         <Surface style={styles.container} elevation={4}>
-            <Avatar.Image size={60} source={props.bebe.icon}></Avatar.Image>
-            <Text style={styles.label}>{props.bebe.nombre}</Text>
+            <Avatar.Image size={60} source={props.baby.icon}></Avatar.Image>
+            <Text style={styles.label}>{props.baby.name}</Text>
         </Surface>
         </Pressable>
     );

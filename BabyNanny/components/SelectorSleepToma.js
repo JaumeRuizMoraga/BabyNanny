@@ -3,61 +3,60 @@ import { StyleSheet, View } from "react-native";
 import { useState } from "react";
 
 export const SelectorSleepToma = (props) => {
-    const [toma, setToma] = useState("")
+    const [intake, setIntake] = useState("")
     const [sleep, setSleep] = useState("")
-    const [tomaIncorrecta, setTomaIncorrecta] = useState(true);
-    const [sleepIncorrecto, setSleepIncorrecto] = useState(true);
+    const [wrongIntake, setWrongIntake] = useState(true);
+    const [wrongSleep, setWrongSleep] = useState(true);
 
-    const formatoToma = /^(\d+)$|^(\d*\.\d+)$/;
-    const formatoSleep = /^(\d+)$/;
+    const intakeFormat = /^(\d+)$|^(\d*\.\d+)$/;
+    const intakeSleep = /^(\d+)$/;
 
 
-    const comprobarDatos = (toma, sleep) => {
-        if (formatoToma.test(toma)) {
-            setTomaIncorrecta(false);
-
-        } else {
-            setTomaIncorrecta(true);
-
-        }
-        if (formatoSleep.test(sleep)) {
-            setSleepIncorrecto(false)
+    const checkData = (intake, sleep) => {
+        if (intakeFormat.test(intake)) {
+            setWrongIntake(false);
 
         } else {
+            setWrongIntake(true);
+
+        }
+        if (intakeSleep.test(sleep)) {
+            setWrongSleep(false)
+
+        } else {
 
 
-            setSleepIncorrecto(true);
+            setWrongSleep(true);
         }
     }
-    const cambiarToma = (newToma)=>{
-        setToma(newToma)
-        comprobarDatos(newToma,sleep)
+    const changeIntake = (newIntake)=>{
+        setIntake(newIntake)
+        checkData(newIntake,sleep)
     }
-    const cambiarSleep = (newSleep)=>{
+    const changeSleep = (newSleep)=>{
         setSleep(newSleep)
-        comprobarDatos(toma,newSleep)
+        checkData(intake,newSleep)
     }
 
-    const enviarDatos = () => {
+    const sendData = () => {
         const date = new Date();
-        let entradaToma = {
+        let intakeEntry = {
             date: (date.getHours()+":"+date.getMinutes()+"/"+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()),
-            type: "Toma",
-            descrip: toma
+            type: "intakerecord",
+            data: intake
         }
-        console.log(entradaToma)
-        let entradaSleep = {
+        console.log(intakeEntry)
+        let sleepEntry = {
             date: (date.getHours()+":"+date.getMinutes()+"/"+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()),
-            type: "Sueño",
-            descrip: sleep
+            type: "sleeprecord",
+            data: sleep
         }
-        console.log(entradaSleep)
-        props.salir(false);
+        props.exit(false);
     }
 
     return (
         <View style={styles.container}>            <TextInput
-                label={"Toma"}
+                label={"Intake"}
                 value={toma}
                 onChangeText={(newToma) => cambiarToma(newToma)}
                 style={styles.textInput}
@@ -65,19 +64,19 @@ export const SelectorSleepToma = (props) => {
                 mode="flat"
             ></TextInput>
             <HelperText type="error" visible={tomaIncorrecta}>
-                Formato de toma incorrecto
+                Wrong intake format
             </HelperText>
             <TextInput
-                label={"Sueño"}
+                label={"Sleep"}
                 value={sleep}
-                onChangeText={(newSleep) => cambiarSleep(newSleep)}
+                onChangeText={(newSleep) => changeSleep(newSleep)}
                 style={styles.textInput}
                 right={<TextInput.Affix text=".min" />}
             ></TextInput>
-            <HelperText type="error" visible={sleepIncorrecto}>
-                Formato de sueño incorrecto
+            <HelperText type="error" visible={wrongSleep}>
+                Wrong sleep format
             </HelperText>
-            <Button onPress={enviarDatos} textColor="white" style={styles.botonManual}>Guardar</Button>
+            <Button onPress={sendData} textColor="white" style={styles.botonManual}>Save</Button>
         </View>
     );
 }

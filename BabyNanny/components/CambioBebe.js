@@ -4,8 +4,8 @@ import { TarjetaBebe } from "./TarjetaBebe";
 import { Button } from "react-native-paper";
 
 
-export const CambioBebe = (props) => {
-    const [bebes,setBebes] = useState(props.bebes);
+export const BabyChange = (props) => {
+    const [babies,setBabies] = useState(props.bebes);
 
     const pressLogout = () =>{
         console.log("Logout")
@@ -13,12 +13,12 @@ export const CambioBebe = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Seleccione otro bebé</Text>
+            <Text style={styles.label}>Select other Baby</Text>
             <FlatList
-                data={bebes}
+                data={babies}
                 keyExtractor={(item, index) => item + index.toString()}
                 renderItem={({ item }) => {
-                return(<TarjetaBebe bebe={item} funCom={props.funCom}></TarjetaBebe>)
+                return(<TarjetaBebe baby={item} funCom={props.funCom}></TarjetaBebe>)
                 }
                 }
             />
