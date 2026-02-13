@@ -14,6 +14,7 @@ export const NewBaby = () => {
     const [sleepPre, setSleepPre] = useState(0);
     const [errorSleep, SetErrorSleep] = useState(false)
     const [errorToma, SetErrorToma] = useState(false)
+    const [date,setNewDate] = useState(new Date);
 
     const formatoToma = /^(\d+)$|^(\d*\.\d+)$/;
     const formatoSleep = /^(\d+)$/;
@@ -113,7 +114,7 @@ export const NewBaby = () => {
                         longStepColor='#DA70D6'
                         indicatorColor='#DA70D6'
                         shortStepColor='#c9c9db'
-                    />;
+                    />
                 </View>
                 <View style={{backgroundColor: '#DA70D6',borderRadius: 10, margin: 10}}>
 
@@ -138,7 +139,7 @@ export const NewBaby = () => {
                         longStepColor='#DA70D6'
                         indicatorColor='#DA70D6'
                         shortStepColor='#c9c9db'
-                    />;
+                    />
                 </View>
                 <View style={{backgroundColor: '#DA70D6',borderRadius: 10, margin: 10}}>
                     <Text style={styles.title2}>Indica la edad</Text>
@@ -162,7 +163,7 @@ export const NewBaby = () => {
                         longStepColor='#DA70D6'
                         indicatorColor='#DA70D6'
                         shortStepColor='#c9c9db'
-                    />;
+                    />
                 </View>
 
                 <Button mode='outlined' textColor='#DA70D6'
