@@ -2,15 +2,12 @@ package babbynannyapi.controller;
 
 import babbynannyapi.model.*;
 import babbynannyapi.repository.*;
-import org.bson.json.JsonObject;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.*;
 import java.util.*;
 
 
@@ -37,12 +34,12 @@ public class Controlador {
     private MedicalRecordRepository medicalRecordRepository;
 
 
-	@GetMapping("/babys")
+	@GetMapping("/babies")
 	ResponseEntity<Object> buscarBebes(@RequestParam(name = "token") String token){
 		Optional<Token> t = tokenRepository.searchToken(token);
 		if (t.isPresent()) {
-			List<Bebe> babyList = babyRepository.searchBabies(t.get().getUser());
-		    Map<String, List<Bebe>> response = new HashMap<>();
+			List<Baby> babyList = babyRepository.searchBabies(t.get().getUser());
+		    Map<String, List<Baby>> response = new HashMap<>();
 		    response.put("bebes", babyList);
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
@@ -67,14 +64,14 @@ public class Controlador {
 		Optional<Token> t = tokenRepository.searchToken(token);
 
 		if (t.isPresent()) {
-			Optional<Bebe> b = babyRepository.findById(id);
+			Optional<Baby> b = babyRepository.findById(id);
             List<String> babyList = new ArrayList<>();
 
             if (b.isPresent()) {
                 String type = (String) obj.get("type");
 
                 switch (type) {
-                    case "intakerecord" : {
+                    case "intakeRecord" : {
                         IntakeRecord irecord = new IntakeRecord();
                         irecord.setDate(new Date());
                         irecord.setIntakeAmount(Double.parseDouble(obj.get("amount").toString()));
@@ -86,7 +83,7 @@ public class Controlador {
                         return ResponseEntity.status(HttpStatus.OK).build();
 
                     }
-                    case "medicalrecord" : {
+                    case "medicalRecord" : {
                         MedicalRecord mrecord = new MedicalRecord();
                         Recipe recipe = new Recipe();
                         recipe.setDosisTime(obj.getInt(obj.getString("dosistime")));
@@ -98,7 +95,7 @@ public class Controlador {
                         babyList.add(mrecord.getId());
                         break;
                     }
-                    case "sleeprecord" : {
+                    case "sleepRecord" : {
                         SleepRecord srecord = new SleepRecord();
                         srecord.setDate(new Date());
                         srecord.setTimeSleep(Double.parseDouble(obj.getString("timesleep")));
@@ -109,10 +106,7 @@ public class Controlador {
 
 
             }
-			List<Bebe> listaBebes = babyRepository.searchBabies(t.get().getUser());
-		    Map<String, List<Bebe>> response = new HashMap<>();
-		    
-		    response.put("bebes", listaBebes);
+
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -120,18 +114,18 @@ public class Controlador {
     /**
      * Función utilitzada para que un usuario haga login y se le genere un token
      *
-     * @param usuario
+     * @param user
      * @return ResponseEntity<?>
      */
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody Usuario usuario){
-        Optional<Usuario> user = userRepository.findByNombreAndPassword(usuario.getNombre(), usuario.getPassword());
-        Optional<Token> usertoken = tokenRepository.searchUserToken(usuario.getNombre());
-        if (user.isPresent()) {
+    public ResponseEntity<Object> login(@RequestBody User user){
+        Optional<User> userobj = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+        Optional<Token> usertoken = tokenRepository.searchUserToken(user.getName());
+        if (userobj.isPresent()) {
             if (usertoken.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             } else {
-                Token token = new Token(usuario.getNombre());
+                Token token = new Token(user.getName());
                 tokenRepository.save(token);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
@@ -141,10 +135,10 @@ public class Controlador {
     }
     
     @PostMapping("/newBaby")
-    public ResponseEntity<Object> newBaby(@RequestBody Bebe bebe, @RequestHeader String token){
+    public ResponseEntity<Object> newBaby(@RequestBody Baby baby, @RequestHeader String token){
     	Optional<Token> t = tokenRepository.searchToken(token);
     	if (t.isPresent()) {
-    		babyRepository.save(bebe);
+    		babyRepository.save(baby);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -157,8 +151,8 @@ public class Controlador {
      * @return ResponseEntity<?>
      */
     @PostMapping("/register")
-    ResponseEntity<?> registro(@RequestBody Usuario user) {
-        Optional<Usuario> userPassEmail = userRepository.searchUserPassEmail(user.getNombre(), user.getPassword(), user.getCorreo());
+    ResponseEntity<?> registro(@RequestBody User user) {
+        Optional<User> userPassEmail = userRepository.searchUserPassEmail(user.getName(), user.getPassword(), user.getEmail());
         if (userPassEmail.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }

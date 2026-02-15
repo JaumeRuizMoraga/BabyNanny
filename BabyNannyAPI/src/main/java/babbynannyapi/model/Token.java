@@ -1,7 +1,6 @@
 package babbynannyapi.model;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,12 +13,12 @@ public class Token {
 	private String id;
 	private String token;
 	private String user;
-	private Date fecha;
+	private Date date;
 	
 	public Token(String user) {
 		String uuid = UUID.randomUUID().toString();
 		this.user = user;
-		this.fecha = Date.from(Instant.now());
+		this.date = Date.from(Instant.now());
 		this.token = uuid.split("-")[0];
 	}
 	
@@ -45,11 +44,11 @@ public class Token {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	public Date getFecha() {
-		return fecha;
+	public Date getDate() {
+		return date;
 	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 }

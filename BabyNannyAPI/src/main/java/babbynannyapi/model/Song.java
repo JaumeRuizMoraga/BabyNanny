@@ -3,28 +3,28 @@ package babbynannyapi.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "cancion")
-public class Cancion {
+@Document(collection = "song")
+public class Song {
 	@Id
 	private String id;
-	private String nombre;
+	private String name;
 	private String uri;
 
-	public Cancion(String nombre, String uri) {
-		this.nombre = nombre;
+	public Song(String name, String uri) {
+		this.name = name;
 		this.uri = uri;
 	}
 
-	public Cancion() {
+	public Song() {
 
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getUri() {
