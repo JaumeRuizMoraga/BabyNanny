@@ -65,7 +65,7 @@ public class Controlador {
 
 		if (t.isPresent()) {
 			Optional<Baby> b = babyRepository.findById(id);
-            List<String> babyList = new ArrayList<>();
+            List<String> babyList;
 
             if (b.isPresent()) {
                 String type = (String) obj.get("type");
@@ -86,28 +86,32 @@ public class Controlador {
                     case "medicalRecord" : {
                         MedicalRecord mrecord = new MedicalRecord();
                         Recipe recipe = new Recipe();
-                        recipe.setDosisTime(obj.getInt(obj.getString("dosistime")));
-                        recipe.setDosis(Double.parseDouble(obj.getString("dosis")));
-                        recipe.setMedicine(obj.getString("medicine"));
+                        recipe.setDosisTime(Integer.parseInt(obj.get("dosisTime").toString()));
+                        recipe.setDosis(Double.parseDouble(obj.get("dosis").toString()));
+                        recipe.setMedicine(obj.get("medicine").toString());
                         mrecord.setDate(new Date());
                         mrecord.setRecipe(recipe);
+                        medicalRecordRepository.save(mrecord);
                         babyList= b.get().getMedicalRecord();
                         babyList.add(mrecord.getId());
-                        break;
+                        b.get().setMedicalRecord(babyList);
+                        babyRepository.save(b.get());
+                        return ResponseEntity.status(HttpStatus.OK).build();
                     }
                     case "sleepRecord" : {
                         SleepRecord srecord = new SleepRecord();
                         srecord.setDate(new Date());
-                        srecord.setTimeSleep(Double.parseDouble(obj.getString("timesleep")));
+                        srecord.setTimeSleep(Double.parseDouble(obj.get("timeSleep").toString()));
                         sleepRecordRepository.save(srecord);
-                        break;
+                        babyList= b.get().getSleepRecord();
+                        babyList.add(srecord.getId());
+                        b.get().setSleepRecord(babyList);
+                        babyRepository.save(b.get());
+                        return ResponseEntity.status(HttpStatus.OK).build();
                     }
                 }
-
-
             }
-
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
