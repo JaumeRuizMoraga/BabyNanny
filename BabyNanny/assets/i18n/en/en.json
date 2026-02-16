@@ -10,14 +10,16 @@
         "user": "Username",
         "password": "Password",
         "login": "Log In",
-        "noUser": "I don't have an account"
+        "noUser": "I don't have an account",
+        "error": "Wrong username or password "
     },
     "register": {
         "register": "Register",
         "user": "Username",
         "password": "Password",
         "mail": "Email",
-        "creatUser": "Create User"
+        "creatUser": "Create User",
+        "error": "The user already exist"
     },
     "home": {
         "babyData": "Baby's Data",

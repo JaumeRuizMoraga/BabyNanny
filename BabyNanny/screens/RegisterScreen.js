@@ -1,6 +1,8 @@
 import { View, StyleSheet, Animated, ImageBackground } from 'react-native';
 import { TextInput, Button, Text, HelperText, PaperProvider } from 'react-native-paper';
 import { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import '../assets/i18n';
 
 export const RegisterScreen = (props) => {
     const [user, setUser] = useState('');
@@ -8,6 +10,7 @@ export const RegisterScreen = (props) => {
     const [mail, setMail] = useState('');
     const [error, SetError] = useState(false)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
+    const {t} = useTranslation();
 
     const shake = () => {
         Animated.sequence([
@@ -55,10 +58,10 @@ export const RegisterScreen = (props) => {
             <ImageBackground
                 source={require("../assets/img/FondoBabyNannyMoons.png")}
                 resizeMode='cover' style={styles.container}>
-                <Text style={styles.title}>Registrarse</Text>
+                <Text style={styles.title}>{t('register.register')}</Text>
                 <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
                     <TextInput
-                        label="Usuario"
+                        label={t('register.user')}
                         mode='outlined'
                         value={user}
                         onChangeText={(user) => {
@@ -71,7 +74,7 @@ export const RegisterScreen = (props) => {
                 </Animated.View>
                 <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
                     <TextInput
-                        label="Contraseña"
+                        label={t('register.password')}
                         mode='outlined'
                         value={password}
                         onChangeText={(password) => {
@@ -84,7 +87,7 @@ export const RegisterScreen = (props) => {
                 </Animated.View>
                 <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
                     <TextInput
-                        label="Gmail"
+                        label={t('register.mail')}
                         mode='outlined'
                         value={mail}
                         onChangeText={(mail) => {
@@ -96,14 +99,14 @@ export const RegisterScreen = (props) => {
                     />
                 </Animated.View>
                 <HelperText type="error" visible={error} style={styles.error}>
-                    El Usuario ya existe
+                    {t('register.error')}
                 </HelperText>
                 <Button
                     mode="contained"
                     onPress={login}
                     style={styles.button}
                 >
-                    Crear Usuario
+                    {t('register.creatUser')}
                 </Button>
             </ImageBackground>
         </PaperProvider>
