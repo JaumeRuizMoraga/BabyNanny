@@ -30,7 +30,7 @@ export const UserData = (props) => {
             <Text>{t('userData.lenguage')}:</Text>
             <Surface style={styles.list}>
             <List.Section style={{}} title={leng}>
-            <List.Accordion style={{borderWidth: 2}} title={leng}>
+            <List.Accordion style={{}} title={leng}>
                 <List.Item title="es" onPress={()=>setLeng("es")}></List.Item>
                 <List.Item title="en" onPress={()=>setLeng("en")}></List.Item>
             </List.Accordion>

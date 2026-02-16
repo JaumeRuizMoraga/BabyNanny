@@ -13,25 +13,25 @@ export const BabyCard = (props) => {
         <Card style={styles.card} mode="elevated">
             <Card.Content>
                 <Text variant="titleMedium" style={styles.title}>
-                    {t('babyData')}
+                    {t('home.babyData')}
                 </Text>
             
                 <Divider style={styles.divider} />
                 <View style={{flexDirection: 'row',justifyContent: "space-between" }}>
                     <View style={{flexDirection: 'column' }}>
 
-                        <Text style={styles.label}>{t('age')} <Text style={{color:"#DA70D6"}}>{props.baby.age} {t('month')}</Text></Text>
+                        <Text style={styles.label}>{t('home.age')} <Text style={{color:"#DA70D6"}}>{props.baby.age} {t('home.months')}</Text></Text>
 
-                        <Text style={styles.label}>{t('height')}  <Text style={{color:"#DA70D6"}}>{props.baby.height} cm</Text></Text>
+                        <Text style={styles.label}>{t('home.height')}  <Text style={{color:"#DA70D6"}}>{props.baby.height} cm</Text></Text>
 
-                        <Text style={styles.label}>{t('weight')}  <Text style={{color:"#DA70D6"}}>{props.baby.weight} kg</Text></Text>
+                        <Text style={styles.label}>{t('home.weight')}  <Text style={{color:"#DA70D6"}}>{props.baby.weight} kg</Text></Text>
 
                     </View>
 
                     <View style={{flexDirection: 'column'}}>
-                        <Text style={styles.label}>{t('avgIntk')} <Text style={{color:"#DA70D6"}}>{props.baby.intakePre} .mil</Text></Text>
+                        <Text style={styles.label}>{t('home.avgIntk')} <Text style={{color:"#DA70D6"}}>{props.baby.intakePre} .mil</Text></Text>
 
-                        <Text style={styles.label}>{t('avgSleep')}  <Text style={{color:"#DA70D6"}}>{props.baby.sleepPre} .min</Text></Text>
+                        <Text style={styles.label}>{t('home.avgSleep')}  <Text style={{color:"#DA70D6"}}>{props.baby.sleepPre} .min</Text></Text>
 
                     </View>
                 </View>

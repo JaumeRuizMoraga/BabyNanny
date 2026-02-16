@@ -7,6 +7,6 @@ export const StackNavigator = () => (
         <Stack.Navigator options="false">
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-            <Stack.Screen name="SleepScreen" component={SleepScreen} />
+            {/* <Stack.Screen name="SleepScreen" component={SleepScreen} /> */}
         </Stack.Navigator>
 );

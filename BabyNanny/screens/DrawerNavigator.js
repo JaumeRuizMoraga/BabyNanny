@@ -4,13 +4,18 @@ import { Home } from './Home.js';
 import { NoBaby } from './NoBaby.js';
 import { ConfigScreen } from './ConfigScreen.js';
 import { NewBaby } from './NewBaby.js';
-import { Icon } from 'react-native-paper';
-import { Image } from 'react-native'
 import Baby from '../context/Baby.js'
+import User from '../context/User.js'
+import Token from '../context/Token.js';
+import { getData } from '../services/services.js';
+
 import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
     const { baby, setBaby } = useContext(Baby)
+    const {user,setUser} = useContext(User)
+    const {token,setToken} = useContext(Token);
+
     const [noBaby, setNoBaby] = useState(true)
     const draweOptrions = {
         drawerType: 'slide',
@@ -35,7 +40,7 @@ export const DrawerNavigator = () => {
     }
 
     useEffect(() => {
-
+        getData(token);
     }, []);
 
 

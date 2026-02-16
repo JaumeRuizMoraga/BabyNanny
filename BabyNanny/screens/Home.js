@@ -9,7 +9,7 @@ import {
     SegmentedButtons,
     Modal
 } from 'react-native-paper';
-import { useState, useContext } from 'react';
+import { useState, useContext, useTransition } from 'react';
 import { BabyCard } from '../components/DatosBebe';
 import Baby from '../context/Baby';
 import User from '../context/User';
@@ -18,6 +18,10 @@ import { EditarDatos } from '../components/EditarDatos';
 import { SleepRecord } from '../components/RegistroSueño';
 import { MedicalRecord } from '../components/RegistroMedico';
 import { IntakeRecord } from '../components/RegistroToma';
+import { comprobarDatosCompleto } from '../utils/utils';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
+
 
 
 export const Home = (props) => {
@@ -27,6 +31,7 @@ export const Home = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [entrys, setEntrys] = useState(baby.intakeRecord);
     const [edit, setEdit] = useState(false);
+    const {t} = useTranslation()
 
 
     const openModal = () => {
@@ -80,16 +85,16 @@ export const Home = (props) => {
                         {
                             value: baby.intakeRecord,
                             labelStyle: { color: "#DA70D6" },
-                            label: 'Tomas',
+                            label: t('home.intk'),
                             style: { backgroundColor: "white" },
                         },
                         {
                             value: baby.sleepRecord,
                             labelStyle: { color: "#DA70D6" },
-                            label: 'Sueño',
+                            label: t('home.sleep'),
                             style: { backgroundColor: "white" },
                         },
-                        { value: baby.medicalRecord, label: 'Medico', labelStyle: { color: "#DA70D6" }, style: { backgroundColor: "white" }, },
+                        { value: baby.medicalRecord, label: t('home.med'), labelStyle: { color: "#DA70D6" }, style: { backgroundColor: "white" }, },
                     ]}
                 />
             </View>

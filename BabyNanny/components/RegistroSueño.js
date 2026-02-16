@@ -8,8 +8,8 @@ export const SleepRecord = (props) => {
         <View>
             <Card style={{margin:5}}>
                 <Card.Content>
-                    <Text>{t('date')}: <Text style={{color:"#DA70D6"}}>{props.entry.date}</Text></Text>
-                    <Text>{t('sleep')}: <Text style={{color:"#DA70D6"}}>{props.entry.data} mins</Text></Text>
+                    <Text>{t('home.date')}: <Text style={{color:"#DA70D6"}}>{props.entry.date}</Text></Text>
+                    <Text>{t('home.sleep')}: <Text style={{color:"#DA70D6"}}>{props.entry.data} mins</Text></Text>
                 </Card.Content>
             </Card>
         </View>

@@ -59,7 +59,7 @@ export const SelectorSleepToma = (props) => {
 
     return (
         <View style={styles.container}>            <TextInput
-                label={t('intk')}
+                label={t('home.intk')}
                 value={toma}
                 onChangeText={(newToma) => cambiarToma(newToma)}
                 style={styles.textInput}
@@ -67,17 +67,17 @@ export const SelectorSleepToma = (props) => {
                 mode="flat"
             ></TextInput>
             <HelperText type="error" visible={tomaIncorrecta}>
-{t('errorIntk')}            </HelperText>
+{t('home.errorIntk')}            </HelperText>
             <TextInput
-                label={t('sleep')}
+                label={t('home.sleep')}
                 value={sleep}
                 onChangeText={(newSleep) => changeSleep(newSleep)}
                 style={styles.textInput}
                 right={<TextInput.Affix text=".min" />}
             ></TextInput>
             <HelperText type="error" visible={wrongSleep}>
-{t('errorSleep')}            </HelperText>
-            <Button onPress={sendData} textColor="white" style={styles.botonManual}>Save</Button>
+{t('home.errorSleep')}            </HelperText>
+            <Button onPress={sendData} textColor="white" style={styles.botonManual}>{t('home.save')}</Button>
         </View>
     );
 }

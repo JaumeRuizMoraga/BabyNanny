@@ -27,7 +27,7 @@
         "avgIntk":"Toma promedio",
         "avgSleep":"Sueño por defecto",
         "intk":"Tomas",
-        "month":"meses",
+        "months":"meses",
         "errorWeight":"Formato de peso incorrecto",
         "errorAge":"Formato de edad incorrecto",
         "errorHeight":"Formato de altura incorrecto",

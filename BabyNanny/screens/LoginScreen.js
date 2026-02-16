@@ -1,13 +1,18 @@
 import { View, StyleSheet, Animated, ImageBackground } from 'react-native';
 import { TextInput, Button, Text, HelperText, PaperProvider } from 'react-native-paper';
-import { useState, useRef } from 'react';
+import { useState, useRef,useContext } from 'react';
 import { login } from '../services/services';
+import Token from '../context/Token';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const LoginScreen = (props) => {
+    const {token,setToken} = useContext(Token);
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [error, SetError] = useState(false)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
+    const {t} = useTranslation();
 
     const shake = () => {
         Animated.sequence([
@@ -18,9 +23,15 @@ export const LoginScreen = (props) => {
         ]).start();
     };
 
-    const login = () => {
-        const response  = {status: 204};
-        if (response.status === 204) {
+    const loginFull = async () => {
+        let json = {
+            name: user,
+            password: password
+        }
+        
+        let code = await login(json);
+        if (code === 204) {
+            setToken("cdb67999");
             props.navigation.navigate('DrawerNavigator')
         }
         else {
@@ -30,38 +41,31 @@ export const LoginScreen = (props) => {
     };
 
     const updateUser = (user) => {
-        setUsuario(user);
+        setUser(user);
         if (error) {
             SetError(false);
         }
     };
 
     const updatePassword = (password) => {
-        setContrasenya(password);
+        setPassword(password);
         if (error) {
             SetError(false);
         }
     };
 
-    const Login = async () =>{
-        let json = {
-            name:user,
-            password:password
-        }
-        console.log(json)
-        let objTemp = await login(json);
-        props.navigation.navigate('RegisterScreen')
-    }
+
 
     return (
         <PaperProvider>
             <ImageBackground
+            
                 source={require("../assets/img/FondoBabyNannyMoons.png")}
                 resizeMode='cover' style={styles.container}>
-                <Text style={styles.title}>Bienvenido</Text>
+                <Text style={styles.title}>{t('login.welcome')}</Text>
                 <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
                     <TextInput
-                        label="Usuario"
+                        label={t('login.user')}
                         mode='outlined'
                         value={user}
                         onChangeText={(user) => {
@@ -74,11 +78,11 @@ export const LoginScreen = (props) => {
                 </Animated.View>
                 <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
                     <TextInput
-                        label="Contraseña"
+                        label= {t('login.password')}
                         mode='outlined'
                         value={password}
                         onChangeText={(password) => {
-                            actualizarContrasenya(password);
+                            updatePassword(password);
                         }}
                         outlineColor={error ? 'red' : '#DA70D6'}
                         activeOutlineColor={error ? 'red' : '#DA70D6'}
@@ -90,12 +94,12 @@ export const LoginScreen = (props) => {
                 </HelperText>
                 <Button
                     mode="contained"
-                    onPress={login}
+                    onPress={loginFull}
                     style={styles.button}
                 >
                     Iniciar Sesión
                 </Button>
-                <Text style={styles.text} onPress={() => Login()}>No tengo usuario</Text>
+                <Text style={styles.text} onPress={() => props.navigation.navigate('RegisterScreen')}>No tengo usuario</Text>
             </ImageBackground>
         </PaperProvider>
     );
@@ -114,22 +118,22 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
         fontSize: 40,
-        borderRadius:16,
+        borderRadius: 16,
         backgroundColor: '#D88FD8',
-        padding:10,
+        padding: 10,
     },
     text: {
         textAlign: 'center',
         marginTop: 20,
         fontWeight: 'bold',
         color: '#1100ff',
-        margin:40,
-        padding:10,
+        margin: 40,
+        padding: 10,
         fontSize: 12,
-        borderRadius:16,
+        borderRadius: 16,
         backgroundColor: 'white',
         borderColor: '#1100ff',
-        borderWidth:1
+        borderWidth: 1
     },
     input: {
         marginBottom: 12

@@ -15,7 +15,7 @@ export const BabyChange = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>{t('selectBaby')}</Text>
+            <Text style={styles.label}>{t('home.selectBaby')}</Text>
             <FlatList
                 data={babies}
                 keyExtractor={(item, index) => item + index.toString()}

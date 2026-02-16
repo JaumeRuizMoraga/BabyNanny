@@ -6,8 +6,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import { BabyProvider } from './context/Baby.js';
 import { UserProvider } from './context/User.js';
+import { TokenProvider } from './context/Token.js';
 const App = () => {
   return (
+    <TokenProvider>
     <UserProvider>
     <BabyProvider>
     <NavigationContainer>
@@ -19,6 +21,7 @@ const App = () => {
     </NavigationContainer>
     </BabyProvider>
     </UserProvider>
+    </TokenProvider>
   );
 }
 export default App;
