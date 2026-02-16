@@ -123,15 +123,15 @@ public class Controlador {
      */
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody User user){
-        Optional<User> userobj = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
-        Optional<Token> usertoken = tokenRepository.searchUserToken(user.getName());
-        if (userobj.isPresent()) {
-            if (usertoken.isPresent()) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        Optional<User> userObj = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+        Optional<Token> userToken = tokenRepository.searchUserToken(user.getName());
+        if (userObj.isPresent()) {
+            if (userToken.isPresent()) {
+                return ResponseEntity.status(HttpStatus.OK).body(userToken.get().getToken());
             } else {
                 Token token = new Token(user.getName());
                 tokenRepository.save(token);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+                return ResponseEntity.status(HttpStatus.OK).body(token);
             }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
