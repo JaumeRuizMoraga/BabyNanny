@@ -117,7 +117,6 @@ public class Controlador {
 	}
     /**
      * Función utilitzada para que un usuario haga login y se le genere un token
-     *
      * @param user
      * @return ResponseEntity<?>
      */
@@ -168,4 +167,3 @@ public class Controlador {
         	}
         }
     }
-}
