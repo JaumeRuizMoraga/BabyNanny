@@ -46,11 +46,33 @@ public class Controlador {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 	
-	@DeleteMapping("/deleteBaby/{id}")
-    public ResponseEntity<Void> deleteBaby(@PathVariable String id, @RequestHeader String token) {
+	@GetMapping("/getUser")
+	ResponseEntity<Object> searchUser(@RequestParam(name = "token") String token){
 		Optional<Token> t = tokenRepository.searchToken(token);
+		if (t.isPresent()) {
+			Optional<User> user = userRepository.findByName(t.get().getUser());
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+	@DeleteMapping("/deleteBaby/{id}")
+    public ResponseEntity<Void> deleteBaby(@PathVariable String id) {
+		Optional<Token> t = tokenRepository.findById(id);
 		if(t.isPresent()){
-			babyRepository.deleteById(id);
+			tokenRepository.deleteById(id);
+	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+    }
+	
+	@DeleteMapping("/logOut/{id}")
+    public ResponseEntity<Void> logOut(@PathVariable String id) {
+		Optional<Token> t = tokenRepository.findById(id);
+		if(t.isPresent()){
+			tokenRepository.deleteById(id);
 	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		else {
@@ -126,7 +148,7 @@ public class Controlador {
         Optional<Token> userToken = tokenRepository.searchUserToken(user.getName());
         if (userObj.isPresent()) {
             if (userToken.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).body(userToken.get().getToken());
+                return ResponseEntity.status(HttpStatus.OK).body(userToken.get());
             } else {
                 Token token = new Token(user.getName());
                 tokenRepository.save(token);
