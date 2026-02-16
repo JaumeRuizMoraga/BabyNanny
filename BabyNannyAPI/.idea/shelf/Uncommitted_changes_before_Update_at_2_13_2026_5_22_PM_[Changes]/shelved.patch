@@ -1,0 +1,18 @@
+Index: src/main/java/babbynannyapi/repository/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package babbynannyapi.repository;\r\n\r\nimport org.springframework.data.mongodb.repository.MongoRepository;\r\nimport org.springframework.data.mongodb.repository.Query;\r\n\r\nimport babbynannyapi.model.Usuario;\r\n\r\nimport java.util.Optional;\r\n\r\npublic interface UserRepository extends MongoRepository<Usuario, String> {\r\n\r\n    @Query\r\n    Optional<Usuario> findByNombreAndPassword(String nombre, String password);\r\n\r\n    @Query(value = \"{ 'nombre': ?0, 'password': ?1, 'correo': ?2 }\")\r\n    Optional<Usuario> searchUserPassEmail(String nombre, String password, String correo);\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/babbynannyapi/repository/UserRepository.java b/src/main/java/babbynannyapi/repository/UserRepository.java
+--- a/src/main/java/babbynannyapi/repository/UserRepository.java	(revision cabcb3cb8b9311019804e936497ee8307259d88e)
++++ b/src/main/java/babbynannyapi/repository/UserRepository.java	(date 1770999760230)
+@@ -9,6 +9,7 @@
+ 
+ public interface UserRepository extends MongoRepository<Usuario, String> {
+ 
++
+     @Query
+     Optional<Usuario> findByNombreAndPassword(String nombre, String password);
+ 
