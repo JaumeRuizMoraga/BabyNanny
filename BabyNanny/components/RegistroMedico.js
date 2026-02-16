@@ -1,14 +1,17 @@
 import { View, Text} from 'react-native';
 import {Card} from 'react-native-paper';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 export const MedicalRecord = (props) => {
+    const {t} = useTranslation()
     return (
         <View>
             <Card style={{margin:5}}>
                 <Card.Content>
-                    <Text>Date: <Text style={{color:"#DA70D6"}}>{props.entry.date}</Text></Text>
-                    <Text>Medicine: <Text style={{color:"#DA70D6"}}>{props.entry.recipe.medicine}</Text></Text>
-                    <Text>Dosis: <Text style={{color:"#DA70D6"}}>{props.entry.recipe.medicine} mg</Text></Text>
-                    <Text>Treatment duration: <Text style={{color:"#DA70D6"}}>{props.entry.recipe.dosisTime} horas</Text></Text>
+                    <Text>{t('date')}: <Text style={{color:"#DA70D6"}}>{props.entry.date}</Text></Text>
+                    <Text>{t('medicine')}: <Text style={{color:"#DA70D6"}}>{props.entry.recipe.medicine}</Text></Text>
+                    <Text>{t('dosis')}: <Text style={{color:"#DA70D6"}}>{props.entry.recipe.medicine} mg</Text></Text>
+                    <Text>{t('treatTime')} <Text style={{color:"#DA70D6"}}>{props.entry.recipe.dosisTime} horas</Text></Text>
                 </Card.Content>
             </Card>
         </View>

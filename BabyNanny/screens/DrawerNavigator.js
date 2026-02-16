@@ -2,6 +2,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { SleepScreen } from './SleepScreen';
 import { Home } from './Home.js';
 import { NoBaby } from './NoBaby.js';
+import { ConfigScreen } from './ConfigScreen.js';
 import { NewBaby } from './NewBaby.js';
 import { Icon } from 'react-native-paper';
 import { Image } from 'react-native'
@@ -10,7 +11,7 @@ import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
     const { baby, setBaby } = useContext(Baby)
-    const [noBaby, setNoBaby] = useState(false)
+    const [noBaby, setNoBaby] = useState(true)
     const draweOptrions = {
         drawerType: 'slide',
         drawerActiveTintColor: 'white',
@@ -46,6 +47,7 @@ export const DrawerNavigator = () => {
                 <Drawer.Screen name="NoBaby" options={{ headerShown: false }} component={NoBaby} />
             }
             <Drawer.Screen name="NewBaby" options={{ headerShown: !noBaby }} component={NewBaby} />
+            <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
         </Drawer.Navigator>
     );

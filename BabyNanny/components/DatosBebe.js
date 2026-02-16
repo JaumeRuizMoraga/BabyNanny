@@ -2,34 +2,36 @@ import { StyleSheet, View } from 'react-native';
 import { Card, Text, Divider, FAB, Modal } from 'react-native-paper';
 import { useState } from 'react';
 import { EditarDatos } from './EditarDatos';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const BabyCard = (props) => {
 
     const [edit,setEdit] = useState(false);
-
+    const {t} = useTranslation()
     return (
         <Card style={styles.card} mode="elevated">
             <Card.Content>
                 <Text variant="titleMedium" style={styles.title}>
-                    Baby data
+                    {t('babyData')}
                 </Text>
             
                 <Divider style={styles.divider} />
                 <View style={{flexDirection: 'row',justifyContent: "space-between" }}>
                     <View style={{flexDirection: 'column' }}>
 
-                        <Text style={styles.label}>Age: <Text style={{color:"#DA70D6"}}>{props.bebe.edad} months</Text></Text>
+                        <Text style={styles.label}>{t('age')} <Text style={{color:"#DA70D6"}}>{props.baby.age} {t('month')}</Text></Text>
 
-                        <Text style={styles.label}>Height:  <Text style={{color:"#DA70D6"}}>{props.bebe.altura} cm</Text></Text>
+                        <Text style={styles.label}>{t('height')}  <Text style={{color:"#DA70D6"}}>{props.baby.height} cm</Text></Text>
 
-                        <Text style={styles.label}>Weight:  <Text style={{color:"#DA70D6"}}>{props.bebe.peso} kg</Text></Text>
+                        <Text style={styles.label}>{t('weight')}  <Text style={{color:"#DA70D6"}}>{props.baby.weight} kg</Text></Text>
 
                     </View>
 
                     <View style={{flexDirection: 'column'}}>
-                        <Text style={styles.label}>Average intake: <Text style={{color:"#DA70D6"}}>{props.bebe.tomaPre} .mil</Text></Text>
+                        <Text style={styles.label}>{t('avgIntk')} <Text style={{color:"#DA70D6"}}>{props.baby.intakePre} .mil</Text></Text>
 
-                        <Text style={styles.label}>Average sleep:  <Text style={{color:"#DA70D6"}}>{props.bebe.sleepPre} .min</Text></Text>
+                        <Text style={styles.label}>{t('avgSleep')}  <Text style={{color:"#DA70D6"}}>{props.baby.sleepPre} .min</Text></Text>
 
                     </View>
                 </View>

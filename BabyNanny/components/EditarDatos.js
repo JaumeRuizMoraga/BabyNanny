@@ -2,13 +2,16 @@ import { View, Text, StyleSheet, } from 'react-native'
 import { Card, Divider, TextInput, HelperText, Button } from 'react-native-paper';
 import { useState } from 'react';
 import { comprobarDatosCompleto } from '../utils/utils';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const EditarDatos = (props) => {
+    const {t} = useTranslation()
     const [newAge, setNewAge] = useState(props.baby.age);
     const [newHeight, setNewHeight] = useState(props.baby.height);
     const [newWeight, setNewWeight] = useState(props.baby.height);
     const [newIntakePre, setNewIntakePre] = useState(props.baby.intakePre);
-    const [newSleepPre, setNewSleepPre] = useState(props.bebe.sleepPre);
+    const [newSleepPre, setNewSleepPre] = useState(props.baby.sleepPre);
     const [errors, setErrors] = useState({ intake: false, sleep: false, height: false, weight: false, age: false });
 
 
@@ -29,7 +32,7 @@ export const EditarDatos = (props) => {
     }
     const changeToma = (date) => {
         setNewIntakePre(date)
-        setErrores(checkDataFull(date, newSleepPre, newEdad, newAltura, newWeight))
+        setErrors(checkDataFull(date, newSleepPre, newEdad, newAltura, newWeight))
 
     }
     const changeSleep = (date) => {
@@ -63,27 +66,27 @@ export const EditarDatos = (props) => {
         <Card style={styles.card} mode="elevated">
             <Card.Content>
                 <Text variant="titleMedium" style={styles.title}>
-                    Baby Data                </Text>
+                    {t('babyData')}                </Text>
                 <Divider style={styles.divider} />
                 <View style={{ flexDirection: 'column', justifyContent: "space-between" }}>
                     <View style={{ flexDirection: 'column' }}>
 
                         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                            <Text style={styles.label}>Age: </Text>
+                            <Text style={styles.label}>{t('age')}: </Text>
                             <TextInput textColor='#DA70D6' placeholder={String(props.baby.age)} activeOutlineColor='#DA70D6' right={<TextInput.Affix text="months" textStyle={{ color: '#DA70D6' }} />}
                                 defaultValue={props.baby.age} value={newAge} onChangeText={(dato) => changeAge(dato)} style={styles.input} mode='outlined'></TextInput>
-                            <HelperText type='error' visible={errors.age}>Wrong age format</HelperText>
+                            <HelperText type='error' visible={errors.age}>{t('errorAge')}</HelperText>
                         </View>
                         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                            <Text style={styles.label}>Height: </Text>
+                            <Text style={styles.label}>{t('height')}: </Text>
                             <TextInput textColor='#DA70D6' placeholder={String(props.baby.height)} activeOutlineColor='#DA70D6' right={<TextInput.Affix text="cm" textStyle={{ color: '#DA70D6' }} />} defaultValue={props.baby.height} value={newHeight} onChangeText={(dato) => changeHeight(dato)} style={styles.input} mode='outlined'></TextInput>
-                            <HelperText type='error' visible={errors.height}>Wrong height format</HelperText>
+                            <HelperText type='error' visible={errors.height}>{t('errorHeight')}</HelperText>
 
                         </View>
                         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                            <Text style={styles.label}>Weight: </Text>
+                            <Text style={styles.label}>{t('weight')}: </Text>
                             <TextInput textColor='#DA70D6' placeholder={String(props.baby.weight)} activeOutlineColor='#DA70D6' right={<TextInput.Affix text="kg" textStyle={{ color: '#DA70D6' }} />} defaultValue={props.baby.weight} value={newWeight} onChangeText={(dato) => changeWeight(dato)} style={styles.input} mode='outlined'></TextInput>
-                            <HelperText type='error' visible={errors.weight}>Wrong weight format</HelperText>
+                            <HelperText type='error' visible={errors.weight}>{t('errorWeight')}</HelperText>
 
                         </View>
                     </View>
@@ -91,21 +94,21 @@ export const EditarDatos = (props) => {
 
                     <View style={{ flexDirection: 'column' }}>
                         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                            <Text style={styles.label}>Predefined toma: </Text>
+                            <Text style={styles.label}>{t('avgIntk')}:</Text>
                             <TextInput textColor='#DA70D6' placeholder={String(props.baby.intakePre)} activeOutlineColor='#DA70D6' right={<TextInput.Affix text=".ml" textStyle={{ color: '#DA70D6' }} />} defaultValue={props.baby.intakePre} value={newIntakePre} onChangeText={(dato) => changeToma(dato)} style={styles.input} mode='outlined'></TextInput>
-                            <HelperText type='error' visible={errors.toma}>Wrong toma format</HelperText>
+                            <HelperText type='error' visible={errors.toma}>{t('errorIntk')}</HelperText>
 
                         </View>
                         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                            <Text style={styles.label}>Predefined sleep: </Text>
+                            <Text style={styles.label}>{t('avgSleep')}:</Text>
                             <TextInput textColor='#DA70D6' placeholder={String(props.baby.sleepPre)} activeOutlineColor='#DA70D6' right={<TextInput.Affix text=".min" textStyle={{ color: '#DA70D6' }} />} defaultValue={props.baby.sleepPre} value={newSleepPre} onChangeText={(dato) => changeSleep(dato)} style={styles.input} mode='outlined'></TextInput>
-                            <HelperText type='error' visible={errors.sleep}>Wrong sleep format</HelperText>
+                            <HelperText type='error' visible={errors.sleep}>{t('errorSleep')}</HelperText>
 
                         </View>
                     </View>
                 </View>
                 <Divider style={styles.divider}></Divider>
-                <Button textColor='#DA70D6' style={styles.button} onPress={() => props.save(checkVoids({sleepPre:newSleepPre,intakePre:newIntakePre,weight:newWeight,height:newHeight,age:newAge}))}>Save</Button>
+                <Button textColor='#DA70D6' style={styles.button} onPress={() => props.save(checkVoids({sleepPre:newSleepPre,intakePre:newIntakePre,weight:newWeight,height:newHeight,age:newAge}))}>{t('save')}</Button>
             </Card.Content>
         </Card>
     );

@@ -1,0 +1,61 @@
+{
+    "configScreen": {
+        "data": "Data",
+        "userName": "Username",
+        "lenguage": "Language",
+        "save": "Save"
+    },
+    "login": {
+        "welcome": "Welcome",
+        "user": "Username",
+        "password": "Password",
+        "login": "Log In",
+        "noUser": "I don't have an account"
+    },
+    "register": {
+        "register": "Register",
+        "user": "Username",
+        "password": "Password",
+        "mail": "Email",
+        "creatUser": "Create User"
+    },
+    "home": {
+        "babyData": "Baby's Data",
+        "age": "Age",
+        "height": "Height",
+        "weight": "Weight",
+        "avgIntk": "Average Intake",
+        "avgSleep": "Default Sleep",
+        "months":"months",
+        "errorWeight":"Wrong height format",
+        "errorAge":"Wrong age format",
+        "errorHeight":"Wrong height format",
+        "errorIntk":"Wrong intake format",
+        "errorSleep":"Wrong sleep format",
+        "intk": "Feedings",
+        "sleep": "Sleep",
+        "med": "Doctor",
+        "date": "Date",
+        "medicine": "Medicine",
+        "dosis": "Dosage",
+        "treatTime": "Treatment Duration",
+        "selectBaby": "Select another baby",
+                "save":"Save"
+    },
+    "sleepScreen": {
+        "manual": "MANUAL"
+    },
+    "newBaby": {
+        "babyData": "Baby's Data",
+        "babyName": "Baby's Name",
+        "intkSleepPre": "Average intake and sleep",
+        "sleepPre": "Average sleep",
+        "tomaPre": "Average intake",
+        "babyHeight": "Select baby's height",
+        "babyWeight": "Select baby's weight",
+        "save": "Save"
+    },
+    "noBaby": {
+        "message": "Oh...! It looks like you don't have any babies registered"
+    }
+}

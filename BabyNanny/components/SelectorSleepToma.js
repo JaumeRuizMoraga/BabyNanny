@@ -1,8 +1,11 @@
 import { Text, TextInput, Button, HelperText } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useState } from "react";
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const SelectorSleepToma = (props) => {
+    const {t} = useTranslation();
     const [intake, setIntake] = useState("")
     const [sleep, setSleep] = useState("")
     const [wrongIntake, setWrongIntake] = useState(true);
@@ -56,7 +59,7 @@ export const SelectorSleepToma = (props) => {
 
     return (
         <View style={styles.container}>            <TextInput
-                label={"Intake"}
+                label={t('intk')}
                 value={toma}
                 onChangeText={(newToma) => cambiarToma(newToma)}
                 style={styles.textInput}
@@ -64,18 +67,16 @@ export const SelectorSleepToma = (props) => {
                 mode="flat"
             ></TextInput>
             <HelperText type="error" visible={tomaIncorrecta}>
-                Wrong intake format
-            </HelperText>
+{t('errorIntk')}            </HelperText>
             <TextInput
-                label={"Sleep"}
+                label={t('sleep')}
                 value={sleep}
                 onChangeText={(newSleep) => changeSleep(newSleep)}
                 style={styles.textInput}
                 right={<TextInput.Affix text=".min" />}
             ></TextInput>
             <HelperText type="error" visible={wrongSleep}>
-                Wrong sleep format
-            </HelperText>
+{t('errorSleep')}            </HelperText>
             <Button onPress={sendData} textColor="white" style={styles.botonManual}>Save</Button>
         </View>
     );

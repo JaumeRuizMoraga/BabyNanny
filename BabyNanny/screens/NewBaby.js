@@ -86,7 +86,6 @@ export const NewBaby = (props) => {
 
     return (
         <View style={styles.layout}>
-            {console.log(edad)}
             <ScrollView>
                 <Surface elevation={2} style={styles.container}>
                     <Text style={styles.title}>Datos de tu bebé</Text>

@@ -2,18 +2,20 @@ import { Text, View, FlatList, StyleSheet } from "react-native"
 import { useState } from "react";
 import { TarjetaBebe } from "./TarjetaBebe";
 import { Button } from "react-native-paper";
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 
 
 export const BabyChange = (props) => {
     const [babies,setBabies] = useState(props.bebes);
-
+    const { t } = useTranslation();
     const pressLogout = () =>{
         console.log("Logout")
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Select other Baby</Text>
+            <Text style={styles.label}>{t('selectBaby')}</Text>
             <FlatList
                 data={babies}
                 keyExtractor={(item, index) => item + index.toString()}

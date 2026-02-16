@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
         pass: "Pasword_Ejemplo",
         mail: "jaumerumoraga@gmail.com",
         config: {
-            idioma: "en",
+            lenguage: "en",
         },
         favSongs: [{
             titel: "INVISIBLE",

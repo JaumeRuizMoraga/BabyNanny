@@ -1,10 +1,11 @@
 import { View, StyleSheet, Animated, ImageBackground } from 'react-native';
 import { TextInput, Button, Text, HelperText, PaperProvider } from 'react-native-paper';
 import { useState, useRef } from 'react';
+import { login } from '../services/services';
 
 export const LoginScreen = (props) => {
-    const [usuario, setUsuario] = useState('');
-    const [contrasenya, setContrasenya] = useState('');
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
     const [error, SetError] = useState(false)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
 
@@ -28,19 +29,29 @@ export const LoginScreen = (props) => {
         }
     };
 
-    const actualizarUsuario = (usuario) => {
-        setUsuario(usuario);
+    const updateUser = (user) => {
+        setUsuario(user);
         if (error) {
             SetError(false);
         }
     };
 
-    const actualizarContrasenya = (contrasenya) => {
-        setContrasenya(contrasenya);
+    const updatePassword = (password) => {
+        setContrasenya(password);
         if (error) {
             SetError(false);
         }
     };
+
+    const Login = async () =>{
+        let json = {
+            name:user,
+            password:password
+        }
+        console.log(json)
+        let objTemp = await login(json);
+        props.navigation.navigate('RegisterScreen')
+    }
 
     return (
         <PaperProvider>
@@ -52,9 +63,9 @@ export const LoginScreen = (props) => {
                     <TextInput
                         label="Usuario"
                         mode='outlined'
-                        value={usuario}
-                        onChangeText={(usuario) => {
-                            actualizarUsuario(usuario);
+                        value={user}
+                        onChangeText={(user) => {
+                            updateUser(user);
                         }}
                         style={styles.input}
                         outlineColor={error ? 'red' : '#DA70D6'}
@@ -65,9 +76,9 @@ export const LoginScreen = (props) => {
                     <TextInput
                         label="Contraseña"
                         mode='outlined'
-                        value={contrasenya}
-                        onChangeText={(contrasenya) => {
-                            actualizarContrasenya(contrasenya);
+                        value={password}
+                        onChangeText={(password) => {
+                            actualizarContrasenya(password);
                         }}
                         outlineColor={error ? 'red' : '#DA70D6'}
                         activeOutlineColor={error ? 'red' : '#DA70D6'}
@@ -84,7 +95,7 @@ export const LoginScreen = (props) => {
                 >
                     Iniciar Sesión
                 </Button>
-                <Text style={styles.text} onPress={() => props.navigation.navigate('RegisterScreen')}>No tengo usuario</Text>
+                <Text style={styles.text} onPress={() => Login()}>No tengo usuario</Text>
             </ImageBackground>
         </PaperProvider>
     );

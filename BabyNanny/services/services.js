@@ -1,13 +1,13 @@
-export const login = async () => {
-    try {
-        const response = await fetch('http://');
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        }
-    }
-
-    catch (error) {
-        console.log(error);
-    }
-}
+export const login = async (newBabyData,token) => {
+  try {
+    const response = await fetch('https://api.ejemplo.com/bebes', {
+      method: 'POST',
+      body: JSON.stringify(newBabyData),
+    });
+    const json = await response.json();
+    console.log("Creado con éxito:", json);
+    return json
+  } catch (error) {
+    console.error("Error al crear:", error);
+  }
+};

@@ -11,38 +11,40 @@ import {
 } from 'react-native-paper';
 import { useState, useContext } from 'react';
 import { BabyCard } from '../components/DatosBebe';
-import { RegistroToma } from '../components/RegistroToma';
-import { RegistroSueño } from '../components/RegistroSueño';
 import Baby from '../context/Baby';
 import User from '../context/User';
-import { RegistroMedico } from '../components/RegistroMedico';
-import { CambioBebe } from '../components/CambioBebe';
+import { BabyChange } from '../components/CambioBebe';
 import { EditarDatos } from '../components/EditarDatos';
+import { SleepRecord } from '../components/RegistroSueño';
+import { MedicalRecord } from '../components/RegistroMedico';
+import { IntakeRecord } from '../components/RegistroToma';
 
 
-
-export const Home = () => {
-    const [tipo, setTipo] = useState();
+export const Home = (props) => {
+    const [type, setType] = useState();
     const { baby, setBaby } = useContext(Baby);
     const { user, setUser } = useContext(User);
-    const [mostrarModal, setMostrarModal] = useState(false);
-    const [entradas, setEntradas] = useState(baby.registroTomas);
-    const [editar, setEditar] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [entrys, setEntrys] = useState(baby.intakeRecord);
+    const [edit, setEdit] = useState(false);
 
 
     const openModal = () => {
-        setMostrarModal(true)
+        setShowModal(true)
     }
-    const cambiarBebe = (bebe) => {
-        console.log("Cambiando a bebe: " + bebe.nombre)
+    const changeBaby = (baby) => {
+        console.log("Cambiando a bebe: " + baby.name)
     }
         const save = (newChars) => {
-        let bebe = baby;
-        bebe.caracteristicas = newChars
-        console.log(bebe)
+        let newBaby = baby;
+        newBaby.assets = newChars
+        console.log(newBaby)
     }
     const deleteBaby = () =>{
-        console.log("Removing: baby:"+baby.id)
+        console.log("Removing baby:"+baby.id)
+    }
+    const goConfig = () =>{
+        props.navigation.navigate("Config");
     }
 
     return (
@@ -64,44 +66,44 @@ export const Home = () => {
 
 
                     <Text variant="headlineMedium" style={styles.title}>
-                        {baby.nombre}
+                        {baby.name}
                     </Text>
                     <Text variant="bodyMedium" style={styles.subtitle}>
                         Panel principal
                     </Text>
                 </Surface>
-                <BabyCard bebe={baby.caracteristicas} />
+                <BabyCard baby={baby.assets} />
                 <SegmentedButtons
-                    value={entradas}
-                    onValueChange={setEntradas}
+                    value={entrys}
+                    onValueChange={setEntrys}
                     buttons={[
                         {
-                            value: baby.registroTomas,
+                            value: baby.intakeRecord,
                             labelStyle: { color: "#DA70D6" },
                             label: 'Tomas',
                             style: { backgroundColor: "white" },
                         },
                         {
-                            value: baby.registroSueño,
+                            value: baby.sleepRecord,
                             labelStyle: { color: "#DA70D6" },
                             label: 'Sueño',
                             style: { backgroundColor: "white" },
                         },
-                        { value: baby.registroMedico, label: 'Medico', labelStyle: { color: "#DA70D6" }, style: { backgroundColor: "white" }, },
+                        { value: baby.medicalRecord, label: 'Medico', labelStyle: { color: "#DA70D6" }, style: { backgroundColor: "white" }, },
                     ]}
                 />
             </View>
             <FlatList
-                data={entradas}
+                data={entrys}
                 keyExtractor={(item, index) => item + index.toString()}
                 renderItem={({ item }) => {
-                    switch (item.tipo) {
+                    switch (item.type) {
                         case "Medico":
-                            return <RegistroMedico entry={item} />;
+                            return <MedicalRecord entry={item} />;
                         case "Toma":
-                            return <RegistroToma entry={item} />;
+                            return <IntakeRecord entry={item} />;
                         case "Sueño":
-                            return <RegistroSueño entry={item} />;
+                            return <SleepRecord entry={item} />;
                         default:
                             return;
                     }
@@ -112,7 +114,14 @@ export const Home = () => {
                 icon="pencil"
                 style={styles.fabEdit}
                 size='small'
-                onPress={() => setEditar(true)}
+                onPress={() => setEdit(true)}
+                animated={true}
+            />
+                        <FAB
+                icon="account"
+                style={styles.fabUser}
+                size='small'
+                onPress={() => goConfig()}
                 animated={true}
             />
             <FAB
@@ -122,12 +131,12 @@ export const Home = () => {
                 onPress={() => deleteBaby()}
                 animated={true}
             />
-            <Modal visible={editar} onDismiss={() => setEditar(false)} contentContainerStyle={styles.modal}>
-                <EditarDatos bebe={baby.caracteristicas} save={(newChars)=>save(newChars)}></EditarDatos>
+            <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
+                <EditarDatos baby={baby.assets} save={(newChars)=>save(newChars)}></EditarDatos>
             </Modal>
-            <Modal visible={mostrarModal} onDismiss={() => setMostrarModal(false)}
+            <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>
-                <CambioBebe bebes={user.bebes} funCom={cambiarBebe}></CambioBebe>
+                <BabyChange babies={user.babies} funCom={changeBaby}></BabyChange>
             </Modal>
         </View>
     );
@@ -176,6 +185,12 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 20,
         top: 190,
+    },
+    fabUser:{
+        position: 'absolute',
+        margin: 16,
+        right: 325,
+        top: 10,
     },
     modal: {
         justifyContent: 'center',
