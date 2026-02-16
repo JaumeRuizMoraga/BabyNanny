@@ -29,9 +29,9 @@ export const LoginScreen = (props) => {
             password: password
         }
         
-        let code = await login(json);
-        if (code === 204) {
-            setToken("cdb67999");
+        let response = await login(json);
+        if (response.status === 200) {
+            setToken(response.token);
             props.navigation.navigate('DrawerNavigator')
         }
         else {
