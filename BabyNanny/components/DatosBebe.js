@@ -1,0 +1,73 @@
+import { StyleSheet, View } from 'react-native';
+import { Card, Text, Divider, FAB, Modal } from 'react-native-paper';
+import { useState } from 'react';
+import { EditarDatos } from './EditarDatos';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
+
+export const BabyCard = (props) => {
+
+    const [edit,setEdit] = useState(false);
+    const {t} = useTranslation()
+    return (
+        <Card style={styles.card} mode="elevated">
+            <Card.Content>
+                <Text variant="titleMedium" style={styles.title}>
+                    {t('babyData')}
+                </Text>
+            
+                <Divider style={styles.divider} />
+                <View style={{flexDirection: 'row',justifyContent: "space-between" }}>
+                    <View style={{flexDirection: 'column' }}>
+
+                        <Text style={styles.label}>{t('age')} <Text style={{color:"#DA70D6"}}>{props.baby.age} {t('month')}</Text></Text>
+
+                        <Text style={styles.label}>{t('height')}  <Text style={{color:"#DA70D6"}}>{props.baby.height} cm</Text></Text>
+
+                        <Text style={styles.label}>{t('weight')}  <Text style={{color:"#DA70D6"}}>{props.baby.weight} kg</Text></Text>
+
+                    </View>
+
+                    <View style={{flexDirection: 'column'}}>
+                        <Text style={styles.label}>{t('avgIntk')} <Text style={{color:"#DA70D6"}}>{props.baby.intakePre} .mil</Text></Text>
+
+                        <Text style={styles.label}>{t('avgSleep')}  <Text style={{color:"#DA70D6"}}>{props.baby.sleepPre} .min</Text></Text>
+
+                    </View>
+                </View>
+            </Card.Content>
+        </Card>
+    );
+};
+
+const styles = StyleSheet.create({
+    card: {
+        borderRadius: 16,
+        marginVertical: 12,
+        backgroundColor: '#FFF',
+    },
+    title: {
+        fontWeight: 'bold',
+        color: '#DA70D6',
+        marginBottom: 6,
+    },
+    divider: {
+        marginVertical: 10,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 6,
+    },
+    label: {
+        color: '#555',
+        margin: '5',
+    },
+        fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 107,
+    },
+
+});

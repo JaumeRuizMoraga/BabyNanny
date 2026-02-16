@@ -1,0 +1,10 @@
+Archivo para indicar los tipos de peticiones HTTP que necisitara la App para funcionar:
+
+Peticiones tipo GET:
+1- Get de usuario => Devuelve un objeto usuario
+2- Get de bebe => Devuelve un objeto bebe
+3- Get de alimentacion => La lista completa de recetas
+Peticiones tipo POST:
+1- Post de nuevo bebe => Dar de alta un nuevo bebe en la tabla bebes
+2- Post de nuvo usuario => Dar de alta un nuevo usuario en la table usuarios
+¿Post de receta => Dar de alta una nueva receta en la tabla de alimentacion? (Opcional por el momento)

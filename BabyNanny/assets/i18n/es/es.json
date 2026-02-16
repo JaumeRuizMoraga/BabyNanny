@@ -1,0 +1,62 @@
+{
+    "configScreen":{
+        "data":"Datos",
+        "userName":"Nombre de usuario",
+        "lenguage":"Idioma",
+        "save":"Guardar"
+    },
+    "login":{
+        "welcome":"Bienvenido",
+        "user":"Usuario",
+        "password":"Contraseña",
+        "login":"Iniciar Sessión",
+        "noUser": "No tengo usuario"
+    },
+    "register":{
+        "register":"Registrarse",
+        "user":"Usuario",
+        "password":"Contraseña",
+        "mail":"Gmail",
+        "creatUser": "Crear Usuario"
+    },
+    "home":{
+        "babyData":"Datos del bebe",
+        "age":"Edad",
+        "height":"Altura",
+        "weight":"Peso",
+        "avgIntk":"Toma promedio",
+        "avgSleep":"Sueño por defecto",
+        "intk":"Tomas",
+        "month":"meses",
+        "errorWeight":"Formato de peso incorrecto",
+        "errorAge":"Formato de edad incorrecto",
+        "errorHeight":"Formato de altura incorrecto",
+        "errorIntk":"Formato de toma incorrecto",
+        "errorSleep":"Formato de sueño incorrecto",
+        "sleep":"Sueño",
+        "med":"Medico",
+        "date":"Fecha",
+        "medicine":"Medicamento",
+        "dosis":"Dosis",
+        "treatTime":"Duracion del tratamiento",
+        "selectBaby":"Seleccione otro bebé",
+        "save":"Guardar"
+    },
+    "sleepScreen":{
+        "manual":"MANUAL"
+    },
+    "newBaby":{
+        "babyData":"Datos del bebe",
+        "babyName":"Nombre del bebe",
+        "intkSleepPre":"Toma y sueño promedio",
+        "sleepPre": "Sueño promedio",
+        "tomaPre":"Toma promedio",
+        "babyHeight":"Selecciona la altura del bebe",
+        "babyWeight":"Slecciona el peso del bebe",
+        "save":"Guardar"
+    },
+    "noBaby":{
+        "message":"Oh...! Parece que no tienes ningún bebé registrado"
+    }
+
+}
