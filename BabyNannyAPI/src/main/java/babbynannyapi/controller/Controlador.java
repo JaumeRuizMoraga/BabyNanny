@@ -40,7 +40,7 @@ public class Controlador {
 		if (t.isPresent()) {
 			List<Baby> babyList = babyRepository.searchBabies(t.get().getUser());
 		    Map<String, List<Baby>> response = new HashMap<>();
-		    response.put("bebes", babyList);
+		    response.put("babies", babyList);
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
