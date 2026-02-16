@@ -35,7 +35,7 @@ public class Controlador {
 
 
 	@GetMapping("/babies")
-	ResponseEntity<Object> buscarBebes(@RequestParam(name = "token") String token){
+	ResponseEntity<Object> searchBabies(@RequestParam(name = "token") String token){
 		Optional<Token> t = tokenRepository.searchToken(token);
 		if (t.isPresent()) {
 			List<Baby> babyList = babyRepository.searchBabies(t.get().getUser());
@@ -155,14 +155,22 @@ public class Controlador {
      * @return ResponseEntity<?>
      */
     @PostMapping("/register")
-    ResponseEntity<?> registro(@RequestBody User user) {
+    ResponseEntity<?> register(@RequestBody User user) {
         Optional<User> userPassEmail = userRepository.searchUserPassEmail(user.getName(), user.getPassword(), user.getEmail());
+        Optional<Token> userToken = tokenRepository.searchUserToken(user.getName());
         if (userPassEmail.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         else {
-        	userRepository.save(user);
-            return ResponseEntity.status(HttpStatus.OK).build();
+        	if (userToken.isPresent()) {
+                return ResponseEntity.status(HttpStatus.OK).body(userToken.get().getToken());
+            }
+        	else {
+        		userRepository.save(user);
+        		Token token = new Token(user.getName());
+                tokenRepository.save(token);
+                return ResponseEntity.status(HttpStatus.OK).body(user);
+        	}
         }
     }
 }
