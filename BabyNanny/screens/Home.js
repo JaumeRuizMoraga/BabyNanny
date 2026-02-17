@@ -74,7 +74,7 @@ export const Home = (props) => {
                         {baby.name}
                     </Text>
                     <Text variant="bodyMedium" style={styles.subtitle}>
-                        Panel principal
+                        
                     </Text>
                 </Surface>
                 <BabyCard baby={baby.assets} />

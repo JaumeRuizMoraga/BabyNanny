@@ -7,8 +7,11 @@ import { Audio } from 'expo-av';
 import User from '../context/User';
 import Baby from '../context/Baby';
 import { sendSleep, sendIntake } from '../utils/utils';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const SleepScreen = (props) => {
+    const {t} = useTranslation()
     const [manual, setManual] = useState(false)
     const [playing, setPlaying] = useState(false)
     const [song, setSong] = useState();
@@ -72,7 +75,7 @@ export const SleepScreen = (props) => {
                     <Button onPress={() => setManual(true)}
                         textColor='#DA70D6'
                         labelStyle={{ fontSize: 20 }}
-                        style={styles.butonManual}>M A N U A L</Button>
+                        style={styles.butonManual}>{t('sleepScreen.manual')}</Button>
                 </Surface>
                 <Modal visible={manual} onDismiss={() => setManual(false)}
                     contentContainerStyle={styles.modal}>

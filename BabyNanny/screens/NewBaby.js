@@ -4,6 +4,8 @@ import { RulerPicker } from 'react-native-ruler-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState, useContext } from 'react'
 import { getAgeMonth } from '../utils/utils';
+import { newBaby } from '../services/services';
+import Token from '../context/Token';
 
 import User from '../context/User';
 
@@ -19,6 +21,7 @@ export const NewBaby = (props) => {
     const [errorIntake, setErrorIntake] = useState(false)
     const [date, setDate] = useState(new Date);
     const [showDate, setShowDate] = useState(false)
+    const {token,setToken} = useContext(Token);
 
 
     const intakeFormat = /^(\d+)$|^(\d*\.\d+)$/;
@@ -32,16 +35,14 @@ export const NewBaby = (props) => {
 
     }
 
-    const assembleBaby = () => {
+    const assembleBaby = async() => {
         let baby = {
-            id: "idMongo",
             name: name,
             tutors: [user.user],
-            icon: require('../assets/img/baby_icon.png'),
             intakeRecord: [],
             sleepRecord: [],
             medicalRecord: [],
-            assets: {
+            features: {
                 height: height,
                 weight: weight,
                 age: age,
@@ -50,7 +51,8 @@ export const NewBaby = (props) => {
             },
             events: []
         }
-        console.log(baby)
+        let response = await newBaby(baby,token);
+        console.log(response)
         props.navigation.navigate("Home")
     }
 

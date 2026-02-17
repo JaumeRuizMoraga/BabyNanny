@@ -7,7 +7,7 @@ import { NewBaby } from './NewBaby.js';
 import Baby from '../context/Baby.js'
 import User from '../context/User.js'
 import Token from '../context/Token.js';
-import { getData } from '../services/services.js';
+import { getDataBabies } from '../services/services.js';
 
 import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
@@ -16,7 +16,13 @@ export const DrawerNavigator = () => {
     const {user,setUser} = useContext(User)
     const {token,setToken} = useContext(Token);
 
-    const [noBaby, setNoBaby] = useState(true)
+    const [noBaby, setNoBaby] = useState(false)
+
+    const getUser = async() =>{
+        let babies = await getDataBabies(token)
+        console.log(babies)
+    }
+
     const draweOptrions = {
         drawerType: 'slide',
         drawerActiveTintColor: 'white',
@@ -40,7 +46,7 @@ export const DrawerNavigator = () => {
     }
 
     useEffect(() => {
-        getData(token);
+        getUser(token);
     }, []);
 
 

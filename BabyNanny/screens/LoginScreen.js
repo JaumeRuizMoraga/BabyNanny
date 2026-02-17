@@ -29,9 +29,9 @@ export const LoginScreen = (props) => {
             password: password
         }
         
-        let code = await login(json);
-        if (code === 204) {
-            setToken("cdb67999");
+        let response = await login(json);
+        if (response.status === 200) {
+            setToken(response.token);
             props.navigation.navigate('DrawerNavigator')
         }
         else {
@@ -90,16 +90,16 @@ export const LoginScreen = (props) => {
                     />
                 </Animated.View>
                 <HelperText type="error" visible={error} style={styles.error}>
-                    Contraseña o usuario incorrectos
+                    {t('login.error')}
                 </HelperText>
                 <Button
                     mode="contained"
                     onPress={loginFull}
                     style={styles.button}
                 >
-                    Iniciar Sesión
+                    {t('login.login')}
                 </Button>
-                <Text style={styles.text} onPress={() => props.navigation.navigate('RegisterScreen')}>No tengo usuario</Text>
+                <Text style={styles.text} onPress={() => props.navigation.navigate('RegisterScreen')}>{t('login.noUser')}</Text>
             </ImageBackground>
         </PaperProvider>
     );

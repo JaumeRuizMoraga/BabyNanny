@@ -10,14 +10,16 @@
         "user":"Usuario",
         "password":"Contraseña",
         "login":"Iniciar Sessión",
-        "noUser": "No tengo usuario"
+        "noUser": "No tengo usuario",
+        "error":"Contraseña o usuario incorrectos"
     },
     "register":{
         "register":"Registrarse",
         "user":"Usuario",
         "password":"Contraseña",
         "mail":"Gmail",
-        "creatUser": "Crear Usuario"
+        "creatUser": "Crear Usuario",
+         "error": "El Usuario ya existe"
     },
     "home":{
         "babyData":"Datos del bebe",
