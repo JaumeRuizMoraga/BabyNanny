@@ -45,11 +45,12 @@
                 "save":"Save"
     },
     "sleepScreen": {
-        "manual": "MANUAL"
+        "manual": "M A N U A L"
     },
     "newBaby": {
         "babyData": "Baby's Data",
         "babyName": "Baby's Name",
+        "optionalData":"This data is not mandatory",
         "intkSleepPre": "Average intake and sleep",
         "sleepPre": "Average sleep",
         "tomaPre": "Average intake",

@@ -1,20 +1,21 @@
-export const sendIntake = (intake) => {
+import { newEntry } from "../services/services";
+export const sendIntake = (intake,idBebe,token) => {
     const date = new Date();
     let intakeEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
-        type: "Toma",
+        type: "intake",
         description: intake
     }
-    console.log(intakeEntry)
+    console.log(newEntry(intakeEntry,idBebe,token))
 }
-export const sendSleep = (sleep) => {
+export const sendSleep = (sleep,idBebe,token) => {
     const date = new Date();
     let sleepEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
-        type: "Sueño",
+        type: "sleep",
         description: sleep
     }
-    console.log(sleepEntry)
+    console.log(newEntry(sleepEntry,idBebe,token))
 }
 
 const intakeFormat = /^(\d+)$|^(\d*\.(\d|\d\d))$/;
@@ -85,4 +86,9 @@ export const getAgeMonth = (stringDate) => {
         monthAge--;
     }
     return monthAge
+}
+export const getLocalBaby = (arrayBabies,nameBaby) => {
+    let result = arrayBabies.filter((elem)=> elem.name == nameBaby);
+
+    return result[0]
 }

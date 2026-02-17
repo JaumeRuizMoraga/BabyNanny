@@ -6,10 +6,13 @@ import { useState, useContext } from 'react'
 import { getAgeMonth } from '../utils/utils';
 import { newBaby } from '../services/services';
 import Token from '../context/Token';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 
 import User from '../context/User';
 
 export const NewBaby = (props) => {
+    const {t} = useTranslation()
     const [height, setHeight] = useState();
     const { user, setUser } = useContext(User)
     const [weight, setWeight] = useState(0);
@@ -51,8 +54,11 @@ export const NewBaby = (props) => {
             },
             events: []
         }
-        let response = await newBaby(baby,token);
-        console.log(response)
+        // let response = await newBaby(baby,token);
+        // console.log(response)
+        let userTemp = user
+        userTemp.babies.push(baby)
+        setUser(userTemp)
         props.navigation.navigate("Home")
     }
 
@@ -90,8 +96,8 @@ export const NewBaby = (props) => {
         <View style={styles.layout}>
             <ScrollView>
                 <Surface elevation={2} style={styles.container}>
-                    <Text style={styles.title}>Datos de tu bebé</Text>
-                    <TextInput style={styles.input} onChangeText={(text) => changeName(text)} label={"Baby's name"}></TextInput>
+                    <Text style={styles.title}>{t('newBaby.babyData')}</Text>
+                    <TextInput style={styles.input} onChangeText={(text) => changeName(text)} label={t('newBaby.babyName')}></TextInput>
                     <TextInput style={styles.input} mode='outlined' right={<TextInput.Icon icon="calendar" />} placeholder={date.toDateString()}
                         onPress={() => setShowDate(true)}></TextInput>
                     {
@@ -101,22 +107,22 @@ export const NewBaby = (props) => {
 
                 </Surface>
                 <Surface elevation={2} style={styles.container}>
-                    <Text style={styles.title}>Introduce el sueño y toma predeterminado</Text>
-                    <Text style={styles.helper}>(Estos campos no son obligatorios)</Text>
+                    <Text style={styles.title}>{t('newBaby.intkSleepPre')}</Text>
+                    <Text style={styles.helper}>({t('newBaby.optionalData')})</Text>
                     <View style={{ flexDirection: "column" }}>
-                        <TextInput style={styles.input} label={"Sueño predeterminado"}
+                        <TextInput style={styles.input} label={t('newBaby.sleepPre')}
                             onChangeText={(text) => changeSleep(text)}></TextInput>
-                        <HelperText type='error' visible={errorSleep}>Formato de sueño incorrecto</HelperText>
+                        <HelperText type='error' visible={errorSleep}>{t('home.errorSleep')}</HelperText>
 
-                        <TextInput style={styles.input} label={"Toma predeterminada"}
+                        <TextInput style={styles.input} label={t('newBaby.tomaPre')}
                             onChangeText={(text) => changeIntake(text)}></TextInput>
-                        <HelperText type='error' visible={errorIntake}>Formato de toma incorrecto</HelperText>
+                        <HelperText type='error' visible={errorIntake}>{t('home.errorIntk')}</HelperText>
 
                     </View>
                 </Surface>
                 <View style={{ backgroundColor: '#DA70D6', borderRadius: 10, margin: 10 }}>
 
-                    <Text style={styles.title2}>Indica la altura del bebe</Text>
+                    <Text style={styles.title2}>{t('newBaby.babyHeight')}</Text>
                 </View>
                 <View style={styles.rotate}>
                     <RulerPicker
@@ -140,7 +146,7 @@ export const NewBaby = (props) => {
                 </View>
                 <View style={{ backgroundColor: '#DA70D6', borderRadius: 10, margin: 10 }}>
 
-                    <Text style={styles.title2}>Indica el peso</Text>
+                    <Text style={styles.title2}>{t('newBaby.babyWeight')}</Text>
                 </View>
 
                 <View style={styles.rotate}>
@@ -164,7 +170,7 @@ export const NewBaby = (props) => {
                     />
                 </View>
                 <Button mode='outlined' textColor='#DA70D6'
-                    style={styles.boton} onPress={() => assembleBaby()}>Guardar</Button>
+                    style={styles.boton} onPress={() => assembleBaby()}>{t('newBaby.save')}</Button>
             </ScrollView>
         </View>
     );

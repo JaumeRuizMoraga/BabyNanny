@@ -45,13 +45,14 @@
         "save":"Guardar"
     },
     "sleepScreen":{
-        "manual":"MANUAL"
+        "manual":"M A N U A L"
     },
     "newBaby":{
         "babyData":"Datos del bebe",
         "babyName":"Nombre del bebe",
         "intkSleepPre":"Toma y sueño promedio",
         "sleepPre": "Sueño promedio",
+                "optionalData":"Estos campos no son obligatorios",
         "tomaPre":"Toma promedio",
         "babyHeight":"Selecciona la altura del bebe",
         "babyWeight":"Slecciona el peso del bebe",

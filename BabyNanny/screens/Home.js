@@ -10,7 +10,11 @@ import {
     Modal
 } from 'react-native-paper';
 import { useState, useContext, useTransition } from 'react';
-import { BabyCard } from '../components/DatosBebe';
+import { BabyCard } from '../components/DatosBebe'
+;
+import { logout } from '../services/services';
+import { deleteBaby } from '../services/services';
+
 import Baby from '../context/Baby';
 import User from '../context/User';
 import { BabyChange } from '../components/CambioBebe';
@@ -21,13 +25,14 @@ import { IntakeRecord } from '../components/RegistroToma';
 import { comprobarDatosCompleto } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
+import { getLocalBaby } from '../utils/utils';
 
 
 
 export const Home = (props) => {
     const [type, setType] = useState();
-    const { baby, setBaby } = useContext(Baby);
-    const { user, setUser } = useContext(User);
+        const { user, setUser } = useContext(User);
+    const [ baby, setBaby ] = useState(user.babies[0]);
     const [showModal, setShowModal] = useState(false);
     const [entrys, setEntrys] = useState(baby.intakeRecord);
     const [edit, setEdit] = useState(false);
@@ -38,15 +43,20 @@ export const Home = (props) => {
         setShowModal(true)
     }
     const changeBaby = (baby) => {
-        console.log("Cambiando a bebe: " + baby.name)
+        console.log("Cambiando bebe")
+       setBaby(getLocalBaby(user.babies,baby.name))
+       setShowModal(false)
     }
         const save = (newChars) => {
         let newBaby = baby;
         newBaby.assets = newChars
         console.log(newBaby)
     }
-    const deleteBaby = () =>{
-        console.log("Removing baby:"+baby.id)
+    const DeleteBaby = () =>{
+        let response = deleteBaby(baby.id)
+        if(response === 0){
+            console.log("Todo bien")
+        }
     }
     const goConfig = () =>{
         props.navigation.navigate("Config");
@@ -54,6 +64,7 @@ export const Home = (props) => {
 
     return (
         <View style={styles.root}>
+            {console.log(user.babies)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
 
@@ -133,7 +144,7 @@ export const Home = (props) => {
                 icon="delete"
                 style={styles.fabDelete}
                 size='small'
-                onPress={() => deleteBaby()}
+                onPress={() => DeleteBaby()}
                 animated={true}
             />
             <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
@@ -141,7 +152,7 @@ export const Home = (props) => {
             </Modal>
             <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>
-                <BabyChange babies={user.babies} funCom={changeBaby}></BabyChange>
+                <BabyChange goLogin={props.goLogin} babies={user.babies} funCom={(nameBaby)=>changeBaby(nameBaby)}></BabyChange>
             </Modal>
         </View>
     );
