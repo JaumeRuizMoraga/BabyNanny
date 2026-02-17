@@ -178,7 +178,7 @@ public class Controlador {
 	
 	/**
      * Creates a new token in the database with the information provided in the request body.
-     * @param user. The user object containing the registration details.
+     * @param user The user object containing the registration details.
      * @return a {@code ResponseEntity} with HTTP 200 OK if the baby is created successfully, 
      * or HTTP 401 Unauthorized if the user don't have a correct token.
      */
@@ -203,8 +203,8 @@ public class Controlador {
     
     /**
      * Creates a new baby in the database with the information provided in the request body.
-     * @param baby. The baby object containing the baby information.
-     * @param token. A identification for the user.
+     * @param baby The baby object containing the baby information.
+     * @param token A identification for the user.
      * @return a {@code ResponseEntity} with HTTP 200 OK if the baby is created successfully, 
      * or HTTP 401 Unauthorized if the user don't have a correct token.
      */
@@ -227,7 +227,7 @@ public class Controlador {
 
     /**
      * Creates a new user in the database with the information provided in the request body.
-     * @param user. The user object containing the registration details.
+     * @param user The user object containing the registration details.
      * @return a {@code ResponseEntity} with HTTP 200 OK if the user is created successfully, 
      * or HTTP 403 Forbidden if the user already exists.
      */
