@@ -128,10 +128,6 @@ export const deleteBaby = async(idBebe) => {
 }
 export const newEntry = async(registro,idBebe,token) => {
         try {
-        console.log("Entrando new entry")
-        console.log(registro)
-        console.log(idBebe)
-        console.log(token)
         const response = await fetch('http://52.2.207.230:8080/BabyNanny/newEntry/'+idBebe, {
             method: 'PUT',
             headers: {
@@ -142,7 +138,32 @@ export const newEntry = async(registro,idBebe,token) => {
             body: JSON.stringify(registro)
 
         });
-        console.log(response)
+        if (response.ok) {
+            return  204 
+        } else {
+            return null
+        }
+
+
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    } }
+
+    export const changeImage = async(imagenBase64,idBebe,token) => {
+        console.log(imagenBase64);
+        console.log(idBebe);
+        console.log(token);
+        try {
+        const response = await fetch('http://52.2.207.230:8080/BabyNanny/changeImage/'+idBebe, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'token':token
+            },
+            body: JSON.stringify(imagenBase64)
+
+        });
         if (response.ok) {
             return  204 
         } else {
@@ -153,4 +174,5 @@ export const newEntry = async(registro,idBebe,token) => {
     } catch (error) {
         console.error("Error en la conexión:", error);
     }
+
 }

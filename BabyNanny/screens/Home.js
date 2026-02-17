@@ -11,19 +11,13 @@ import {
 } from 'react-native-paper';
 import { useState, useContext, useTransition } from 'react';
 import { BabyCard } from '../components/DatosBebe'
-import { PermissionsAndroid, Platform, Alert } from 'react-native';
-;
-import { logout } from '../services/services';
-import { deleteBaby } from '../services/services';
-
-import Baby from '../context/Baby';
+import { changeImage, deleteBaby } from '../services/services';
 import User from '../context/User';
 import { BabyChange } from '../components/CambioBebe';
 import { EditarDatos } from '../components/EditarDatos';
 import { SleepRecord } from '../components/RegistroSueño';
 import { MedicalRecord } from '../components/RegistroMedico';
 import { IntakeRecord } from '../components/RegistroToma';
-import { comprobarDatosCompleto } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import { getLocalBaby } from '../utils/utils';
@@ -41,7 +35,7 @@ export const Home = (props) => {
     const [edit, setEdit] = useState(false);
     const {t} = useTranslation()
      const [modalVisible, setModalVisible] = useState(false);
-     const [babyImage, setBabyImage] = useState("");
+   
 
 
     const openModal = () => {
@@ -73,7 +67,7 @@ const openCamera = async () => {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
     if (permissionResult.granted === false) {
-        alert("¡Te has negado a permitir que esta aplicación use tu cámara!");
+        alert("Te has negado a permitir que esta aplicación use tu cámara");
         return;
     }
 
@@ -84,8 +78,7 @@ const openCamera = async () => {
     });
 
     if (!result.canceled) {
-        console.log(result.assets[0].uri);
-        setBabyImage(result.assets[0].uri)
+         changeImage(result.assets[0].base64, baby.id, token.token)
         // Aquí se actualiza el icono del bebé
         setModalVisible(false);
     }
@@ -104,11 +97,13 @@ const openLibrary = async () => {
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
+        base64 : true,
     });
 
     if (!result.canceled) {
-        console.log(result.assets[0].uri);
-        setBabyImage(result.assets[0].uri)
+        //result.assets[0].base64 esto devuelve la imagen en base64
+        //result.assets[0].uri esto devuelve la ruta de la imagen en el movil
+        changeImage(result.assets[0].base64, baby.id, token.token)
         // Aquí se actualiza el icono del bebé
         setModalVisible(false);
     }
