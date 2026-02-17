@@ -57,14 +57,29 @@ public class Controlador {
 	}
 	
 	@DeleteMapping("/deleteBaby/{id}")
-    public ResponseEntity<Void> deleteBaby(@PathVariable String id) {
-		Optional<Token> t = tokenRepository.findById(id);
+    public ResponseEntity<Void> deleteBaby(@PathVariable String id, @RequestHeader String token) {
+		Optional<Token> t = tokenRepository.searchToken(token);
 		if(t.isPresent()){
-			tokenRepository.deleteById(id);
+			Optional<Baby> optionalBaby = babyRepository.findById(id);
+			Baby baby = optionalBaby.get();
+			deleteBabyFromUser(baby);
+			babyRepository.deleteById(id);
 	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+    }
+	
+	public void deleteBabyFromUser(Baby baby) {
+		List<String> userList = baby.getTutors();
+		for(String s : userList) {
+			Optional<User> optionalUser = userRepository.findByName(s);
+			User user = optionalUser.get();
+			List<String> babyList = user.getBabies();
+			babyList.remove(baby.getId());
+			user.setBabies(babyList);
+			userRepository.save(user);
 		}
     }
 	
@@ -137,11 +152,14 @@ public class Controlador {
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
-    /**
-     * Función utilitzada para que un usuario haga login y se le genere un token
-     * @param user
-     * @return ResponseEntity<?>
+	
+	/**
+     * Creates a new token in the database with the information provided in the request body.
+     * @param user. The user object containing the registration details.
+     * @return a {@code ResponseEntity} with HTTP 200 OK if the baby is created successfully, 
+     * or HTTP 401 Unauthorized if the user don't have a correct token.
      */
+	
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody User user){
         Optional<User> userObj = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
@@ -159,6 +177,14 @@ public class Controlador {
         }
     }
     
+    
+    /**
+     * Creates a new baby in the database with the information provided in the request body.
+     * @param baby. The baby object containing the baby information.
+     * @param token. A identification for the user.
+     * @return a {@code ResponseEntity} with HTTP 200 OK if the baby is created successfully, 
+     * or HTTP 401 Unauthorized if the user don't have a correct token.
+     */
     @PostMapping("/newBaby")
     public ResponseEntity<Object> newBaby(@RequestBody Baby baby, @RequestHeader String token){
     	Optional<Token> t = tokenRepository.searchToken(token);
@@ -171,9 +197,10 @@ public class Controlador {
     }
 
     /**
-     * Función utilitzada pera registrar un usuario en la base de datos
-     * @param user
-     * @return ResponseEntity<?>
+     * Creates a new user in the database with the information provided in the request body.
+     * @param user. The user object containing the registration details.
+     * @return a {@code ResponseEntity} with HTTP 200 OK if the user is created successfully, 
+     * or HTTP 403 Forbidden if the user already exists.
      */
     @PostMapping("/register")
     ResponseEntity<?> register(@RequestBody User user) {
