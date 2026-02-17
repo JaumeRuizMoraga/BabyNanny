@@ -23,7 +23,6 @@ public class Baby {
 
     public Baby() {
     }
-
     public Baby(String id, String name, List<String> tutors, String image, String icon, List<String> intakeRecord, List<String> sleepRecord, List<String> medicalRecord, Map<String, Object> features, List<String> events) {
         this.id = id;
         this.name = name;

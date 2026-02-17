@@ -13,4 +13,6 @@ import java.util.Optional;
 
 public interface MedicalRecordRepository extends MongoRepository<MedicalRecord, String> {
 
+	@Query(value = "{ 'tutors': ?0}")
+    List<MedicalRecord> searchBabies(String id);
 }
