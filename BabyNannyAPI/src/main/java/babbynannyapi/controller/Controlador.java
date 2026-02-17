@@ -162,8 +162,15 @@ public class Controlador {
     @PostMapping("/newBaby")
     public ResponseEntity<Object> newBaby(@RequestBody Baby baby, @RequestHeader String token){
     	Optional<Token> t = tokenRepository.searchToken(token);
+
     	if (t.isPresent()) {
-    		babyRepository.save(baby);
+            babyRepository.save(baby);
+            List<String> babyList;
+            Optional<User> user = userRepository.findByName(t.get().getUser());
+            babyList = user.get().getBabies();
+            babyList.add(baby.getId());
+            user.get().setBabies(babyList);
+            userRepository.save(user.get());
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
