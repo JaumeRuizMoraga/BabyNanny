@@ -64,7 +64,7 @@ export const Home = (props) => {
 
     return (
         <View style={styles.root}>
-            {console.log(user.babies)}
+            {console.log(props.goLogin)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
 
@@ -88,7 +88,7 @@ export const Home = (props) => {
                         
                     </Text>
                 </Surface>
-                <BabyCard baby={baby.assets} />
+                <BabyCard baby={baby.features} />
                 <SegmentedButtons
                     value={entrys}
                     onValueChange={setEntrys}
