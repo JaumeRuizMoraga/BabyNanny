@@ -71,6 +71,7 @@ public class Controlador {
 		}
     }
 	
+	@PutMapping
 	public void deleteBabyFromUser(Baby baby) {
 		List<String> userList = baby.getTutors();
 		for(String s : userList) {
@@ -87,6 +88,21 @@ public class Controlador {
 					System.out.println("AAAAAAAAAAAAAAAAAAAAaa");
 				}
 			}
+		}
+    }
+	
+	@PutMapping("/changeImage/{id}")
+	public ResponseEntity<Object> changeImage(@PathVariable String id, @RequestHeader String token, @RequestBody Map<String, Object> image) {
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if(t.isPresent()){
+			Optional<Baby> optionalBaby = babyRepository.findById(id);
+			Baby baby = optionalBaby.get();
+			baby.setImage(image.get("image").toString());
+			babyRepository.save(baby);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
     }
 	

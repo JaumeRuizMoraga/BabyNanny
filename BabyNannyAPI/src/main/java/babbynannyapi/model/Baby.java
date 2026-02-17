@@ -14,7 +14,7 @@ public class Baby {
     private String name;
     private List<String> tutors;
     private String image;
-    private List<Byte> icon;
+    private String icon;
     private List<String> intakeRecord;
     private List<String> sleepRecord;
     private List<String> medicalRecord;
@@ -24,7 +24,7 @@ public class Baby {
     public Baby() {
     }
 
-    public Baby(String id, String name, List<String> tutors, String image, List<Byte> icon, List<String> intakeRecord, List<String> sleepRecord, List<String> medicalRecord, Map<String, Object> features, List<String> events) {
+    public Baby(String id, String name, List<String> tutors, String image, String icon, List<String> intakeRecord, List<String> sleepRecord, List<String> medicalRecord, Map<String, Object> features, List<String> events) {
         this.id = id;
         this.name = name;
         this.tutors = tutors;
@@ -69,11 +69,11 @@ public class Baby {
         this.image = image;
     }
 
-    public List<Byte> getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(List<Byte> icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
