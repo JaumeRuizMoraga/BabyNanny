@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
+import { View, StyleSheet, ScrollView, FlatList, Pressable } from 'react-native';
 import {
     Button,
     Text,
@@ -11,6 +11,7 @@ import {
 } from 'react-native-paper';
 import { useState, useContext, useTransition } from 'react';
 import { BabyCard } from '../components/DatosBebe'
+import { PermissionsAndroid, Platform, Alert } from 'react-native';
 ;
 import { logout } from '../services/services';
 import { deleteBaby } from '../services/services';
@@ -26,6 +27,8 @@ import { comprobarDatosCompleto } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import { getLocalBaby } from '../utils/utils';
+import * as ImagePicker from 'expo-image-picker';
+
 
 
 
@@ -37,6 +40,8 @@ export const Home = (props) => {
     const [entrys, setEntrys] = useState(baby.intakeRecord);
     const [edit, setEdit] = useState(false);
     const {t} = useTranslation()
+     const [modalVisible, setModalVisible] = useState(false);
+     const [babyImage, setBabyImage] = useState("");
 
 
     const openModal = () => {
@@ -62,12 +67,60 @@ export const Home = (props) => {
         props.navigation.navigate("Config");
     }
 
+
+const openCamera = async () => {
+    // Expo pide los permisos automáticamente con esta función
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+        alert("¡Te has negado a permitir que esta aplicación use tu cámara!");
+        return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true, // Permite recortar la foto
+        aspect: [1, 1],      // La deja cuadrada para el Avatar
+        quality: 1,
+    });
+
+    if (!result.canceled) {
+        console.log(result.assets[0].uri);
+        setBabyImage(result.assets[0].uri)
+        // Aquí se actualiza el icono del bebé
+        setModalVisible(false);
+    }
+};
+
+const openLibrary = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+        alert("¡Te has negado a permitir que esta aplicación acceda a tus fotos!");
+        return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+    });
+
+    if (!result.canceled) {
+        console.log(result.assets[0].uri);
+        setBabyImage(result.assets[0].uri)
+        // Aquí se actualiza el icono del bebé
+        setModalVisible(false);
+    }
+};
+  
+
     return (
         <View style={styles.root}>
             {console.log(user.babies)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
-
+                  
                     <FAB
                         icon={() => (
                             <Avatar.Image
@@ -78,8 +131,10 @@ export const Home = (props) => {
                         style={styles.fab}
                         onPress={() => openModal()}
                     />
-                    <Avatar.Image size={140} source={baby.icon} />
-
+                   <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                   <Avatar.Image size={140} source={baby.icon} />
+                   </Pressable>
+                   
 
                     <Text variant="headlineMedium" style={styles.title}>
                         {baby.name}
@@ -154,6 +209,43 @@ export const Home = (props) => {
                 contentContainerStyle={styles.modal}>
                 <BabyChange goLogin={props.goLogin} babies={user.babies} funCom={(nameBaby)=>changeBaby(nameBaby)}></BabyChange>
             </Modal>
+            <Modal 
+    visible={modalVisible} 
+    onDismiss={() => setModalVisible(false)} 
+    contentContainerStyle={styles.imagePickerModal} 
+>
+    <Text style={styles.modalTitle}>Seleccionar imagen</Text>
+    
+    <View style={styles.buttonContainer}>
+        <Button 
+            mode="contained" 
+            icon="camera" 
+            onPress={openCamera}
+            style={styles.optionButton}
+            buttonColor="#DA70D6"
+        >
+            Usar Cámara
+        </Button>
+
+        <Button 
+            mode="contained" 
+            icon="image-album" 
+            onPress={openLibrary}
+            style={styles.optionButton}
+            buttonColor="#DA70D6"
+        >
+            Abrir Galería
+        </Button>
+    </View>
+
+    <Button 
+        onPress={() => setModalVisible(false)} 
+        textColor="red" 
+        style={{marginTop: 10}}
+    >
+        Cancelar
+    </Button>
+</Modal>
         </View>
     );
 };
@@ -217,5 +309,27 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 10,
         borderColor: "#DA70D6"
+    },
+    imagePickerModal: {
+        backgroundColor: 'white',
+        padding: 20,
+        marginHorizontal: 40, // Esto le da el ancho centrado
+        borderRadius: 20,
+        alignItems: 'center',
+       
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#DA70D6',
+        marginBottom: 20,
+    },
+    buttonContainer: {
+        width: '100%',
+    },
+    optionButton: {
+        marginBottom: 10,
+        width: '100%',
+        paddingVertical: 5,
     },
 });
