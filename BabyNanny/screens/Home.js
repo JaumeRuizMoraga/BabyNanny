@@ -22,6 +22,7 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import { getLocalBaby } from '../utils/utils';
 import * as ImagePicker from 'expo-image-picker';
+import Token from '../context/Token';
 
 
 
@@ -29,7 +30,9 @@ import * as ImagePicker from 'expo-image-picker';
 export const Home = (props) => {
     const [type, setType] = useState();
         const { user, setUser } = useContext(User);
+        const { token, setToken } = useContext(Token);
     const [ baby, setBaby ] = useState(user.babies[0]);
+    
     const [showModal, setShowModal] = useState(false);
     const [entrys, setEntrys] = useState(baby.intakeRecord);
     const [edit, setEdit] = useState(false);
@@ -103,7 +106,10 @@ const openLibrary = async () => {
     if (!result.canceled) {
         //result.assets[0].base64 esto devuelve la imagen en base64
         //result.assets[0].uri esto devuelve la ruta de la imagen en el movil
-        changeImage(result.assets[0].base64, baby.id, token.token)
+        const obj = {
+            image : result.assets[0].base64
+        }
+        changeImage(obj, baby.id, token.token)
         // Aquí se actualiza el icono del bebé
         setModalVisible(false);
     }
