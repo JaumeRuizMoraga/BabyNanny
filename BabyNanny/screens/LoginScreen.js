@@ -25,20 +25,23 @@ export const LoginScreen = (props) => {
     };
 
     const loginFull = async () => {
-        // let json = {
-        //     name: user,
-        //     password: password
-        // }
+        let json = {
+            name: user,
+            password: password
+        }
         
-        // let response = await login(json);
-        // if (response.status === 200) {
-        //     setToken(response.token);
+
+        let response = await login(json);
+        if (response.status === 200) {
+            setToken(response.token);
+            console.log("Yendo a drawer")
+
             props.navigation.navigate('DrawerNavigator')
-        // }
-        // else {
-        //     SetError(true);
-        //     shake();
-        // }
+        }
+        else {
+            SetError(true);
+            shake();
+        }
     };
 
     const updateUser = (user) => {

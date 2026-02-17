@@ -1,21 +1,21 @@
 import { newEntry } from "../services/services";
-export const sendIntake = (intake,idBebe,token) => {
+export const sendIntake = async (intake,idBebe,token) => {
     const date = new Date();
     let intakeEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
-        type: "intake",
-        description: intake
+        type: "intakeRecord",
+        amount: intake
     }
-    console.log(newEntry(intakeEntry,idBebe,token))
+    console.log( await newEntry(intakeEntry,idBebe,token))
 }
-export const sendSleep = (sleep,idBebe,token) => {
+export const sendSleep = async (sleep,idBebe,token) => {
     const date = new Date();
     let sleepEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
-        type: "sleep",
-        description: sleep
+        type: "sleepRecord",
+        timeSleep: sleep
     }
-    console.log(newEntry(sleepEntry,idBebe,token))
+    console.log( await newEntry(sleepEntry,idBebe,token))
 }
 
 const intakeFormat = /^(\d+)$|^(\d*\.(\d|\d\d))$/;
