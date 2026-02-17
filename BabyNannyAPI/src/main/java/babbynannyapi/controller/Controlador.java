@@ -75,11 +75,18 @@ public class Controlador {
 		List<String> userList = baby.getTutors();
 		for(String s : userList) {
 			Optional<User> optionalUser = userRepository.findByName(s);
-			User user = optionalUser.get();
-			List<String> babyList = user.getBabies();
-			babyList.remove(baby.getId());
-			user.setBabies(babyList);
-			userRepository.save(user);
+			if (optionalUser.isPresent()) {
+				User user = optionalUser.get();
+				List<String> babyList = user.getBabies();
+				boolean removed = babyList.remove(baby.getId());
+				if (removed) {
+	                user.setBabies(new ArrayList<>(babyList));
+	                userRepository.save(user);
+	            }
+				else{
+					System.out.println("AAAAAAAAAAAAAAAAAAAAaa");
+				}
+			}
 		}
     }
 	
@@ -189,7 +196,13 @@ public class Controlador {
     public ResponseEntity<Object> newBaby(@RequestBody Baby baby, @RequestHeader String token){
     	Optional<Token> t = tokenRepository.searchToken(token);
     	if (t.isPresent()) {
-    		babyRepository.save(baby);
+            babyRepository.save(baby);
+            List<String> babyList;
+            Optional<User> user = userRepository.findByName(t.get().getUser());
+            babyList = user.get().getBabies();
+            babyList.add(baby.getId());
+            user.get().setBabies(babyList);
+            userRepository.save(user.get());
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
