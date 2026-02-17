@@ -5,7 +5,7 @@ import { SelectorSleepToma } from '../components/SelectorSleepToma';
 import { useContext } from 'react';
 import { Audio } from 'expo-av';
 import User from '../context/User';
-import Baby from '../context/Baby';
+import Token from '../context/Token';
 import { sendSleep, sendIntake } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
@@ -16,15 +16,16 @@ export const SleepScreen = (props) => {
     const [playing, setPlaying] = useState(false)
     const [song, setSong] = useState();
     const { user, setUser } = useContext(User);
-    const { baby, setBaby } = useContext(Baby);
+    const {token,setToken} = useContext(Token);
+    const [ baby, setBaby ] = useContext(user.babies[0]);
 
 
 
     const postSleep = () => {
-        sendSleep(baby.assets.sleepPre);
+        sendSleep(baby.assets.sleepPre,baby.id,token.token);
     }
     const postIntake = () => {
-        sendIntake(baby.assets.intakePre);
+        sendIntake(baby.assets.intakePre,baby.id,token.token);
     }
     const playAudio = async () => {
         if (!playing) {

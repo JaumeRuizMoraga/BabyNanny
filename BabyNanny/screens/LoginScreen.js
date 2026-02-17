@@ -3,6 +3,7 @@ import { TextInput, Button, Text, HelperText, PaperProvider } from 'react-native
 import { useState, useRef,useContext } from 'react';
 import { login } from '../services/services';
 import Token from '../context/Token';
+import User from '../context/User';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 

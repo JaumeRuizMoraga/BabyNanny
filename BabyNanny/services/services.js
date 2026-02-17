@@ -3,7 +3,7 @@ export const login = async (newBabyData) => {
 
 
 
-        const response = await fetch('http://3.216.66.25:8080/BabyNanny/login', {
+        const response = await fetch('http://52.2.207.230:8080/BabyNanny/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -14,8 +14,9 @@ export const login = async (newBabyData) => {
         });
 
         if (response.ok) {
-            let token = await response.text()
-            return { token: token, status: 200 }
+            let token = await response.json()
+            console.log(token)
+            return {token:token,status:200}
         } else {
             return null
         }
@@ -28,7 +29,7 @@ export const login = async (newBabyData) => {
 export const newBaby = async (newBabyData,token) => {
     try {
         console.log("Entrando new baby")
-        const response = await fetch('http://3.216.66.25:8080/BabyNanny/newBaby', {
+        const response = await fetch('http://52.2.207.230:8080/BabyNanny/newBaby', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +41,6 @@ export const newBaby = async (newBabyData,token) => {
         });
 
         if (response.ok) {
-            let token = await response.text()
             return { status: 200 }
         } else {
             return null
@@ -54,11 +54,10 @@ export const newBaby = async (newBabyData,token) => {
 export const getDataBabies = async (token) => {
     try {
         const response = await fetch(
-            'http://3.216.66.25:8080/BabyNanny/babies?token=' + token
+            'http://52.2.207.230:8080/BabyNanny/babies?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
             return data;
         }
     } catch (error) {
@@ -68,14 +67,84 @@ export const getDataBabies = async (token) => {
 export const getDataUser = async (token) => {
     try {
         const response = await fetch(
-            'http://3.216.66.25:8080/BabyNanny/babies?token=' + token
+            'http://52.2.207.230:8080/BabyNanny/getUser?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
             return data;
         }
     } catch (error) {
         console.log(error);
     }
 };
+export const logout = async (idToken) =>{
+        try {
+        console.log("Entrando a logout")
+        const response = await fetch('http://52.2.207.230:8080/BabyNanny/logOut/'+idToken, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+
+        });
+
+        if (response.ok) {
+            return  204 
+        } else {
+            return null
+        }
+
+
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+}
+export const deleteBaby = async(idBebe) => {
+    try {
+        console.log("Entrando a delete baby")
+        const response = await fetch('http://52.2.207.230:8080/BabyNanny/deleteBaby/'+idBebe, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+
+        });
+
+        if (response.ok) {
+            return  204 
+        } else {
+            return null
+        }
+
+
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+}
+export const newEntry = async(idBebe,token,registro) => {
+        try {
+        console.log("Entrando new entry")
+        const response = await fetch('http://52.2.207.230:8080/BabyNanny/logOut/'+idBebe, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'token':token
+            },
+            body: registro
+
+        });
+
+        if (response.ok) {
+            return  204 
+        } else {
+            return null
+        }
+
+
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+}

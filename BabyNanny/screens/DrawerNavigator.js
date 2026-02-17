@@ -4,23 +4,35 @@ import { Home } from './Home.js';
 import { NoBaby } from './NoBaby.js';
 import { ConfigScreen } from './ConfigScreen.js';
 import { NewBaby } from './NewBaby.js';
-import Baby from '../context/Baby.js'
 import User from '../context/User.js'
 import Token from '../context/Token.js';
 import { getDataBabies } from '../services/services.js';
+import { getDataUser } from '../services/services.js';
 
 import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
-    const { baby, setBaby } = useContext(Baby)
     const {user,setUser} = useContext(User)
     const {token,setToken} = useContext(Token);
 
-    const [noBaby, setNoBaby] = useState(false)
+    const [noBaby, setNoBaby] = useState()
 
-    const getUser = async() =>{
-        let babies = await getDataBabies(token)
-        console.log(babies)
+    const getAllData = async() =>{
+        let babies = await getDataBabies(token.token)
+        let userReal = await getDataUser(token.token);
+        user.babies = babies.babies;
+        await setUser(userReal)
+        if(userReal.babies.length == 0){
+            setNoBaby(true)
+        }else{
+            setNoBaby(false)
+        }
+        console.log(user)
+        console.log("Fin log")
+    }
+
+    const goLogin = () =>{
+    props.navigation.navigate("LoginScreen")
     }
 
     const draweOptrions = {
@@ -46,14 +58,14 @@ export const DrawerNavigator = () => {
     }
 
     useEffect(() => {
-        getUser(token);
+        getAllData(token);
     }, []);
 
 
 
     return (
         <Drawer.Navigator screenOptions={draweOptrions} initialRouteName={noBaby ? "NoBaby" : "Home"}>
-            <Drawer.Screen name="Home" options={{ headerShown: true }} component={Home} />
+            <Drawer.Screen name="Home" options={{ headerShown: true }} goLogin={goLogin} component={Home} />
             {noBaby &&
                 <Drawer.Screen name="NoBaby" options={{ headerShown: false }} component={NoBaby} />
             }

@@ -1,16 +1,20 @@
 import { Text, View, FlatList, StyleSheet } from "react-native"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { TarjetaBebe } from "./TarjetaBebe";
 import { Button } from "react-native-paper";
+import { logout } from "../services/services";
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
+import Token from "../context/Token";
 
 
 export const BabyChange = (props) => {
-    const [babies,setBabies] = useState(props.bebes);
+    const [babies,setBabies] = useState(props.babies);
     const { t } = useTranslation();
+    const {token,setToken} = useContext(Token)
     const pressLogout = () =>{
-        console.log("Logout")
+        // logout(token.id);
+        props.goLogin();
     }
 
     return (
