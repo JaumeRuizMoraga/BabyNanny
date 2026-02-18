@@ -14,7 +14,6 @@ import { changeLanguage } from 'i18next';
 import '../assets/i18n';
 
 import { useContext, useState, useEffect } from 'react';
-import { isLength } from 'react-native-reanimated/lib/typescript/common/index.js';
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
     const { user, setUser } = useContext(User)
@@ -78,7 +77,8 @@ export const DrawerNavigator = () => {
         return (
             <View>
                 <ActivityIndicator size="large" color="#DA70D6" />
-            </View>)
+            </View>
+        )
     }
 
     return (
