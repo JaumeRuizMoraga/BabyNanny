@@ -9,6 +9,8 @@ import Token from '../context/Token.js';
 import { getDataBabies } from '../services/services.js';
 import { getDataUser } from '../services/services.js';
 import {View,ActivityIndicator} from 'react-native'
+import { changeLanguage } from 'i18next';
+import '../assets/i18n';
 
 import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
@@ -25,6 +27,12 @@ export const DrawerNavigator = () => {
             let userReal = await getDataUser(token.token);
             userReal.babies = babies.babies;
             await setUser(userReal)
+            const userLang = userReal.config.language;
+            if (userLang === "es" || userLang === "en") {
+                changeLanguage(userLang);
+            } else {
+                console.log("Idioma no encontrado");
+            }
             setNoBaby(userReal.babies.length === 0)
         } catch (error) {
             console.error("Error cargando datos" + error)

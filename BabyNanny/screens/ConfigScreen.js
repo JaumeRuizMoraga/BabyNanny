@@ -7,8 +7,8 @@ export const ConfigScreen = (props) =>{
     const {user,setUser} = useContext(User);
     return(
         <View>
-        <UserCard user={user}></UserCard>
-        <UserData user={user}></UserData>
+            <UserCard user={user}></UserCard>
+            <UserData user={user}></UserData>
         </View>
     );
 }

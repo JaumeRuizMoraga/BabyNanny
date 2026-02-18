@@ -8,12 +8,23 @@ export const sendIntake = async (intake,idBebe,token) => {
     }
     console.log( await newEntry(intakeEntry,idBebe,token))
 }
+
 export const sendSleep = async (sleep,idBebe,token) => {
     const date = new Date();
     let sleepEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
         type: "sleepRecord",
         timeSleep: sleep
+    }
+    console.log( await newEntry(sleepEntry,idBebe,token))
+}
+
+export const sendMedic = async (sleep,idBebe,token) => {
+    const date = new Date();
+    let medicalEntry = {
+        date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
+        type: "medicalRecord",
+        
     }
     console.log( await newEntry(sleepEntry,idBebe,token))
 }
@@ -87,8 +98,8 @@ export const getAgeMonth = (stringDate) => {
     }
     return monthAge
 }
+
 export const getLocalBaby = (arrayBabies,nameBaby) => {
     let result = arrayBabies.filter((elem)=> elem.name == nameBaby);
-
     return result[0]
 }

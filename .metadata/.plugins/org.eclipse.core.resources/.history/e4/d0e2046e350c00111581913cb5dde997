@@ -1,0 +1,291 @@
+package babbynannyapi.controller;
+
+import babbynannyapi.model.*;
+import babbynannyapi.repository.*;
+
+import org.bson.json.JsonObject;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+
+@RestController
+@RequestMapping("/BabyNanny")
+public class Controlador {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private TokenRepository tokenRepository;
+
+	@Autowired
+	private BabyRepository babyRepository;
+
+    @Autowired
+    private IntakeRecordRepository intakeRecordRepository;
+
+    @Autowired
+    private SleepRecordRepository sleepRecordRepository;
+
+    @Autowired
+    private MedicalRecordRepository medicalRecordRepository;
+
+
+	@GetMapping("/babies")
+	ResponseEntity<Object> sleepRecordRepository(@RequestParam(name = "token") String token) throws JSONException{
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if (t.isPresent()) {
+			List<Baby> babyList = babyRepository.searchBabies(t.get().getUser());
+			List<JSONObject> list = new ArrayList<>();
+			JSONObject obj = new JSONObject();
+			for(Baby b : babyList) {
+				obj.put("id",b.getId());
+				obj.put("name",b.getName());
+				obj.put("tutors",b.getTutors());
+				obj.put("image",b.getImage());
+				obj.put("icon",b.getIcon());
+				obj.put("intakeRecord",intakeRecordRepository.findAllById(b.getIntakeRecord()));
+				obj.put("medicalRecord",sleepRecordRepository.findAllById(b.getMedicalRecord()));
+				obj.put("sleepRecord",medicalRecordRepository.findAllById(b.getSleepRecord()));
+				obj.put("features",b.getFeatures());
+				obj.put("events",b.getEvents());
+				list.add(obj);
+			}
+		    Map<String, List<JSONObject>> response = new HashMap<>();
+		    response.put("babies", list);
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+//	public List<JSONObject> putSleep(List<SleepRecord> record) throws JSONException {
+//		JSONObject obj = new JSONObject();
+//		for(Baby b : babyList) {
+//			obj.put("id",record.getId());
+//			obj.put("date",record.getDate());
+//			obj.put("timeSleep",record.getTimeSleep());
+//		}
+//		return obj;
+//	}
+//	
+//	public List<JSONObject> putIntake(List<IntakeRecord> record) throws JSONException {
+//		JSONObject obj = new JSONObject();
+//		obj.put("id",record.getId());
+//		obj.put("date",record.getDate());
+//		obj.put("intakeAmount",record.getIntakeAmount());
+//		return obj;
+//	}
+//	
+//	public List<JSONObject> putMedical(List<MedicalRecord> record) throws JSONException {
+//		JSONObject obj = new JSONObject();
+//		obj.put("id",record.getId());
+//		obj.put("date",record.getDate());
+//		obj.put("recipe",record.getRecipe());
+//		return obj;
+//	}
+	
+	@GetMapping("/getUser")
+	ResponseEntity<Object> searchUser(@RequestParam(name = "token") String token){
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if (t.isPresent()) {
+			Optional<User> user = userRepository.findByName(t.get().getUser());
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+	@DeleteMapping("/deleteBaby/{id}")
+    public ResponseEntity<Void> deleteBaby(@PathVariable String id, @RequestHeader String token) {
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if(t.isPresent()){
+			Optional<Baby> optionalBaby = babyRepository.findById(id);
+			Baby baby = optionalBaby.get();
+			deleteBabyFromUser(baby);
+			babyRepository.deleteById(id);
+	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+    }
+	
+	@PutMapping
+	public void deleteBabyFromUser(Baby baby) {
+		List<String> userList = baby.getTutors();
+		for(String s : userList) {
+			Optional<User> optionalUser = userRepository.findByName(s);
+			if (optionalUser.isPresent()) {
+				User user = optionalUser.get();
+				List<String> babyList = user.getBabies();
+				boolean removed = babyList.remove(baby.getId());
+				if (removed) {
+	                user.setBabies(new ArrayList<>(babyList));
+	                userRepository.save(user);
+	            }
+				else{
+					System.out.println("AAAAAAAAAAAAAAAAAAAAaa");
+				}
+			}
+		}
+    }
+	
+	@PutMapping("/changeImage/{id}")
+	public ResponseEntity<Object> changeImage(@PathVariable String id, @RequestHeader String token, @RequestBody Map<String, Object> image) {
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if(t.isPresent()){
+			Optional<Baby> optionalBaby = babyRepository.findById(id);
+			Baby baby = optionalBaby.get();
+			baby.setImage(image.get("image").toString());
+			babyRepository.save(baby);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+    }
+	
+	@DeleteMapping("/logOut/{id}")
+    public ResponseEntity<Void> logOut(@PathVariable String id) {
+		Optional<Token> t = tokenRepository.findById(id);
+		if(t.isPresent()){
+			tokenRepository.deleteById(id);
+	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+    }
+
+
+	@PutMapping("/newEntry/{id}")
+	ResponseEntity<Object> newEntry(@PathVariable String id, @RequestHeader String token, @RequestBody Map<String, Object> obj) throws JSONException {
+		Optional<Token> t = tokenRepository.searchToken(token);
+
+		if (t.isPresent()) {
+			Optional<Baby> b = babyRepository.findById(id);
+            List<String> babyList;
+
+            if (b.isPresent()) {
+                String type = (String) obj.get("type");
+
+                switch (type) {
+                    case "intakeRecord" : {
+                        IntakeRecord irecord = new IntakeRecord();
+                        irecord.setDate(new Date());
+                        irecord.setIntakeAmount(Double.parseDouble(obj.get("amount").toString()));
+                        intakeRecordRepository.save(irecord);
+                        babyList= b.get().getIntakeRecord();
+                        babyList.add(irecord.getId());
+                        b.get().setIntakeRecord(babyList);
+                        babyRepository.save(b.get());
+                        return ResponseEntity.status(HttpStatus.OK).build();
+
+                    }
+                    case "medicalRecord" : {
+                        MedicalRecord mrecord = new MedicalRecord();
+                        Recipe recipe = new Recipe();
+                        recipe.setDosisTime(Integer.parseInt(obj.get("dosisTime").toString()));
+                        recipe.setDosis(Double.parseDouble(obj.get("dosis").toString()));
+                        recipe.setMedicine(obj.get("medicine").toString());
+                        mrecord.setDate(new Date());
+                        mrecord.setRecipe(recipe);
+                        medicalRecordRepository.save(mrecord);
+                        babyList= b.get().getMedicalRecord();
+                        babyList.add(mrecord.getId());
+                        b.get().setMedicalRecord(babyList);
+                        babyRepository.save(b.get());
+                        return ResponseEntity.status(HttpStatus.OK).build();
+                    }
+                    case "sleepRecord" : {
+                        SleepRecord srecord = new SleepRecord();
+                        srecord.setDate(new Date());
+                        srecord.setTimeSleep(Double.parseDouble(obj.get("timeSleep").toString()));
+                        sleepRecordRepository.save(srecord);
+                        babyList= b.get().getSleepRecord();
+                        babyList.add(srecord.getId());
+                        b.get().setSleepRecord(babyList);
+                        babyRepository.save(b.get());
+                        return ResponseEntity.status(HttpStatus.OK).build();
+                    }
+                }
+            }
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+	/**
+     * Creates a new token in the database with the information provided in the request body.
+     * @param user. The user object containing the registration details.
+     * @return a {@code ResponseEntity} with HTTP 200 OK if the baby is created successfully, 
+     * or HTTP 401 Unauthorized if the user don't have a correct token.
+     */
+	
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody User user){
+        Optional<User> userObj = userRepository.findByNameAndPassword(user.getName(), user.getPassword());
+        Optional<Token> userToken = tokenRepository.searchUserToken(user.getName());
+        if (userObj.isPresent()) {
+            if (userToken.isPresent()) {
+                return ResponseEntity.status(HttpStatus.OK).body(userToken.get());
+            } else {
+                Token token = new Token(user.getName());
+                tokenRepository.save(token);
+                return ResponseEntity.status(HttpStatus.OK).body(token);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+    
+    
+    /**
+     * Creates a new baby in the database with the information provided in the request body.
+     * @param baby. The baby object containing the baby information.
+     * @param token. A identification for the user.
+     * @return a {@code ResponseEntity} with HTTP 200 OK if the baby is created successfully, 
+     * or HTTP 401 Unauthorized if the user don't have a correct token.
+     */
+    @PostMapping("/newBaby")
+    public ResponseEntity<Object> newBaby(@RequestBody Baby baby, @RequestHeader String token){
+    	Optional<Token> t = tokenRepository.searchToken(token);
+    	if (t.isPresent()) {
+            babyRepository.save(baby);
+            List<String> babyList;
+            Optional<User> user = userRepository.findByName(t.get().getUser());
+            babyList = user.get().getBabies();
+            babyList.add(baby.getId());
+            user.get().setBabies(babyList);
+            userRepository.save(user.get());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    /**
+     * Creates a new user in the database with the information provided in the request body.
+     * @param user. The user object containing the registration details.
+     * @return a {@code ResponseEntity} with HTTP 200 OK if the user is created successfully, 
+     * or HTTP 403 Forbidden if the user already exists.
+     */
+    @PostMapping("/register")
+    ResponseEntity<?> register(@RequestBody User user) {
+        Optional<User> userPassEmail = userRepository.searchUserPassEmail(user.getName(), user.getPassword(), user.getEmail());
+        if (userPassEmail.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        else {
+        		userRepository.save(user);
+        		Token token = new Token(user.getName());
+                tokenRepository.save(token);
+                return ResponseEntity.status(HttpStatus.OK).body(token);
+        	}
+        }
+    }

@@ -8,7 +8,7 @@ import { changeLanguage } from 'i18next';
 export const UserData = (props) => {
     const { t } = useTranslation();
     const [userName,setUserName] = useState(props.user.user);
-    const [leng,setLeng] = useState(props.user.config.lenguage);
+    const [leng,setLeng] = useState(props.user.config.language);
 
 
    useEffect(() => { 
@@ -29,6 +29,8 @@ export const UserData = (props) => {
             <Surface style={styles.list}>
             <List.Section style={{}} title={leng}>
             <List.Accordion style={{}} title={leng}>
+                {//Faltaria una funcion put que actualice el lenguage que tiene el usuario configurado en la base de datos
+                }
                 <List.Item title="es" onPress={()=>setLeng("es")}></List.Item>
                 <List.Item title="en" onPress={()=>setLeng("en")}></List.Item>
             </List.Accordion>
