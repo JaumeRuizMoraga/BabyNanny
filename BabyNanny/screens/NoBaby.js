@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon, FAB } from 'react-native-paper';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 export const NoBaby = (props) => {
+     const { t } = useTranslation()
     return (
         <View style={styles.layout}>
-            <Text style={styles.title}>Oh...! Seems like you don't have any baby registered</Text>
+            <Text style={styles.title}>{t('noBaby.message')}</Text>
 
             <View style={{ flexDirection: "row" }}>
                 <Icon source={"baby-face-outline"} color='gray' size={170}></Icon>

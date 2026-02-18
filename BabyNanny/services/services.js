@@ -111,7 +111,6 @@ export const deleteBaby = async(idBebe) => {
             },
 
         });
-
         if (response.ok) {
             return  204 
         } else {

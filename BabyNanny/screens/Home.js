@@ -55,7 +55,7 @@ export const Home = (props) => {
     }
     const DeleteBaby = () => {
         let response = deleteBaby(baby.id)
-        if (response === 0) {
+        if (response === 204) {
             console.log("Todo bien")
         }
     }
