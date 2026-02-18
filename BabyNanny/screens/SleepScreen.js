@@ -17,15 +17,15 @@ export const SleepScreen = (props) => {
     const [song, setSong] = useState();
     const { user, setUser } = useContext(User);
     const {token,setToken} = useContext(Token);
-    const [ baby, setBaby ] = useState(user.babies[0]);
+    const [ baby, setBaby ] = useContext(user.babies[0]);
 
 
 
     const postSleep = () => {
-        sendSleep(baby.features.sleepPre,baby.id,token.token);
+        sendSleep(baby.assets.sleepPre,baby.id,token.token);
     }
     const postIntake = () => {
-        sendIntake(baby.features.intakePre,baby.id,token.token);
+        sendIntake(baby.assets.intakePre,baby.id,token.token);
     }
     const playAudio = async () => {
         if (!playing) {
@@ -43,7 +43,6 @@ export const SleepScreen = (props) => {
 
     return (
         <PaperProvider>
-            {console.log(user)}
             <ImageBackground
                 source={require("../assets/img/FondoBabyNannyStars.png")}
                 resizeMode='cover'
