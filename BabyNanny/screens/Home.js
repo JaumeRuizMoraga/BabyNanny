@@ -138,7 +138,7 @@ const openLibrary = async () => {
                         
                     </Text>
                 </Surface>
-                <BabyCard baby={baby.assets} />
+                <BabyCard baby={baby.features} />
                 <SegmentedButtons
                     value={entrys}
                     onValueChange={setEntrys}

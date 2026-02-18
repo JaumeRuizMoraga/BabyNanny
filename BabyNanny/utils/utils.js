@@ -106,3 +106,18 @@ export const getLocalBaby = (arrayBabies,nameBaby) => {
 
     return result[0]
 }
+export const recargarDatos = async (token) => {
+    console.log(token)
+    try {
+        let babies = await getDataBabies(token)
+        let userReal = await getDataUser(token);
+        userReal.babies = babies.babies;
+        console.log("Lo que devuelve la recarga")
+        console.log(userReal.babies)
+        return userReal
+    } catch (error) {
+        console.error("Error cargando datos" + error)
+    } finally {
+        setIsLoading(false)
+    }
+}
