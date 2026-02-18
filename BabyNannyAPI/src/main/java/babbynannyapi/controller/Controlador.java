@@ -38,7 +38,7 @@ public class Controlador {
 
 
 	@GetMapping("/babies")
-	ResponseEntity<?> sleepRecordRepository(@RequestParam(name = "token") String token) throws JSONException{
+	ResponseEntity<?> getBabies(@RequestParam(name = "token") String token) throws JSONException{
 		Optional<Token> t = tokenRepository.searchToken(token);
 		if (t.isPresent()) {
 			List<Baby> babyList = babyRepository.searchBabies(t.get().getUser());

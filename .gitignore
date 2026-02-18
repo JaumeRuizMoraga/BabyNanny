@@ -1,2 +1,4 @@
 /.metadata/
-/.BabyNanny/
+/BabyNanny/node_modules/
+/BabyNannyAPI/node_modules/
+node_modules/
