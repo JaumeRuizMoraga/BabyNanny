@@ -1,23 +1,21 @@
 import { newEntry } from "../services/services";
-import { getDataBabies } from '../services/services.js';
-import { getDataUser } from '../services/services.js';
-export const sendIntake = async (intake, idBebe, token) => {
+export const sendIntake = async (intake,idBebe,token) => {
     const date = new Date();
     let intakeEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
         type: "intakeRecord",
         amount: intake
     }
-    console.log(await newEntry(intakeEntry, idBebe, token))
+    console.log( await newEntry(intakeEntry,idBebe,token))
 }
-export const sendSleep = async (sleep, idBebe, token) => {
+export const sendSleep = async (sleep,idBebe,token) => {
     const date = new Date();
     let sleepEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
         type: "sleepRecord",
         timeSleep: sleep
     }
-    console.log(await newEntry(sleepEntry, idBebe, token))
+    console.log( await newEntry(sleepEntry,idBebe,token))
 }
 
 export const sendMedic = async (sleep,idBebe,token) => {
@@ -99,23 +97,8 @@ export const getAgeMonth = (stringDate) => {
     }
     return monthAge
 }
-export const getLocalBaby = (arrayBabies, nameBaby) => {
-    let result = arrayBabies.filter((elem) => elem.name == nameBaby);
+export const getLocalBaby = (arrayBabies,nameBaby) => {
+    let result = arrayBabies.filter((elem)=> elem.name == nameBaby);
 
     return result[0]
-}
-export const recargarDatos = async (token) => {
-    console.log(token)
-    try {
-        let babies = await getDataBabies(token)
-        let userReal = await getDataUser(token);
-        userReal.babies = babies.babies;
-        console.log("Lo que devuelve la recarga")
-        console.log(userReal.babies)
-        return userReal
-    } catch (error) {
-        console.error("Error cargando datos" + error)
-    } finally {
-        setIsLoading(false)
-    }
 }

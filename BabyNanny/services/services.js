@@ -15,6 +15,8 @@ export const login = async (newBabyData) => {
 
         if (response.ok) {
             let token = await response.json()
+            console.log("Saliendo token")
+            console.log(token)
             return {token:token,status:200}
         } else {
             return null
@@ -51,6 +53,7 @@ export const newBaby = async (newBabyData,token) => {
     }
 }
 export const getDataBabies = async (token) => {
+        console.log("Entrando en getBabies")
     try {
         const response = await fetch(
             'http://52.2.207.230:8080/BabyNanny/babies?token=' + token
@@ -64,6 +67,7 @@ export const getDataBabies = async (token) => {
     }
 };
 export const getDataUser = async (token) => {
+    console.log("Entrando en getUser")
     try {
         const response = await fetch(
             'http://52.2.207.230:8080/BabyNanny/getUser?token=' + token
@@ -76,25 +80,9 @@ export const getDataUser = async (token) => {
         console.log(error);
     }
 };
-// export const getDataEntrys = async (token,idBaby) => {
-//     try {
-//         const response = await fetch(
-//             'http://52.2.207.230:8080/BabyNanny/getEntrys?id=' + idBaby,{
-//                 headers:{
-//                 'token':token
-//                 }
-//             }
-//         );
-//         if (response.ok) {
-//             const data = await response.json();
-//             return data;
-//         }
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
 export const logout = async (idToken) =>{
         try {
+        console.log("Entrando a logout")
         const response = await fetch('http://52.2.207.230:8080/BabyNanny/logOut/'+idToken, {
             method: 'DELETE',
             headers: {
@@ -103,6 +91,7 @@ export const logout = async (idToken) =>{
             },
 
         });
+        console.log(response)
         if (response.ok) {
             return  204 
         } else {
@@ -116,6 +105,7 @@ export const logout = async (idToken) =>{
 }
 export const deleteBaby = async(idBebe) => {
     try {
+        console.log("Entrando a delete baby")
         const response = await fetch('http://52.2.207.230:8080/BabyNanny/deleteBaby/'+idBebe, {
             method: 'DELETE',
             headers: {
@@ -138,6 +128,10 @@ export const deleteBaby = async(idBebe) => {
 }
 export const newEntry = async(registro,idBebe,token) => {
         try {
+        console.log("Entrando new entry")
+        console.log(registro)
+        console.log(idBebe)
+        console.log(token)
         const response = await fetch('http://52.2.207.230:8080/BabyNanny/newEntry/'+idBebe, {
             method: 'PUT',
             headers: {
@@ -148,6 +142,7 @@ export const newEntry = async(registro,idBebe,token) => {
             body: JSON.stringify(registro)
 
         });
+        console.log(response)
         if (response.ok) {
             return  204 
         } else {

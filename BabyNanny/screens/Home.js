@@ -112,6 +112,7 @@ const openLibrary = async () => {
 
     return (
         <View style={styles.root}>
+            {console.log(props.goLogin)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                   
@@ -201,7 +202,7 @@ const openLibrary = async () => {
             </Modal>
             <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>
-                <BabyChange goLogin={props.navigation.navigate("LoginScreen")} babies={user.babies} funCom={(nameBaby)=>changeBaby(nameBaby)}></BabyChange>
+                <BabyChange goLogin={props.goLogin} babies={user.babies} funCom={(nameBaby)=>changeBaby(nameBaby)}></BabyChange>
             </Modal>
             <Modal 
     visible={modalVisible} 

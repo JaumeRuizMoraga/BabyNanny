@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Image, Animated, FlatList, ScrollView } from 'r
 import { Icon, FAB, TextInput, Surface, HelperText, Button } from 'react-native-paper';
 import { RulerPicker } from 'react-native-ruler-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { recargarDatos } from '../utils/utils';
 import { useState, useContext } from 'react'
 import { getAgeMonth } from '../utils/utils';
 import { newBaby } from '../services/services';
@@ -42,7 +41,7 @@ export const NewBaby = (props) => {
     const assembleBaby = async() => {
         let baby = {
             name: name,
-            tutors: [user.name],
+            tutors: [user.user],
             intakeRecord: [],
             sleepRecord: [],
             medicalRecord: [],
@@ -55,14 +54,11 @@ export const NewBaby = (props) => {
             },
             events: []
         }
-        let response = await newBaby(baby,token.token); //La response es 200
-        let newUser = await recargarDatos(token.token)
-        console.log("New user")
-        console.log(newUser.babies.length)
-        console.log("Entrando al set user")
-        await setUser(newUser)
-        console.log("Despues del set")
-        console.log(user)
+        // let response = await newBaby(baby,token);
+        // console.log(response)
+        let userTemp = user
+        userTemp.babies.push(baby)
+        setUser(userTemp)
         props.navigation.navigate("Home")
     }
 
