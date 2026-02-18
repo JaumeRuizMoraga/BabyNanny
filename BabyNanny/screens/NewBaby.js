@@ -3,11 +3,13 @@ import { Icon, FAB, TextInput, Surface, HelperText, Button } from 'react-native-
 import { RulerPicker } from 'react-native-ruler-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState, useContext } from 'react'
-import { getAgeMonth } from '../utils/utils';
+import { getAgeMonth,recargarDatos } from '../utils/utils';
 import { newBaby } from '../services/services';
 import Token from '../context/Token';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
+import { imageToBase64 } from '../utils/utils';
+import { default_baby_img } from '../assets/img/baby_icon.js';
 
 import User from '../context/User';
 
@@ -41,7 +43,8 @@ export const NewBaby = (props) => {
     const assembleBaby = async() => {
         let baby = {
             name: name,
-            tutors: [user.user],
+            image: default_baby_img,
+            tutors: [user.name],
             intakeRecord: [],
             sleepRecord: [],
             medicalRecord: [],
@@ -54,11 +57,11 @@ export const NewBaby = (props) => {
             },
             events: []
         }
-        // let response = await newBaby(baby,token);
-        // console.log(response)
-        let userTemp = user
-        userTemp.babies.push(baby)
-        setUser(userTemp)
+        let response = await newBaby(baby,token.token);
+        console.log(response)
+        await setUser(await recargarDatos(token.token))
+        console.log("Usuario actual")
+        console.log(user)
         props.navigation.navigate("Home")
     }
 
@@ -91,6 +94,10 @@ export const NewBaby = (props) => {
     const changeName = (newName) => {
         setName(newName)
     }
+    const getImageDeffault = async () =>{
+        console.log("Entrando en get img default")
+        return await imageToBase64(require('../assets/img/baby_icon.jpg'))
+    };
 
     return (
         <View style={styles.layout}>

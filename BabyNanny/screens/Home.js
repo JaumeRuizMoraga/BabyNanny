@@ -22,7 +22,10 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import { getLocalBaby } from '../utils/utils';
 import * as ImagePicker from 'expo-image-picker';
+import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
+
+
 
 
 export const Home = (props) => {
@@ -113,13 +116,14 @@ export const Home = (props) => {
 
     return (
         <View style={styles.root}>
+            {console.log(baby)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB
                         icon={() => (
                             <Avatar.Image
                                 size={40}
-                                source={baby.icon}
+                                source={{ uri: baby.image  }}
                                 style={{ margin: -6.7, padding: 0 }}
                             />)}
                         style={styles.fab}

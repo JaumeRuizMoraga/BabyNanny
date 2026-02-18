@@ -21,6 +21,7 @@ export const BabyChange = (props) => {
         <View style={styles.container}>
             <Text style={styles.label}>{t('home.selectBaby')}</Text>
             <FlatList
+            style={{borderWidth: 2, width: '130%'}}
                 data={babies}
                 keyExtractor={(item, index) => item + index.toString()}
                 renderItem={({ item }) => {

@@ -39,7 +39,7 @@ export const newBaby = async (newBabyData,token) => {
 
             body: JSON.stringify(newBabyData)
         });
-
+        console.log(response)
         if (response.ok) {
             return { status: 200 }
         } else {
@@ -123,22 +123,25 @@ export const deleteBaby = async(idBebe) => {
         console.error("Error en la conexión:", error);
     }
 }
-export const newEntry = async(idBebe,token,registro) => {
+export const newEntry = async(registro,idBebe,token) => {
+    console.log(idBebe)
+    console.log(token)
+    console.log(registro)
         try {
         console.log("Entrando new entry")
-        const response = await fetch('http://23.20.30.144:8080/BabyNanny/logOut/'+idBebe, {
+        const response = await fetch('http://23.20.30.144:8080/BabyNanny/newEntry/'+idBebe, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'token':token
             },
-            body: registro
+            body: JSON.stringify(registro)
 
         });
-
+        console.log(response)
         if (response.ok) {
-            return  204 
+            return  200 
         } else {
             return null
         }
