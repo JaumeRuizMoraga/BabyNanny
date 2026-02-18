@@ -61,7 +61,6 @@ export const DrawerNavigator = () => {
     }
 
     useEffect(() => {
-        console.log("UseEffect")
         getAllData(token);
     }, []);
 
@@ -77,7 +76,7 @@ export const DrawerNavigator = () => {
     }
     return (
         <Drawer.Navigator screenOptions={draweOptrions} initialRouteName={noBaby ? "NoBaby" : "Home"}>
-            <Drawer.Screen name="Home" options={{ headerShown: true }} goLogin={goLogin} component={Home} />
+            <Drawer.Screen name="Home" options={{ headerShown: true }} component={Home} />
             {noBaby &&
                 <Drawer.Screen name="NoBaby" options={{ headerShown: false }} component={NoBaby} />
             }

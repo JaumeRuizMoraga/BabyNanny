@@ -7,6 +7,7 @@ import { Audio } from 'expo-av';
 import User from '../context/User';
 import Token from '../context/Token';
 import { sendSleep, sendIntake } from '../utils/utils';
+import { recargarDatos } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
@@ -21,10 +22,12 @@ export const SleepScreen = (props) => {
 
 
 
-    const postSleep = () => {
+    const postSleep = async () => {
         sendSleep(baby.features.sleepPre,baby.id,token.token);
+        await setUser( await recargarDatos(token.token))
+        console.log(user)
     }
-    const postIntake = () => {
+    const postIntake = async () => {
         sendIntake(baby.features.intakePre,baby.id,token.token);
     }
     const playAudio = async () => {
