@@ -158,4 +158,5 @@ export const newEntry = async(registro,idBebe,token) => {
     } catch (error) {
         console.error("Error en la conexión:", error);
     }
+
 }

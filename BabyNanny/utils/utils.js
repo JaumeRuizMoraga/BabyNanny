@@ -20,6 +20,16 @@ export const sendSleep = async (sleep, idBebe, token) => {
     console.log(await newEntry(sleepEntry, idBebe, token))
 }
 
+export const sendMedic = async (sleep,idBebe,token) => {
+    const date = new Date();
+    let medicalEntry = {
+        date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
+        type: "medicalRecord",
+        
+    }
+    console.log( await newEntry(sleepEntry,idBebe,token))
+}
+
 const intakeFormat = /^(\d+)$|^(\d*\.(\d|\d\d))$/;
 const sleepFormat = /^(\d+)$/;
 const ageFormat = /^(\d\d)$|^(\d)$/

@@ -30,6 +30,7 @@ export const LoginScreen = (props) => {
             password: password
         }
         
+
         let response = await login(json);
         if (response.status === 200) {
             setToken(response.token);

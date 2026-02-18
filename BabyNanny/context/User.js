@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
 const User = createContext();
 export const UserProvider = ({ children }) => {
+
     const [user, setUser] = useState(
 //         {
 //         babies: [
@@ -81,6 +82,7 @@ export const UserProvider = ({ children }) => {
 //         ]
 //     }
 );
+
     return (
         <User.Provider value={{ user, setUser }}>
             {children}
