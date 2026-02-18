@@ -1,11 +1,12 @@
 import { Text, View, StyleSheet, Pressable } from "react-native"
 import { Avatar, Surface } from 'react-native-paper';
+import { default_baby_img } from "../assets/img/baby_icon";
 
 export const TarjetaBebe = (props) => {
     return (
         <Pressable onLongPress={()=>props.funCom(props.baby)}>
         <Surface style={styles.container} elevation={4}>
-            <Avatar.Image size={60} source={props.baby.icon}></Avatar.Image>
+            <Avatar.Image size={60} source={{uri : props.baby.image}}></Avatar.Image>
             <Text style={styles.label}>{props.baby.name}</Text>
         </Surface>
         </Pressable>
