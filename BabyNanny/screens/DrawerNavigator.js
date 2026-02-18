@@ -9,6 +9,7 @@ import Token from '../context/Token.js';
 import { getDataBabies } from '../services/services.js';
 import { getDataUser } from '../services/services.js';
 import { View, ActivityIndicator } from 'react-native'
+import { MedicalRecordScreen } from './MedicalRecordScreen.js';
 import { changeLanguage } from 'i18next';
 import '../assets/i18n';
 
@@ -89,6 +90,7 @@ export const DrawerNavigator = () => {
             <Drawer.Screen name="NewBaby" options={{ headerShown: !noBaby }} component={NewBaby} />
             <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
+            <Drawer.Screen name="MedicalRecordScreen" options={{ headerShown: true }} component={MedicalRecordScreen} />
         </Drawer.Navigator>
     );
 }
