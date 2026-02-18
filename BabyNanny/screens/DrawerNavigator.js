@@ -8,12 +8,9 @@ import User from '../context/User.js'
 import Token from '../context/Token.js';
 import { getDataBabies } from '../services/services.js';
 import { getDataUser } from '../services/services.js';
-<<<<<<< HEAD
 import {View,ActivityIndicator} from 'react-native'
 import { changeLanguage } from 'i18next';
 import '../assets/i18n';
-=======
->>>>>>> parent of 5459630 (Integracion de apis ya completo)
 
 import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
@@ -23,7 +20,6 @@ export const DrawerNavigator = () => {
 
     const [noBaby, setNoBaby] = useState()
 
-<<<<<<< HEAD
     const getAllData = async () => {
         try {
             let babies = await getDataBabies(token.token)
@@ -41,17 +37,6 @@ export const DrawerNavigator = () => {
             console.error("Error cargando datos" + error)
         } finally {
             setIsLoading(false)
-=======
-    const getAllData = async() =>{
-        let babies = await getDataBabies(token.token)
-        let userReal = await getDataUser(token.token);
-        user.babies = babies.babies;
-        await setUser(userReal)
-        if(userReal.babies.length == 0){
-            setNoBaby(true)
-        }else{
-            setNoBaby(false)
->>>>>>> parent of 5459630 (Integracion de apis ya completo)
         }
         console.log(user)
         console.log("Fin log")
