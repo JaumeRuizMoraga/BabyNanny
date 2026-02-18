@@ -14,36 +14,8 @@ El objeto receta almacena: Nombre del medicamento, cantidad de dosis en mg y
 duracion de tratamiento en horas
 */
 export const BabyProvider = ({ children }) => {
-    const [baby, setBaby] = useState({
-        id: "idMongo",
-        name: "nombreBebe",
-        tutors: [],
-        icon: require('../assets/img/baby_icon.png'),
-        intakeRecord:[{date:'13/04/2025',type:'Toma',data:150},{date:'14/04/2025',type:'Toma',data:140},{date:'15/04/2025',type:'Toma',data:160}],
-        sleepRecord:[{date:'13/04/2025',type:'Sueño',data:160},{date:'13/04/2025',type:'Sueño',data:200},
-            {date:'14/04/2025',type:'Sueño',data:90},{date:'14/04/2025',type:'Sueño',data:230},{date:'14/04/2025',type:'Sueño',data:230},
-            {date:'14/04/2025',type:'Sueño',data:230},{date:'14/04/2025',type:'Sueño',data:230}],
-//        RegistroAlimentacion:[],
-        medicalRecord:[{date:'13/04/2025',type:'Medico',recipe:{
-            medicine: 'Paracetamol',
-            dosis: 50,
-            dosisTime: 72
-        }}],
-        assets:{
-            height: 60,
-            weight: 7,
-            age: 4,
-            intakePre: 17.5,
-            sleepPre: 200,
-        },
-        //Importante: Altura(cm), peso(kg), edad(meses)
-        events:[{
-            date: "13/04/2025",
-            description: "Vacuna contra el papiloma humano",
-            hour: "03:30"
-        }]
-
-    });
+    const [baby, setBaby] = useState({})
+    
     return (
         <Baby.Provider value={{ baby, setBaby }}>
             {children}

@@ -6,11 +6,13 @@ import { ConfigScreen } from './ConfigScreen.js';
 import { NewBaby } from './NewBaby.js';
 import User from '../context/User.js'
 import Token from '../context/Token.js';
+import Baby from '../context/Baby.js';
 import { getDataBabies } from '../services/services.js';
 import { getDataUser } from '../services/services.js';
 import { View, ActivityIndicator } from 'react-native'
 import { MedicalRecordScreen } from './MedicalRecordScreen.js';
 import { changeLanguage } from 'i18next';
+
 import '../assets/i18n';
 
 import { useContext, useState, useEffect } from 'react';
@@ -20,13 +22,15 @@ export const DrawerNavigator = () => {
     const { token, setToken } = useContext(Token);
     const [isLoading, setIsLoading] = useState(true);
     const [noBaby, setNoBaby] = useState()
+    const { baby, setBaby } = useContext(Baby);
 
     const getAllData = async () => {
         try {
             let babies = await getDataBabies(token.token)
             let userReal = await getDataUser(token.token);
             userReal.babies = babies.babies;
-            await setUser(userReal)
+            await setUser(userReal);
+            await setBaby(userReal.babies[0]);
             const userLang = userReal.config.language;
             if (userLang === "es" || userLang === "en") {
                 changeLanguage(userLang);
@@ -77,8 +81,7 @@ export const DrawerNavigator = () => {
         return (
             <View>
                 <ActivityIndicator size="large" color="#DA70D6" />
-            </View>
-        )
+            </View>)
     }
 
     return (
@@ -91,6 +94,7 @@ export const DrawerNavigator = () => {
             <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
             <Drawer.Screen name="MedicalRecordScreen" options={{ headerShown: true }} component={MedicalRecordScreen} />
+
         </Drawer.Navigator>
     );
 }
