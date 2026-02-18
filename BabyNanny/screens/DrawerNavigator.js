@@ -8,16 +8,17 @@ import User from '../context/User.js'
 import Token from '../context/Token.js';
 import { getDataBabies } from '../services/services.js';
 import { getDataUser } from '../services/services.js';
-import {View,ActivityIndicator} from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import { changeLanguage } from 'i18next';
 import '../assets/i18n';
 
 import { useContext, useState, useEffect } from 'react';
+import { isLength } from 'react-native-reanimated/lib/typescript/common/index.js';
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
-    const {user,setUser} = useContext(User)
-    const {token,setToken} = useContext(Token);
-
+    const { user, setUser } = useContext(User)
+    const { token, setToken } = useContext(Token);
+    const [isLoading, setIsLoading] = useState(true);
     const [noBaby, setNoBaby] = useState()
 
     const getAllData = async () => {
@@ -42,8 +43,8 @@ export const DrawerNavigator = () => {
         console.log("Fin log")
     }
 
-    const goLogin = () =>{
-    props.navigation.navigate("LoginScreen")
+    const goLogin = () => {
+        props.navigation.navigate("LoginScreen")
     }
 
     const draweOptrions = {
@@ -72,7 +73,12 @@ export const DrawerNavigator = () => {
         getAllData(token);
     }, []);
 
-
+    if (isLoading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
+    }
 
     return (
         <Drawer.Navigator screenOptions={draweOptrions} initialRouteName={noBaby ? "NoBaby" : "Home"}>
