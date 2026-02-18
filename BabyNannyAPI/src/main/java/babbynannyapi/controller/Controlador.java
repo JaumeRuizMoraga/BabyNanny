@@ -2,7 +2,10 @@ package babbynannyapi.controller;
 
 import babbynannyapi.model.*;
 import babbynannyapi.repository.*;
+
+import org.bson.json.JsonObject;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,15 +38,35 @@ public class Controlador {
 
 
 	@GetMapping("/babies")
-	ResponseEntity<Object> searchBabies(@RequestParam(name = "token") String token){
+	ResponseEntity<?> sleepRecordRepository(@RequestParam(name = "token") String token) throws JSONException{
 		Optional<Token> t = tokenRepository.searchToken(token);
 		if (t.isPresent()) {
 			List<Baby> babyList = babyRepository.searchBabies(t.get().getUser());
-		    Map<String, List<Baby>> response = new HashMap<>();
-		    response.put("babies", babyList);
+			List<Map<String, Object>> list = new ArrayList<>();
+			System.out.println(babyList.size());
+			for(Baby b : babyList) {
+				list.add(createParsedBaby(b));
+			}
+		    Map<String, List<Map<String, Object>>> response = new HashMap<>();
+		    response.put("babies", list);
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+	
+	public Map<String, Object> createParsedBaby(Baby b) {
+		Map<String, Object> baby = new HashMap<>();
+		baby.put("id",b.getId());
+		baby.put("name",b.getName());
+		baby.put("tutors",b.getTutors());
+		baby.put("image",b.getImage());
+		baby.put("icon",b.getIcon());
+		baby.put("intakeRecord",intakeRecordRepository.findAllById(b.getIntakeRecord()));
+		baby.put("medicalRecord",sleepRecordRepository.findAllById(b.getMedicalRecord()));
+		baby.put("sleepRecord",medicalRecordRepository.findAllById(b.getSleepRecord()));
+		baby.put("features",b.getFeatures());
+		baby.put("events",b.getEvents());
+		return baby;
 	}
 	
 	@GetMapping("/getUser")
