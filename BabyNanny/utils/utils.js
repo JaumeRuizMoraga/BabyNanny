@@ -1,21 +1,22 @@
 import { newEntry } from "../services/services";
-export const sendIntake = (intake,idBebe,token) => {
+import { getDataBabies,getDataUser } from "../services/services";
+import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
+export const sendIntake = async (intake,idBebe,token) => {
     const date = new Date();
     let intakeEntry = {
-        date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
-        type: "intake",
-        description: intake
+        type: "intakeRecord",
+        amount: intake
     }
-    console.log(newEntry(intakeEntry,idBebe,token))
+    console.log(await newEntry(intakeEntry,idBebe,token))
 }
-export const sendSleep = (sleep,idBebe,token) => {
+export const sendSleep = async (sleep,idBebe,token) => {
     const date = new Date();
     let sleepEntry = {
-        date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
-        type: "sleep",
-        description: sleep
+        type: "sleepRecord",
+        timeSleep: sleep
     }
-    console.log(newEntry(sleepEntry,idBebe,token))
+    console.log(await newEntry(sleepEntry,idBebe,token))
 }
 
 export const sendMedic = async (sleep,medicine,dosis,dosisTime,idBebe,token) => {
@@ -117,7 +118,30 @@ export const recargarDatos = async (token) => {
         return userReal
     } catch (error) {
         console.error("Error cargando datos" + error)
-    } finally {
-        setIsLoading(false)
     }
 }
+export const imageLocalToBase64 = async (staticResource) => {
+    console.log("Entrando en bas64")
+  try {
+
+    const asset = Asset.fromModule(staticResource);
+    await asset.downloadAsync();
+
+    const uri = asset.localUri || asset.uri;
+
+
+    const base64 = await FileSystem.readAsStringAsync(uri, {
+      encoding: 'base64',
+    });
+
+    const extension = asset.type === 'jpg' ? 'jpeg' : (asset.type || 'png');
+    let image = `data:image/${extension};base64,${base64}`
+    console.log(image)
+    
+    return image;
+    
+  } catch (error) {
+    console.error("Error al convertir la imagen local:", error);
+    return null;
+  }
+};

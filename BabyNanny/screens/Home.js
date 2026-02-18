@@ -22,6 +22,8 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import { getLocalBaby } from '../utils/utils';
 import * as ImagePicker from 'expo-image-picker';
+import { default_baby_img } from '../assets/img/baby_icon';
+import Baby from '../context/Baby';
 
 
 
@@ -29,7 +31,7 @@ import * as ImagePicker from 'expo-image-picker';
 export const Home = (props) => {
     const [type, setType] = useState();
     const { user, setUser } = useContext(User);
-    const [baby, setBaby] = useState(user.babies[0]);
+    const {baby, setBaby} = useContext(Baby);
     const [showModal, setShowModal] = useState(false);
     const [entrys, setEntrys] = useState();
     const [edit, setEdit] = useState(false);
@@ -114,13 +116,14 @@ export const Home = (props) => {
 
     return (
         <View style={styles.root}>
+            {console.log(baby)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB
                         icon={() => (
                             <Avatar.Image
                                 size={40}
-                                source={baby.icon}
+                                source={{ uri: baby.image  }}
                                 style={{ margin: -6.7, padding: 0 }}
                             />)}
                         style={styles.fab}

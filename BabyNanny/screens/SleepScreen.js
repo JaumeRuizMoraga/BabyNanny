@@ -17,15 +17,15 @@ export const SleepScreen = (props) => {
     const [song, setSong] = useState();
     const { user, setUser } = useContext(User);
     const {token,setToken} = useContext(Token);
-    const [ baby, setBaby ] = useContext(user.babies[0]);
+    const [ baby, setBaby ] = useState(user.babies[0]);
 
 
 
     const postSleep = () => {
-        sendSleep(baby.assets.sleepPre,baby.id,token.token);
+        sendSleep(baby.features.sleepPre,baby.id,token.token);
     }
     const postIntake = () => {
-        sendIntake(baby.assets.intakePre,baby.id,token.token);
+        sendIntake(baby.features.intakePre,baby.id,token.token);
     }
     const playAudio = async () => {
         if (!playing) {
@@ -80,7 +80,7 @@ export const SleepScreen = (props) => {
                 </Surface>
                 <Modal visible={manual} onDismiss={() => setManual(false)}
                     contentContainerStyle={styles.modal}>
-                    <SelectorSleepToma exit={(value) => setManual(value)}></SelectorSleepToma>
+                    <SelectorSleepToma baby={baby} exit={(value) => setManual(value)}></SelectorSleepToma>
                 </Modal>
             </ImageBackground>
         </PaperProvider>

@@ -1,13 +1,17 @@
 import { Text, TextInput, Button, HelperText } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
+import { sendIntake,sendSleep } from "../utils/utils";
+import Token from "../context/Token";
 
 export const SelectorSleepToma = (props) => {
     const {t} = useTranslation();
+    const {token,setToken} = useContext(Token)
     const [intake, setIntake] = useState("")
     const [sleep, setSleep] = useState("")
+    const [baby,setBaby] = useState(props.baby);
     const [wrongIntake, setWrongIntake] = useState(true);
     const [wrongSleep, setWrongSleep] = useState(true);
 
@@ -41,32 +45,24 @@ export const SelectorSleepToma = (props) => {
         checkData(intake,newSleep)
     }
 
+
     const sendData = () => {
-        const date = new Date();
-        let intakeEntry = {
-            date: (date.getHours()+":"+date.getMinutes()+"/"+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()),
-            type: "intakerecord",
-            data: intake
-        }
-        console.log(intakeEntry)
-        let sleepEntry = {
-            date: (date.getHours()+":"+date.getMinutes()+"/"+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()),
-            type: "sleeprecord",
-            data: sleep
-        }
+        sendIntake(intake,baby.id,token.token);
+        sendSleep(sleep,baby.id,token.token);
         props.exit(false);
     }
 
     return (
-        <View style={styles.container}>            <TextInput
+        <View style={styles.container}>            
+        <TextInput
                 label={t('home.intk')}
-                value={toma}
-                onChangeText={(newToma) => cambiarToma(newToma)}
+                value={intake}
+                onChangeText={(newIntake) => changeIntake(newIntake)}
                 style={styles.textInput}
                 right={<TextInput.Affix text=".ml" />}
                 mode="flat"
             ></TextInput>
-            <HelperText type="error" visible={tomaIncorrecta}>
+            <HelperText type="error" visible={wrongIntake}>
 {t('home.errorIntk')}            </HelperText>
             <TextInput
                 label={t('home.sleep')}
@@ -79,7 +75,7 @@ export const SelectorSleepToma = (props) => {
 {t('home.errorSleep')}            </HelperText>
             <Button onPress={sendData} textColor="white" style={styles.botonManual}>{t('home.save')}</Button>
         </View>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
