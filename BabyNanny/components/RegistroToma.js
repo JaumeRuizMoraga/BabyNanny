@@ -9,7 +9,7 @@ export const IntakeRecord = (props) => {
             <Card style={{margin:5}}>
                 <Card.Content>
                     <Text>{t('home.date')}: <Text style={{color:"#DA70D6"}}>{props.entry.date}</Text></Text>
-                    <Text>{t('home.intk')}: <Text style={{color:"#DA70D6"}}>{props.entry.data} .ml</Text></Text>
+                    <Text>{t('home.intk')}: <Text style={{color:"#DA70D6"}}>{props.entry.intakeAmount} .ml</Text></Text>
                 </Card.Content>
             </Card>
         </View>
