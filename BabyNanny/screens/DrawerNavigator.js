@@ -76,7 +76,8 @@ export const DrawerNavigator = () => {
         return (
             <View>
                 <ActivityIndicator size="large" color="#DA70D6" />
-            </View>)
+            </View>
+        )
     }
 
     return (

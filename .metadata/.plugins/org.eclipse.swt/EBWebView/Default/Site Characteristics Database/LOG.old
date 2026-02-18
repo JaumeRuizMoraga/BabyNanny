@@ -1,3 +1,5 @@
-2026/02/12-23:56:25.652 66d0 Reusing MANIFEST C:\Users\Jaume\Desktop\BabyNanny\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/MANIFEST-000001
-2026/02/12-23:56:25.654 66d0 Recovering log #3
-2026/02/12-23:56:25.655 66d0 Reusing old log C:\Users\Jaume\Desktop\BabyNanny\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/000003.log 
+2026/02/18-19:35:22.744 6558 Log #3: 10 ops saved to Table #4 OK
+2026/02/18-19:35:22.747 6558 Archiving C:\Users\Jaume\Desktop\BabyNanny\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/000003.log: OK
+2026/02/18-19:35:22.748 6558 Table #4: 10 entries OK
+2026/02/18-19:35:22.753 6558 Archiving C:\Users\Jaume\Desktop\BabyNanny\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database/MANIFEST-000001: OK
+2026/02/18-19:35:22.775 6558 **** Repaired leveldb C:\Users\Jaume\Desktop\BabyNanny\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Site Characteristics Database; recovered 1 files; 287 bytes. Some data may have been lost. ****

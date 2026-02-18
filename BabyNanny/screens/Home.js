@@ -9,7 +9,7 @@ import {
     SegmentedButtons,
     Modal
 } from 'react-native-paper';
-import { useState, useContext, useTransition } from 'react';
+import { useState, useContext, useTransition,useEffect } from 'react';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
 import User from '../context/User';
@@ -29,94 +29,95 @@ import { default_baby_img } from '../assets/img/baby_icon';
 
 export const Home = (props) => {
     const [type, setType] = useState();
-        const { user, setUser } = useContext(User);
-    const [ baby, setBaby ] = useState(user.babies[0]);
+    const { user, setUser } = useContext(User);
+    const [baby, setBaby] = useState(user.babies[0]);
     const [showModal, setShowModal] = useState(false);
-    const [entrys, setEntrys] = useState(baby.intakeRecord);
+    const [entrys, setEntrys] = useState();
     const [edit, setEdit] = useState(false);
-    const {t} = useTranslation()
-     const [modalVisible, setModalVisible] = useState(false);
-   
+    const { t } = useTranslation()
+    const [modalVisible, setModalVisible] = useState(false);
 
-
+    // useEffect(() => {
+    //         console.log(entrys);
+    //         console.log(baby.intakeRecord);
+    //     }, [entrys]);
     const openModal = () => {
         setShowModal(true)
     }
     const changeBaby = (baby) => {
         console.log("Cambiando bebe")
-       setBaby(getLocalBaby(user.babies,baby.name))
-       setShowModal(false)
+        setBaby(getLocalBaby(user.babies, baby.name))
+        setShowModal(false)
     }
-        const save = (newChars) => {
+    const save = (newChars) => {
         let newBaby = baby;
         newBaby.assets = newChars
         console.log(newBaby)
     }
-    const DeleteBaby = () =>{
+    const DeleteBaby = () => {
         let response = deleteBaby(baby.id)
-        if(response === 0){
+        if (response === 0) {
             console.log("Todo bien")
         }
     }
-    const goConfig = () =>{
+    const goConfig = () => {
         props.navigation.navigate("Config");
     }
 
 
-const openCamera = async () => {
-    // Expo pide los permisos automáticamente con esta función
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    const openCamera = async () => {
+        // Expo pide los permisos automáticamente con esta función
+        const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-        alert("Te has negado a permitir que esta aplicación use tu cámara");
-        return;
-    }
+        if (permissionResult.granted === false) {
+            alert("Te has negado a permitir que esta aplicación use tu cámara");
+            return;
+        }
 
-    const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true, // Permite recortar la foto
-        aspect: [1, 1],      // La deja cuadrada para el Avatar
-        quality: 1,
-    });
+        const result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true, // Permite recortar la foto
+            aspect: [1, 1],      // La deja cuadrada para el Avatar
+            quality: 1,
+        });
 
-    if (!result.canceled) {
-         changeImage(result.assets[0].base64, baby.id, token.token)
-        // Aquí se actualiza el icono del bebé
-        setModalVisible(false);
-    }
-};
+        if (!result.canceled) {
+            changeImage(result.assets[0].base64, baby.id, token.token)
+            // Aquí se actualiza el icono del bebé
+            setModalVisible(false);
+        }
+    };
 
-const openLibrary = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const openLibrary = async () => {
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-        alert("¡Te has negado a permitir que esta aplicación acceda a tus fotos!");
-        return;
-    }
+        if (permissionResult.granted === false) {
+            alert("¡Te has negado a permitir que esta aplicación acceda a tus fotos!");
+            return;
+        }
 
-    const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-        base64 : true,
-    });
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+            base64: true,
+        });
 
-    if (!result.canceled) {
-        //result.assets[0].base64 esto devuelve la imagen en base64
-        //result.assets[0].uri esto devuelve la ruta de la imagen en el movil
-        changeImage(result.assets[0].base64, baby.id, token.token)
-        // Aquí se actualiza el icono del bebé
-        setModalVisible(false);
-    }
-};
-  
+        if (!result.canceled) {
+            //result.assets[0].base64 esto devuelve la imagen en base64
+            //result.assets[0].uri esto devuelve la ruta de la imagen en el movil
+            changeImage(result.assets[0].base64, baby.id, token.token)
+            // Aquí se actualiza el icono del bebé
+            setModalVisible(false);
+        }
+    };
+
 
     return (
         <View style={styles.root}>
             {console.log(baby)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
-                  
                     <FAB
                         icon={() => (
                             <Avatar.Image
@@ -127,16 +128,16 @@ const openLibrary = async () => {
                         style={styles.fab}
                         onPress={() => openModal()}
                     />
-                   <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                   <Avatar.Image size={140} source={baby.icon} />
-                   </Pressable>
-                   
+                    <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                        <Avatar.Image size={140} source={baby.icon} />
+                    </Pressable>
+
 
                     <Text variant="headlineMedium" style={styles.title}>
                         {baby.name}
                     </Text>
                     <Text variant="bodyMedium" style={styles.subtitle}>
-                        
+
                     </Text>
                 </Surface>
                 <BabyCard baby={baby.features} />
@@ -156,7 +157,12 @@ const openLibrary = async () => {
                             label: t('home.sleep'),
                             style: { backgroundColor: "white" },
                         },
-                        { value: baby.medicalRecord, label: t('home.med'), labelStyle: { color: "#DA70D6" }, style: { backgroundColor: "white" }, },
+                        {
+                            value: baby.medicalRecord,
+                            label: t('home.med'),
+                            labelStyle: { color: "#DA70D6" }, 
+                            style: { backgroundColor: "white" },
+                        },
                     ]}
                 />
             </View>
@@ -164,15 +170,14 @@ const openLibrary = async () => {
                 data={entrys}
                 keyExtractor={(item, index) => item + index.toString()}
                 renderItem={({ item }) => {
-                    switch (item.type) {
-                        case "Medico":
-                            return <MedicalRecord entry={item} />;
-                        case "Toma":
-                            return <IntakeRecord entry={item} />;
-                        case "Sueño":
-                            return <SleepRecord entry={item} />;
-                        default:
-                            return;
+                    if("intakeAmount" in item){
+                        return <IntakeRecord entry={item} />;
+                    }
+                    else if("sleepTime" in item){
+                        return <SleepRecord entry={item} />;
+                    }
+                    else{
+                        return <MedicalRecord entry={item} />;
                     }
                 }
                 }
@@ -184,7 +189,7 @@ const openLibrary = async () => {
                 onPress={() => setEdit(true)}
                 animated={true}
             />
-                        <FAB
+            <FAB
                 icon="account"
                 style={styles.fabUser}
                 size='small'
@@ -199,49 +204,49 @@ const openLibrary = async () => {
                 animated={true}
             />
             <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
-                <EditarDatos baby={baby.assets} save={(newChars)=>save(newChars)}></EditarDatos>
+                <EditarDatos baby={baby.assets} save={(newChars) => save(newChars)}></EditarDatos>
             </Modal>
             <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>
-                <BabyChange goLogin={props.goLogin} babies={user.babies} funCom={(nameBaby)=>changeBaby(nameBaby)}></BabyChange>
+                <BabyChange goLogin={props.goLogin} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)}></BabyChange>
             </Modal>
-            <Modal 
-    visible={modalVisible} 
-    onDismiss={() => setModalVisible(false)} 
-    contentContainerStyle={styles.imagePickerModal} 
->
-    <Text style={styles.modalTitle}>Seleccionar imagen</Text>
-    
-    <View style={styles.buttonContainer}>
-        <Button 
-            mode="contained" 
-            icon="camera" 
-            onPress={openCamera}
-            style={styles.optionButton}
-            buttonColor="#DA70D6"
-        >
-            Usar Cámara
-        </Button>
+            <Modal
+                visible={modalVisible}
+                onDismiss={() => setModalVisible(false)}
+                contentContainerStyle={styles.imagePickerModal}
+            >
+                <Text style={styles.modalTitle}>Seleccionar imagen</Text>
 
-        <Button 
-            mode="contained" 
-            icon="image-album" 
-            onPress={openLibrary}
-            style={styles.optionButton}
-            buttonColor="#DA70D6"
-        >
-            Abrir Galería
-        </Button>
-    </View>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        mode="contained"
+                        icon="camera"
+                        onPress={openCamera}
+                        style={styles.optionButton}
+                        buttonColor="#DA70D6"
+                    >
+                        Usar Cámara
+                    </Button>
 
-    <Button 
-        onPress={() => setModalVisible(false)} 
-        textColor="red" 
-        style={{marginTop: 10}}
-    >
-        Cancelar
-    </Button>
-</Modal>
+                    <Button
+                        mode="contained"
+                        icon="image-album"
+                        onPress={openLibrary}
+                        style={styles.optionButton}
+                        buttonColor="#DA70D6"
+                    >
+                        Abrir Galería
+                    </Button>
+                </View>
+
+                <Button
+                    onPress={() => setModalVisible(false)}
+                    textColor="red"
+                    style={{ marginTop: 10 }}
+                >
+                    Cancelar
+                </Button>
+            </Modal>
         </View>
     );
 };
@@ -284,13 +289,13 @@ const styles = StyleSheet.create({
         right: 20,
         top: 270,
     },
-    fabDelete:{
+    fabDelete: {
         position: 'absolute',
         margin: 16,
         right: 20,
         top: 190,
     },
-    fabUser:{
+    fabUser: {
         position: 'absolute',
         margin: 16,
         right: 325,
@@ -312,7 +317,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 40, // Esto le da el ancho centrado
         borderRadius: 20,
         alignItems: 'center',
-       
+
     },
     modalTitle: {
         fontSize: 20,
