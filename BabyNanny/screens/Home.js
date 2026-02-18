@@ -112,7 +112,7 @@ const openLibrary = async () => {
 
     return (
         <View style={styles.root}>
-            {console.log(props.goLogin)}
+            {console.log(user.babies)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                   
@@ -138,7 +138,7 @@ const openLibrary = async () => {
                         
                     </Text>
                 </Surface>
-                <BabyCard baby={baby.features} />
+                <BabyCard baby={baby.assets} />
                 <SegmentedButtons
                     value={entrys}
                     onValueChange={setEntrys}

@@ -1,21 +1,21 @@
 import { newEntry } from "../services/services";
-export const sendIntake = async (intake,idBebe,token) => {
+export const sendIntake = (intake,idBebe,token) => {
     const date = new Date();
     let intakeEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
-        type: "intakeRecord",
-        amount: intake
+        type: "intake",
+        description: intake
     }
-    console.log( await newEntry(intakeEntry,idBebe,token))
+    console.log(newEntry(intakeEntry,idBebe,token))
 }
-export const sendSleep = async (sleep,idBebe,token) => {
+export const sendSleep = (sleep,idBebe,token) => {
     const date = new Date();
     let sleepEntry = {
         date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
-        type: "sleepRecord",
-        timeSleep: sleep
+        type: "sleep",
+        description: sleep
     }
-    console.log( await newEntry(sleepEntry,idBebe,token))
+    console.log(newEntry(sleepEntry,idBebe,token))
 }
 
 export const sendMedic = async (sleep,idBebe,token) => {

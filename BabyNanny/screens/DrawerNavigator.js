@@ -8,19 +8,22 @@ import User from '../context/User.js'
 import Token from '../context/Token.js';
 import { getDataBabies } from '../services/services.js';
 import { getDataUser } from '../services/services.js';
+<<<<<<< HEAD
 import {View,ActivityIndicator} from 'react-native'
 import { changeLanguage } from 'i18next';
 import '../assets/i18n';
+=======
+>>>>>>> parent of 5459630 (Integracion de apis ya completo)
 
 import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const { user, setUser } = useContext(User)
-    const { token, setToken } = useContext(Token);
+    const {user,setUser} = useContext(User)
+    const {token,setToken} = useContext(Token);
 
     const [noBaby, setNoBaby] = useState()
 
+<<<<<<< HEAD
     const getAllData = async () => {
         try {
             let babies = await getDataBabies(token.token)
@@ -38,12 +41,24 @@ export const DrawerNavigator = () => {
             console.error("Error cargando datos" + error)
         } finally {
             setIsLoading(false)
+=======
+    const getAllData = async() =>{
+        let babies = await getDataBabies(token.token)
+        let userReal = await getDataUser(token.token);
+        user.babies = babies.babies;
+        await setUser(userReal)
+        if(userReal.babies.length == 0){
+            setNoBaby(true)
+        }else{
+            setNoBaby(false)
+>>>>>>> parent of 5459630 (Integracion de apis ya completo)
         }
-
+        console.log(user)
+        console.log("Fin log")
     }
 
-    const goLogin = () => {
-        props.navigation.navigate("LoginScreen")
+    const goLogin = () =>{
+    props.navigation.navigate("LoginScreen")
     }
 
     const draweOptrions = {
@@ -69,20 +84,11 @@ export const DrawerNavigator = () => {
     }
 
     useEffect(() => {
-        console.log("UseEffect")
         getAllData(token);
     }, []);
 
 
 
-
-    if (isLoading) {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size="large" color="#DA70D6" />
-            </View>
-        );
-    }
     return (
         <Drawer.Navigator screenOptions={draweOptrions} initialRouteName={noBaby ? "NoBaby" : "Home"}>
             <Drawer.Screen name="Home" options={{ headerShown: true }} goLogin={goLogin} component={Home} />
@@ -94,5 +100,4 @@ export const DrawerNavigator = () => {
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
         </Drawer.Navigator>
     );
-
 }

@@ -15,7 +15,6 @@ export const login = async (newBabyData) => {
 
         if (response.ok) {
             let token = await response.json()
-            console.log("Saliendo token")
             console.log(token)
             return {token:token,status:200}
         } else {
@@ -53,7 +52,6 @@ export const newBaby = async (newBabyData,token) => {
     }
 }
 export const getDataBabies = async (token) => {
-        console.log("Entrando en getBabies")
     try {
         const response = await fetch(
             'http://52.2.207.230:8080/BabyNanny/babies?token=' + token
@@ -67,7 +65,6 @@ export const getDataBabies = async (token) => {
     }
 };
 export const getDataUser = async (token) => {
-    console.log("Entrando en getUser")
     try {
         const response = await fetch(
             'http://52.2.207.230:8080/BabyNanny/getUser?token=' + token
@@ -91,7 +88,7 @@ export const logout = async (idToken) =>{
             },
 
         });
-        console.log(response)
+
         if (response.ok) {
             return  204 
         } else {
@@ -126,23 +123,20 @@ export const deleteBaby = async(idBebe) => {
         console.error("Error en la conexión:", error);
     }
 }
-export const newEntry = async(registro,idBebe,token) => {
+export const newEntry = async(idBebe,token,registro) => {
         try {
         console.log("Entrando new entry")
-        console.log(registro)
-        console.log(idBebe)
-        console.log(token)
-        const response = await fetch('http://52.2.207.230:8080/BabyNanny/newEntry/'+idBebe, {
+        const response = await fetch('http://52.2.207.230:8080/BabyNanny/logOut/'+idBebe, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'token':token
             },
-            body: JSON.stringify(registro)
+            body: registro
 
         });
-        console.log(response)
+
         if (response.ok) {
             return  204 
         } else {

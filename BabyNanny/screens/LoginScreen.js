@@ -34,7 +34,6 @@ export const LoginScreen = (props) => {
         let response = await login(json);
         if (response.status === 200) {
             setToken(response.token);
-            console.log("Yendo a drawer")
             props.navigation.navigate('DrawerNavigator')
         }
         else {
