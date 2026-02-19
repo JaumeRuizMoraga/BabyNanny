@@ -53,6 +53,8 @@ export const Home = (props) => {
     const changeBaby = (baby) => {
         console.log("Cambiando bebe")
         setBaby(getLocalBaby(user.babies, baby.id))
+        console.log(baby);
+            console.log(baby.medicalRecord[0]);
         setShowModal(false)
     }
     const save = (newChars) => {
@@ -91,10 +93,14 @@ export const Home = (props) => {
             allowsEditing: true, // Permite recortar la foto
             aspect: [1, 1],      // La deja cuadrada para el Avatar
             quality: 1,
+            base64: true,
         });
 
         if (!result.canceled) {
-            changeImage(result.assets[0].base64, baby.id, token.token)
+            let obj = {
+                image : "data:image/jpeg;base64," + result.assets[0].base64
+            }
+            changeImage(obj, baby.id, token.token)
             // Aquí se actualiza el icono del bebé
             setModalVisible(false);
         }
@@ -119,7 +125,10 @@ export const Home = (props) => {
         if (!result.canceled) {
             //result.assets[0].base64 esto devuelve la imagen en base64
             //result.assets[0].uri esto devuelve la ruta de la imagen en el movil
-            changeImage(result.assets[0].base64, baby.id, token.token)
+            let obj = {
+                 image : "data:image/jpeg;base64," + result.assets[0].base64
+            }
+            changeImage(obj, baby.id, token.token)
             // Aquí se actualiza el icono del bebé
             setModalVisible(false);
         }
@@ -203,7 +212,7 @@ useFocusEffect(
                     if("intakeAmount" in item){
                         return <IntakeRecord entry={item} />;
                     }
-                    else if("sleepTime" in item){
+                    else if("timeSleep" in item){
                         return <SleepRecord entry={item} />;
                     }
                     else{
