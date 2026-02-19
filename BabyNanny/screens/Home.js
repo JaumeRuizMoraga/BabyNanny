@@ -59,7 +59,7 @@ export const Home = (props) => {
         newBaby.assets = newChars
         console.log(newBaby)
     }
-    const DeleteBaby = async() => {
+    const erraseBaby = async() => {
         let response = await deleteBaby(baby.id,token.token)
         console.log(response)
         if (response === 204) {
@@ -225,7 +225,7 @@ export const Home = (props) => {
                 <EditarDatos baby={baby.assets} save={(newChars) => save(newChars)}></EditarDatos>
             </Modal>
             <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
-                <ModalDelete baby={baby.assets} delete={(newChars) => save(newChars)}></ModalDelete>
+                <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)}></ModalDelete>
             </Modal>
             <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>
@@ -248,7 +248,6 @@ export const Home = (props) => {
                     >
                         Usar Cámara
                     </Button>
-
                     <Button
                         mode="contained"
                         icon="image-album"
