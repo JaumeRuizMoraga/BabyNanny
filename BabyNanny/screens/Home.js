@@ -9,7 +9,8 @@ import {
     SegmentedButtons,
     Modal
 } from 'react-native-paper';
-import { useState, useContext, useTransition,useEffect,useFocusEffect,useCallback } from 'react';
+import { useState, useContext, useTransition,useEffect,useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
 import User from '../context/User';
@@ -21,7 +22,7 @@ import { MedicalRecord } from '../components/RegistroMedico';
 import { IntakeRecord } from '../components/RegistroToma';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
-import { getLocalBaby,recargarDatos } from '../utils/utils';
+import { getLocalBaby,recargarDatos, getBabyPos } from '../utils/utils';
 import * as ImagePicker from 'expo-image-picker';
 import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
@@ -134,7 +135,7 @@ export const Home = (props) => {
 
 useFocusEffect(
         useCallback(() => {
-            recargarDatos(token.token,setBaby,setUser);
+            recargarDatos(token.token,setBaby,setUser,getBabyPos(user.babies, baby.id));
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
             };
@@ -143,6 +144,7 @@ useFocusEffect(
 
     return (
         <View style={styles.root}>
+            {console.log(baby.name)}
             {console.log(baby.intakeRecord.length)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
