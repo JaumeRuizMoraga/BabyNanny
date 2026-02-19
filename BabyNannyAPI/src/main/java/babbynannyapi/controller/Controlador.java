@@ -62,8 +62,8 @@ public class Controlador {
 		baby.put("image",b.getImage());
 		baby.put("icon",b.getIcon());
 		baby.put("intakeRecord",intakeRecordRepository.findAllById(b.getIntakeRecord()));
-		baby.put("medicalRecord",sleepRecordRepository.findAllById(b.getMedicalRecord()));
-		baby.put("sleepRecord",medicalRecordRepository.findAllById(b.getSleepRecord()));
+		baby.put("medicalRecord",medicalRecordRepository.findAllById(b.getMedicalRecord()));
+		baby.put("sleepRecord",sleepRecordRepository.findAllById(b.getSleepRecord()));
 		baby.put("features",b.getFeatures());
 		baby.put("events",b.getEvents());
 		return baby;

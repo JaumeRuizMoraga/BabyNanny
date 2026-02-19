@@ -1,4 +1,9 @@
 /.metadata/
+<<<<<<< HEAD
 /BabyNanny/node_modules/
 /BabyNannyAPI/node_modules/
 node_modules/
+=======
+node_modules/
+/.BabyNanny/
+>>>>>>> d38e93e14e05238e1b871552bdb83eb21c567067
