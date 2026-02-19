@@ -6,6 +6,8 @@ import Baby from '../context/Baby';
 
 export const MedicalRecordScreen = (props) => {
     const {baby, setBaby} = useContext(Baby);
+
+    
    
     return (
 

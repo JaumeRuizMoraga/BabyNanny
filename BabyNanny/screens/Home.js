@@ -52,6 +52,8 @@ export const Home = (props) => {
     const changeBaby = (baby) => {
         console.log("Cambiando bebe")
         setBaby(getLocalBaby(user.babies, baby.id))
+        console.log(baby);
+            console.log(baby.medicalRecord[0]);
         setShowModal(false)
     }
     const save = (newChars) => {
