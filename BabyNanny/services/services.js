@@ -138,7 +138,6 @@ export const newEntry = async(registro,idBebe,token) => {
             body: JSON.stringify(registro)
 
         });
-        console.log(response)
         if (response.ok) {
             return  200 
         } else {

@@ -2,6 +2,7 @@ import { newEntry } from "../services/services";
 import { getDataBabies,getDataUser } from "../services/services";
 import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
+
 export const sendIntake = async (intake,idBebe,token) => {
     const date = new Date();
     let intakeEntry = {

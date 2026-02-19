@@ -5,107 +5,36 @@ import { comprobarDatosCompleto } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
-export const ModalDelete = () => {
+export const ModalDelete = (props) => {
     return (
         <View>
-            <Text style={styles.modalTitle}>Seleccionar imagen</Text>
-            <View style={styles.buttonContainer}>
+            <Text style={styles.modalTitle}>Estas seguro de que quieres eliminar al bebe?</Text>
+            <View style={styles.modalView}>
                 <Button
                     mode="contained"
-                    icon="camera"
                     style={styles.optionButton}
                     buttonColor="#DA70D6"
                 >
-                    Usar Cámara
+                    Si
                 </Button>
 
                 <Button
                     mode="contained"
-                    icon="image-album"
                     style={styles.optionButton}
                     buttonColor="#DA70D6"
                 >
-                    Abrir Galería
+                    No
                 </Button>
             </View>
-
-            <Button
-                onPress={() => setModalVisible(false)}
-                textColor="red"
-                style={{ marginTop: 10 }}
-            >
-                Cancelar
-            </Button>
         </View>
     )
 } 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        backgroundColor: '#E6E6FA',
-    },
-    container: {
-        margin: 20
-    },
-    header: {
-        alignItems: 'center',
-        padding: 20,
-        borderRadius: 20,
-        backgroundColor: '#FFF',
-    },
-    title: {
-        marginTop: 10,
-        fontWeight: 'bold',
-        color: '#DA70D6',
-    },
-    subtitle: {
-        color: '#777',
-    },
-    fab: {
-        position: 'absolute',
-        right: 10,
-        top: 10,
-        backgroundColor: '#E6E6FA',
-        padding: 0,
-        borderRadius: 180,
-        margin: 0
-
-    },
-    fabEdit: {
-        position: 'absolute',
-        margin: 16,
-        right: 20,
-        top: 270,
-    },
-    fabDelete: {
-        position: 'absolute',
-        margin: 16,
-        right: 20,
-        top: 190,
-    },
-    fabUser: {
-        position: 'absolute',
-        margin: 16,
-        right: 325,
-        top: 10,
-    },
-    modal: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '65%',
-        backgroundColor: 'white',
-        borderWidth: 2,
-        borderRadius: 10,
-        borderColor: "#DA70D6"
-    },
-    imagePickerModal: {
-        backgroundColor: 'white',
-        padding: 20,
-        marginHorizontal: 40, // Esto le da el ancho centrado
-        borderRadius: 20,
-        alignItems: 'center',
-
+    modalView:{
+        alignContent:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        flexDirection:'row'
     },
     modalTitle: {
         fontSize: 20,
@@ -113,12 +42,9 @@ const styles = StyleSheet.create({
         color: '#DA70D6',
         marginBottom: 20,
     },
-    buttonContainer: {
-        width: '100%',
-    },
     optionButton: {
-        marginBottom: 10,
-        width: '100%',
+        margin: 10,
+        width: '20%',
         paddingVertical: 5,
     },
 });
