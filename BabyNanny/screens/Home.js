@@ -20,10 +20,11 @@ import { MedicalRecord } from '../components/RegistroMedico';
 import { IntakeRecord } from '../components/RegistroToma';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
-import { getLocalBaby } from '../utils/utils';
+import { getLocalBaby,recargarDatos } from '../utils/utils';
 import * as ImagePicker from 'expo-image-picker';
 import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
+import Token from '../context/Token';
 
 
 
@@ -32,6 +33,7 @@ export const Home = (props) => {
     const [type, setType] = useState();
     const { user, setUser } = useContext(User);
     const {baby, setBaby} = useContext(Baby);
+    const {token, setToken} = useContext(Token);
     const [showModal, setShowModal] = useState(false);
     const [entrys, setEntrys] = useState();
     const [edit, setEdit] = useState(false);
@@ -55,10 +57,15 @@ export const Home = (props) => {
         newBaby.assets = newChars
         console.log(newBaby)
     }
-    const DeleteBaby = () => {
-        let response = deleteBaby(baby.id)
+    const DeleteBaby = async() => {
+        let response = await deleteBaby(baby.id,token.token)
+        console.log(response)
         if (response === 204) {
             console.log("Todo bien")
+            recargarDatos(token.token);
+        }
+        else{
+            console.log("Fallo")
         }
     }
     const goConfig = () => {
