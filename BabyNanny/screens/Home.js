@@ -13,6 +13,7 @@ import { useState, useContext, useTransition,useEffect } from 'react';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
 import User from '../context/User';
+import Token from '../context/Token';
 import { BabyChange } from '../components/CambioBebe';
 import { EditarDatos } from '../components/EditarDatos';
 import { SleepRecord } from '../components/RegistroSueño';
@@ -24,7 +25,7 @@ import { getLocalBaby,recargarDatos } from '../utils/utils';
 import * as ImagePicker from 'expo-image-picker';
 import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
-import Token from '../context/Token';
+import { ModalDelete } from '../components/ModalDelete';
 
 
 
@@ -37,6 +38,7 @@ export const Home = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [entrys, setEntrys] = useState();
     const [edit, setEdit] = useState(false);
+    const [del, setDel] = useState(false);
     const { t } = useTranslation()
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -61,8 +63,10 @@ export const Home = (props) => {
         let response = await deleteBaby(baby.id,token.token)
         console.log(response)
         if (response === 204) {
+            let nuevosDatos = recargarDatos(token.token);
+            setUser(nuevosDatos.user);
+            setBaby(nuevosDatos.babies[0]);
             console.log("Todo bien")
-            recargarDatos(token.token);
         }
         else{
             console.log("Fallo")
@@ -225,11 +229,14 @@ useFocusEffect(
                 icon="delete"
                 style={styles.fabDelete}
                 size='small'
-                onPress={() => DeleteBaby()}
+                onPress={() => setDel(true)}
                 animated={true}
             />
             <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
                 <EditarDatos baby={baby.assets} save={(newChars) => save(newChars)}></EditarDatos>
+            </Modal>
+            <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
+                <ModalDelete baby={baby.assets} delete={(newChars) => save(newChars)}></ModalDelete>
             </Modal>
             <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>

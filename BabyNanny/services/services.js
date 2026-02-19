@@ -99,7 +99,6 @@ export const logout = async (idToken) =>{
 }
 export const deleteBaby = async(idBebe,token) => {
     try {
-        console.log("Entrando a delete baby")
         const response = await fetch('http://100.52.162.190:8080/BabyNanny/deleteBaby/'+idBebe, {
             method: 'DELETE',
             headers: {
@@ -110,7 +109,6 @@ export const deleteBaby = async(idBebe,token) => {
 
         });
         if (response.ok) {
-            console.log("PUTASSSSS")
             return 204 
         } else {
             return null
@@ -134,7 +132,6 @@ export const newEntry = async(registro,idBebe,token) => {
             body: JSON.stringify(registro)
 
         });
-        console.log(response)
         if (response.ok) {
             return  200 
         } else {
