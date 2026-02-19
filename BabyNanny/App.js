@@ -6,10 +6,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import { UserProvider } from './context/User.js';
 import { TokenProvider } from './context/Token.js';
+import { BabyProvider } from './context/Baby.js';
 const App = () => {
   return (
     <TokenProvider>
     <UserProvider>
+      <BabyProvider>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="LoginScreen" options={{headerShown: false}} component={LoginScreen} />
@@ -17,6 +19,7 @@ const App = () => {
         <Stack.Screen name="DrawerNavigator"  options={{headerShown: false}} component={DrawerNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
+    </BabyProvider>
     </UserProvider>
     </TokenProvider>
   );

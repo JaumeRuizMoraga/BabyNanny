@@ -102,8 +102,8 @@ export const getAgeMonth = (stringDate) => {
     }
     return monthAge
 }
-export const getLocalBaby = (arrayBabies,nameBaby) => {
-    let result = arrayBabies.filter((elem)=> elem.name == nameBaby);
+export const getLocalBaby = (arrayBabies,idBebe) => {
+    let result = arrayBabies.filter((elem)=> elem.id == idBebe);
 
     return result[0]
 }

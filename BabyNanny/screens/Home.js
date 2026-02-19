@@ -47,7 +47,7 @@ export const Home = (props) => {
     }
     const changeBaby = (baby) => {
         console.log("Cambiando bebe")
-        setBaby(getLocalBaby(user.babies, baby.name))
+        setBaby(getLocalBaby(user.babies, baby.id))
         setShowModal(false)
     }
     const save = (newChars) => {
@@ -130,7 +130,7 @@ export const Home = (props) => {
                         onPress={() => openModal()}
                     />
                     <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                        <Avatar.Image size={140} source={baby.icon} />
+                        <Avatar.Image size={140} source={{uri: baby.image}} />
                     </Pressable>
 
 
