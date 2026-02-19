@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { Audio } from 'expo-av';
 import User from '../context/User';
 import Token from '../context/Token';
+import Baby from '../context/Baby';
 import { sendSleep, sendIntake } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +18,7 @@ export const SleepScreen = (props) => {
     const [song, setSong] = useState();
     const { user, setUser } = useContext(User);
     const {token,setToken} = useContext(Token);
-    const [ baby, setBaby ] = useState(user.babies[0]);
+    const {baby, setBaby} = useContext(Baby);
 
 
 

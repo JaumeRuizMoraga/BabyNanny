@@ -13,6 +13,7 @@ import { useState, useContext, useTransition,useEffect } from 'react';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
 import User from '../context/User';
+import Token from '../context/Token';
 import { BabyChange } from '../components/CambioBebe';
 import { EditarDatos } from '../components/EditarDatos';
 import { SleepRecord } from '../components/RegistroSueño';
@@ -49,7 +50,7 @@ export const Home = (props) => {
     }
     const changeBaby = (baby) => {
         console.log("Cambiando bebe")
-        setBaby(getLocalBaby(user.babies, baby.name))
+        setBaby(getLocalBaby(user.babies, baby.id))
         setShowModal(false)
     }
     const save = (newChars) => {
@@ -119,11 +120,20 @@ export const Home = (props) => {
             setModalVisible(false);
         }
     };
+    if (!baby || !user) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Cargando datos...</Text>
+            </View>
+        );
+    }
 
 
     return (
         <View style={styles.root}>
-            {console.log(baby)}
+            {console.log("Losgs Home")}
+            {console.log(baby.name)}
+            {console.log(user.name)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB
@@ -137,7 +147,7 @@ export const Home = (props) => {
                         onPress={() => openModal()}
                     />
                     <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                        <Avatar.Image size={140} source={baby.icon} />
+                        <Avatar.Image size={140} source={{uri: baby.image}} />
                     </Pressable>
 
 
