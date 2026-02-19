@@ -66,9 +66,6 @@ export const Home = (props) => {
         let response = await deleteBaby(baby.id,token.token)
         console.log(response)
         if (response === 204) {
-            let nuevosDatos = recargarDatos(token.token);
-            setUser(nuevosDatos.user);
-            setBaby(nuevosDatos.babies[0]);
             console.log("Todo bien")
         }
         else{
