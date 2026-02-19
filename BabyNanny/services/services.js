@@ -3,7 +3,7 @@ export const login = async (newBabyData) => {
 
 
 
-        const response = await fetch('http://23.20.30.144:8080/BabyNanny/login', {
+        const response = await fetch('http://100.52.162.190:8080/BabyNanny/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export const login = async (newBabyData) => {
 export const newBaby = async (newBabyData,token) => {
     try {
         console.log("Entrando new baby")
-        const response = await fetch('http://23.20.30.144:8080/BabyNanny/newBaby', {
+        const response = await fetch('http://100.52.162.190:8080/BabyNanny/newBaby', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export const newBaby = async (newBabyData,token) => {
 export const getDataBabies = async (token) => {
     try {
         const response = await fetch(
-            'http://23.20.30.144:8080/BabyNanny/babies?token=' + token
+            'http://100.52.162.190:8080/BabyNanny/babies?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -67,7 +67,7 @@ export const getDataBabies = async (token) => {
 export const getDataUser = async (token) => {
     try {
         const response = await fetch(
-            'http://23.20.30.144:8080/BabyNanny/getUser?token=' + token
+            'http://100.52.162.190:8080/BabyNanny/getUser?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -80,7 +80,7 @@ export const getDataUser = async (token) => {
 export const logout = async (idToken) =>{
         try {
         console.log("Entrando a logout")
-        const response = await fetch('http://23.20.30.144:8080/BabyNanny/logOut/'+idToken, {
+        const response = await fetch('http://100.52.162.190:8080/BabyNanny/logOut/'+idToken, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -100,20 +100,19 @@ export const logout = async (idToken) =>{
         console.error("Error en la conexión:", error);
     }
 }
-export const deleteBaby = async(idBebe) => {
+export const deleteBaby = async(idBebe,token) => {
     try {
-        console.log("Entrando a delete baby")
-        const response = await fetch('http://23.20.30.144:8080/BabyNanny/deleteBaby/'+idBebe, {
+        const response = await fetch('http://100.52.162.190:8080/BabyNanny/deleteBaby/'+idBebe, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'token':token
             },
 
         });
-
         if (response.ok) {
-            return  204 
+            return 204 
         } else {
             return null
         }
@@ -129,7 +128,7 @@ export const newEntry = async(registro,idBebe,token) => {
     console.log(registro)
         try {
         console.log("Entrando new entry")
-        const response = await fetch('http://23.20.30.144:8080/BabyNanny/newEntry/'+idBebe, {
+        const response = await fetch('http://100.52.162.190:8080/BabyNanny/newEntry/'+idBebe, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -139,7 +138,6 @@ export const newEntry = async(registro,idBebe,token) => {
             body: JSON.stringify(registro)
 
         });
-        console.log(response)
         if (response.ok) {
             return  200 
         } else {

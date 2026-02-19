@@ -3,7 +3,7 @@ import { Icon, FAB, TextInput, Surface, HelperText, Button } from 'react-native-
 import { RulerPicker } from 'react-native-ruler-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useState, useContext } from 'react'
-import { getAgeMonth,recargarDatos } from '../utils/utils';
+import { getAgeMonth, recargarDatos } from '../utils/utils';
 import { newBaby } from '../services/services';
 import Token from '../context/Token';
 import '../assets/i18n';
@@ -12,11 +12,14 @@ import { imageToBase64 } from '../utils/utils';
 import { default_baby_img } from '../assets/img/baby_icon.js';
 
 import User from '../context/User';
+import Baby from '../context/Baby.js';
 
 export const NewBaby = (props) => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [height, setHeight] = useState();
     const { user, setUser } = useContext(User)
+    const { baby, setBaby } = useContext(Baby);
+
     const [weight, setWeight] = useState(0);
     const [age, setAge] = useState(0);
     const [name, setName] = useState("Nombreejemplo");
@@ -26,7 +29,7 @@ export const NewBaby = (props) => {
     const [errorIntake, setErrorIntake] = useState(false)
     const [date, setDate] = useState(new Date);
     const [showDate, setShowDate] = useState(false)
-    const {token,setToken} = useContext(Token);
+    const { token, setToken } = useContext(Token);
 
 
     const intakeFormat = /^(\d+)$|^(\d*\.\d+)$/;
@@ -40,8 +43,8 @@ export const NewBaby = (props) => {
 
     }
 
-    const assembleBaby = async() => {
-        let baby = {
+    const assembleBaby = async () => {
+        let babyTemp = {
             name: name,
             image: default_baby_img,
             tutors: [user.name],
@@ -57,12 +60,15 @@ export const NewBaby = (props) => {
             },
             events: []
         }
-        let response = await newBaby(baby,token.token);
-        console.log(response)
-        await setUser(await recargarDatos(token.token))
-        console.log("Usuario actual")
-        console.log(user)
-        props.navigation.navigate("Home")
+        let response = await newBaby(babyTemp, token.token);
+        let data = (await recargarDatos(token.token))
+        if (data && data.user && data.babies) {
+            setUser(data.user);
+            setBaby(data.babies[0]);
+
+            props.navigation.navigate("Home");
+        }
+
     }
 
     const checkData = (intake, sleep) => {
@@ -94,7 +100,7 @@ export const NewBaby = (props) => {
     const changeName = (newName) => {
         setName(newName)
     }
-    const getImageDeffault = async () =>{
+    const getImageDeffault = async () => {
         console.log("Entrando en get img default")
         return await imageToBase64(require('../assets/img/baby_icon.jpg'))
     };

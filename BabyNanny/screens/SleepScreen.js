@@ -6,26 +6,42 @@ import { useContext } from 'react';
 import { Audio } from 'expo-av';
 import User from '../context/User';
 import Token from '../context/Token';
+import Baby from '../context/Baby';
 import { sendSleep, sendIntake } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
 export const SleepScreen = (props) => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [manual, setManual] = useState(false)
     const [playing, setPlaying] = useState(false)
     const [song, setSong] = useState();
     const { user, setUser } = useContext(User);
-    const {token,setToken} = useContext(Token);
-    const [ baby, setBaby ] = useState(user.babies[0]);
+    const { token, setToken } = useContext(Token);
+    const { baby, setBaby } = useContext(Baby);
 
 
 
-    const postSleep = () => {
-        sendSleep(baby.features.sleepPre,baby.id,token.token);
+    const postSleep = async () => {
+        console.log("Entrando en post sleep")
+        sendSleep(baby.features.sleepPre, baby.id, token.token);
+        console.lo("Entrando a data")
+        let data = (await recargarDatos(token.token))
+        console.log(data)
+        if (data && data.user && data.babies) {
+            setUser(data.user);
+            setBaby(data.babies[0]);
+
+        }
     }
-    const postIntake = () => {
-        sendIntake(baby.features.intakePre,baby.id,token.token);
+    const postIntake = async () => {
+        sendIntake(baby.features.intakePre, baby.id, token.token);
+        let data = (await recargarDatos(token.token))
+        if (data && data.user && data.babies) {
+            setUser(data.user);
+            setBaby(data.babies[0]);
+
+        }
     }
     const playAudio = async () => {
         if (!playing) {
