@@ -12,6 +12,7 @@ const App = () => {
     <TokenProvider>
     <UserProvider>
       <BabyProvider>
+
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="LoginScreen" options={{headerShown: false}} component={LoginScreen} />

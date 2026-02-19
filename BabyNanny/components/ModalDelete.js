@@ -13,6 +13,7 @@ export const ModalDelete = (props) => {
                 <Button
                     mode="contained"
                     style={styles.optionButton}
+                    onPress={() => props.delete()}
                     buttonColor="#DA70D6"
                 >
                     Si
@@ -21,6 +22,7 @@ export const ModalDelete = (props) => {
                 <Button
                     mode="contained"
                     style={styles.optionButton}
+                    onPress={() => props.exit()}
                     buttonColor="#DA70D6"
                 >
                     No
