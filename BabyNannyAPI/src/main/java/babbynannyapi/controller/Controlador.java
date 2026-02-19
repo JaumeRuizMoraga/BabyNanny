@@ -128,6 +128,21 @@ public class Controlador {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
     }
+
+	@PutMapping("/changeConfig/{id}")
+	public ResponseEntity<Object> changeConfig(@PathVariable String id, @RequestHeader String token, @RequestBody Map<String, Object> config) {
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if(t.isPresent()){
+			Optional<User> optionalUser = userRepository.findById(id);
+			User user = optionalUser.get();
+			user.setConfig(config);
+			userRepository.save(user);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+	}
 	
 	@DeleteMapping("/logOut/{id}")
     public ResponseEntity<Void> logOut(@PathVariable String id) {
