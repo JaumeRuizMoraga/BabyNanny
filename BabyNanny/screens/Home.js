@@ -42,7 +42,6 @@ export const Home = (props) => {
     const [del, setDel] = useState(false);
     const { t } = useTranslation()
     const [modalVisible, setModalVisible] = useState(false);
-
     // useEffect(() => {
     //         console.log(entrys);
     //         console.log(baby.intakeRecord);
@@ -51,10 +50,9 @@ export const Home = (props) => {
         setShowModal(true)
     }
     const changeBaby = (baby) => {
-        console.log("Cambiando bebe")
+        console.log("Bebe cambiado a: ")
+                console.log(baby.name)
         setBaby(getLocalBaby(user.babies, baby.id))
-        console.log(baby);
-            console.log(baby.medicalRecord[0]);
         setShowModal(false)
     }
     const save = (newChars) => {
@@ -141,21 +139,22 @@ export const Home = (props) => {
 
 useFocusEffect(
         useCallback(() => {
-            console.log("CallBack")
-            let index = getBabyPos(user.babies, baby.id)
-            
-            recargarDatos(token.token,setBaby,setUser,index);
+            console.log("Bebe seleccionado:")
+            console.log(baby.name)
+            console.log("le paso")
+            console.log(baby.name)
+            recargarDatos(token.token,setBaby,setUser,baby);
 
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
             };
-        }, [token.token]) 
+        }, [token.token,baby?.id,user?.id]) 
     );
 
     return (
         <View style={styles.root}>
+            {console.log("Bebe cargado: ")}
             {console.log(baby.name)}
-            {console.log(baby.intakeRecord.length)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB

@@ -114,17 +114,63 @@ export const getBabyPos = (arrayBabies,idBebe) => {
 
     return result
 }
-export const recargarDatos = async (token,setBaby,setUser,posBaby) => {
+
+export const recargarDatos = async (token, setBaby, setUser, baby) => {
     try {
-        let babies = await getDataBabies(token)
-        let userReal = await getDataUser(token);
-        userReal.babies = babies.babies;
+        const babiesResponse = await getDataBabies(token);
+        const userReal = await getDataUser(token);
+        
+        // Unimos los datos
+        const listaBabies = babiesResponse.babies;
+        userReal.babies = listaBabies;
         setUser(userReal);
-        setBaby(babies.babies[posBaby]);
+
+        console.log("ID que buscamos:", baby?.id);
+
+        // Usamos .find() en lugar de .filter()[0] por limpieza
+        // Forzamos String() para evitar el error de Number vs String
+        let babyToPut = listaBabies.find(elem => String(elem.id) === String(baby?.id));
+
+        if (babyToPut) {
+            console.log("Encontrado! Manteniendo a:", babyToPut.name);
+            setBaby(babyToPut);
+        } else {
+            console.log("No encontrado o context vacío. Seteando el primero de la lista.");
+            setBaby(listaBabies[0]);
+        }
+
     } catch (error) {
-        console.error("Error cargando datos" + error)
+        console.error("Error cargando datos: ", error);
     }
-}
+};
+
+// export const recargarDatos = async (token,setBaby,setUser,baby) => {
+//     console.log("Le entra:")
+//     console.log(baby.name)
+//     try {
+//         let babies = await getDataBabies(token)
+//         let userReal = await getDataUser(token);
+//         userReal.babies = babies.babies;
+//         setUser(userReal);
+//             let babyToPut = (babies.babies.filter(elem => elem.id == baby.id))[0]
+//             if(babyToPut){
+//                 console.log("Se cuela en el if")
+//                 console.log("Bebe a colocar:")
+//                 console.log(babyToPut.name)
+//                 setBaby(babyToPut)
+//             }else{
+//                             console.log("No se cuela en el if")
+//                 console.log("Bebe a colocar:")
+//                 console.log(babies.babies[0].name)
+//                 setBaby(babies.babies[0])
+//             }
+
+//     } catch (error) {
+//         console.error("Error cargando datos" + error)
+//     }
+// }
+
+
 // export const imageLocalToBase64 = async (staticResource) => {
 //     console.log("Entrando en bas64")
 //   try {
