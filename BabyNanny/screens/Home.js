@@ -9,7 +9,7 @@ import {
     SegmentedButtons,
     Modal
 } from 'react-native-paper';
-import { useState, useContext, useTransition,useEffect } from 'react';
+import { useState, useContext, useTransition,useEffect,useFocusEffect,useCallback } from 'react';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
 import User from '../context/User';
@@ -135,7 +135,6 @@ export const Home = (props) => {
 useFocusEffect(
         useCallback(() => {
             recargarDatos(token.token,setBaby,setUser);
-
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
             };
