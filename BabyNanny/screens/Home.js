@@ -13,6 +13,7 @@ import { useState, useContext, useTransition,useEffect } from 'react';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
 import User from '../context/User';
+import Token from '../context/Token';
 import { BabyChange } from '../components/CambioBebe';
 import { EditarDatos } from '../components/EditarDatos';
 import { SleepRecord } from '../components/RegistroSueño';
@@ -32,6 +33,7 @@ export const Home = (props) => {
     const [type, setType] = useState();
     const { user, setUser } = useContext(User);
     const {baby, setBaby} = useContext(Baby);
+    const {token,setToken} = useContext(Token)
     const [showModal, setShowModal] = useState(false);
     const [entrys, setEntrys] = useState();
     const [edit, setEdit] = useState(false);
@@ -112,11 +114,20 @@ export const Home = (props) => {
             setModalVisible(false);
         }
     };
+    if (!baby || !user) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Cargando datos...</Text>
+            </View>
+        );
+    }
 
 
     return (
         <View style={styles.root}>
-            {console.log(baby)}
+            {console.log("Losgs Home")}
+            {console.log(baby.name)}
+            {console.log(user.name)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB

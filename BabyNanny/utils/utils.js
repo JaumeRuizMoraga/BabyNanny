@@ -114,8 +114,8 @@ export const recargarDatos = async (token) => {
         let userReal = await getDataUser(token);
         userReal.babies = babies.babies;
         console.log("Lo que devuelve la recarga")
-        console.log(userReal.babies)
-        return userReal
+        console.log({user: userReal, babies: babies})
+        return {user: userReal, babies: babies}
     } catch (error) {
         console.error("Error cargando datos" + error)
     }
