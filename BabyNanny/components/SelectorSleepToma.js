@@ -5,13 +5,16 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import { sendIntake,sendSleep } from "../utils/utils";
 import Token from "../context/Token";
+import User from "../context/User";
+import Baby from "../context/Baby";
 
 export const SelectorSleepToma = (props) => {
     const {t} = useTranslation();
+        const { user, setUser } = useContext(User)
+    const { baby, setBaby } = useContext(Baby);
     const {token,setToken} = useContext(Token)
     const [intake, setIntake] = useState("")
     const [sleep, setSleep] = useState("")
-    const [baby,setBaby] = useState(props.baby);
     const [wrongIntake, setWrongIntake] = useState(true);
     const [wrongSleep, setWrongSleep] = useState(true);
 
@@ -46,9 +49,15 @@ export const SelectorSleepToma = (props) => {
     }
 
 
-    const sendData = () => {
+    const sendData = async () => {
         sendIntake(intake,baby.id,token.token);
         sendSleep(sleep,baby.id,token.token);
+        let data = (await recargarDatos(token.token))
+                if (data && data.user && data.babies) {
+                    setUser(data.user);
+                    setBaby(data.babies[0]);
+        
+                }
         props.exit(false);
     }
 
