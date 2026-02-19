@@ -72,6 +72,7 @@ export const DrawerNavigator = () => {
     }
 
     useEffect(() => {
+        console.log("Entrando en drawer")
         getAllData(token);
     }, []);
 

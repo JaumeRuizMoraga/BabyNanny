@@ -135,7 +135,10 @@ export const Home = (props) => {
 
 useFocusEffect(
         useCallback(() => {
-            recargarDatos(token.token,setBaby,setUser,getBabyPos(user.babies, baby.id));
+            console.log("CallBack")
+            let index = getBabyPos(user.babies, baby.id)
+            
+            recargarDatos(token.token,setBaby,setUser,index);
 
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
