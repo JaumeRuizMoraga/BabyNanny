@@ -13,7 +13,6 @@ import { useState, useContext, useTransition,useEffect } from 'react';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
 import User from '../context/User';
-import Token from '../context/Token';
 import { BabyChange } from '../components/CambioBebe';
 import { EditarDatos } from '../components/EditarDatos';
 import { SleepRecord } from '../components/RegistroSueño';
@@ -131,9 +130,6 @@ export const Home = (props) => {
 
     return (
         <View style={styles.root}>
-            {console.log("Losgs Home")}
-            {console.log(baby.name)}
-            {console.log(user.name)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB

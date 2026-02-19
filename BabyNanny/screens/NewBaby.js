@@ -44,7 +44,7 @@ export const NewBaby = (props) => {
     }
 
     const assembleBaby = async () => {
-        let baby = {
+        let babyTemp = {
             name: name,
             image: default_baby_img,
             tutors: [user.name],
@@ -60,18 +60,12 @@ export const NewBaby = (props) => {
             },
             events: []
         }
-        let response = await newBaby(baby, token.token);
-        console.log(response)
+        let response = await newBaby(babyTemp, token.token);
         let data = (await recargarDatos(token.token))
         if (data && data.user && data.babies) {
-            // Seteamos el usuario y el primer bebé
             setUser(data.user);
             setBaby(data.babies[0]);
 
-            console.log("Usuario actual")
-            console.log("Logs new Baby")
-            console.log(user.babies.length)
-            console.log(baby.name)
             props.navigation.navigate("Home");
         }
 
