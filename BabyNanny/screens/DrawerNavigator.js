@@ -31,7 +31,7 @@ export const DrawerNavigator = () => {
             userReal.babies = babies.babies;
             await setUser(userReal);
             await setBaby(userReal.babies[0]);
-            
+
             const userLang = userReal.config.language;
             if (userLang === "es" || userLang === "en") {
                 changeLanguage(userLang);
@@ -43,9 +43,7 @@ export const DrawerNavigator = () => {
             console.error("Error cargando datos" + error)
         } finally {
             setIsLoading(false)
-        }
-        console.log(user)
-        console.log("Fin log")
+        } 
     }
 
     const goLogin = () => {

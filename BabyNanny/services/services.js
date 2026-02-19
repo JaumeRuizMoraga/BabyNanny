@@ -28,7 +28,6 @@ export const login = async (newBabyData) => {
 }
 export const newBaby = async (newBabyData, token) => {
     try {
-        console.log("Entrando new baby")
         const response = await fetch('http://100.52.162.190:8080/BabyNanny/newBaby', {
             method: 'POST',
             headers: {
@@ -39,7 +38,6 @@ export const newBaby = async (newBabyData, token) => {
 
             body: JSON.stringify(newBabyData)
         });
-        console.log(response)
         if (response.ok) {
             return { status: 200 }
         } else {
@@ -100,6 +98,7 @@ export const logout = async (idToken) => {
         console.error("Error en la conexión:", error);
     }
 }
+
 export const deleteBaby = async (idBebe, token) => {
     try {
         const response = await fetch('http://100.52.162.190:8080/BabyNanny/deleteBaby/' + idBebe, {

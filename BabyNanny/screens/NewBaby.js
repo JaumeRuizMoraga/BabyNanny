@@ -61,13 +61,6 @@ export const NewBaby = (props) => {
             events: []
         }
         let response = await newBaby(babyTemp, token.token);
-        let data = (await recargarDatos(token.token))
-        if (data && data.user && data.babies) {
-            setUser(data.user);
-            setBaby(data.babies[0]);
-
-            props.navigation.navigate("Home");
-        }
 
     }
 
