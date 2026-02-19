@@ -3,20 +3,18 @@ import { getDataBabies,getDataUser } from "../services/services";
 import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 export const sendIntake = async (intake,idBebe,token) => {
-    const date = new Date();
     let intakeEntry = {
         type: "intakeRecord",
         amount: intake
     }
-    console.log(await newEntry(intakeEntry,idBebe,token))
+    newEntry(intakeEntry,idBebe,token)
 }
 export const sendSleep = async (sleep,idBebe,token) => {
-    const date = new Date();
     let sleepEntry = {
         type: "sleepRecord",
         timeSleep: sleep
     }
-    console.log(await newEntry(sleepEntry,idBebe,token))
+     newEntry(sleepEntry,idBebe,token)
 }
 
 export const sendMedic = async (sleep,medicine,dosis,dosisTime,idBebe,token) => {
@@ -107,41 +105,39 @@ export const getLocalBaby = (arrayBabies,idBebe) => {
 
     return result[0]
 }
-export const recargarDatos = async (token) => {
-    console.log(token)
+export const recargarDatos = async (token,setBaby,setUser) => {
     try {
         let babies = await getDataBabies(token)
         let userReal = await getDataUser(token);
         userReal.babies = babies.babies;
-        console.log("Lo que devuelve la recarga")
-        console.log({user: userReal, babies: babies})
-        return {user: userReal, babies: babies.babies}
+        setUser(userReal);
+        setBaby(babies.babies[0]);
     } catch (error) {
         console.error("Error cargando datos" + error)
     }
 }
-export const imageLocalToBase64 = async (staticResource) => {
-    console.log("Entrando en bas64")
-  try {
+// export const imageLocalToBase64 = async (staticResource) => {
+//     console.log("Entrando en bas64")
+//   try {
 
-    const asset = Asset.fromModule(staticResource);
-    await asset.downloadAsync();
+//     const asset = Asset.fromModule(staticResource);
+//     await asset.downloadAsync();
 
-    const uri = asset.localUri || asset.uri;
+//     const uri = asset.localUri || asset.uri;
 
 
-    const base64 = await FileSystem.readAsStringAsync(uri, {
-      encoding: 'base64',
-    });
+//     const base64 = await FileSystem.readAsStringAsync(uri, {
+//       encoding: 'base64',
+//     });
 
-    const extension = asset.type === 'jpg' ? 'jpeg' : (asset.type || 'png');
-    let image = `data:image/${extension};base64,${base64}`
-    console.log(image)
+//     const extension = asset.type === 'jpg' ? 'jpeg' : (asset.type || 'png');
+//     let image = `data:image/${extension};base64,${base64}`
+//     console.log(image)
     
-    return image;
+//     return image;
     
-  } catch (error) {
-    console.error("Error al convertir la imagen local:", error);
-    return null;
-  }
-};
+//   } catch (error) {
+//     console.error("Error al convertir la imagen local:", error);
+//     return null;
+//   }
+// };

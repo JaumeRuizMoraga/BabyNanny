@@ -23,25 +23,12 @@ export const SleepScreen = (props) => {
 
 
     const postSleep = async () => {
-        console.log("Entrando en post sleep")
         sendSleep(baby.features.sleepPre, baby.id, token.token);
-        console.lo("Entrando a data")
-        let data = (await recargarDatos(token.token))
-        console.log(data)
-        if (data && data.user && data.babies) {
-            setUser(data.user);
-            setBaby(data.babies[0]);
 
-        }
     }
     const postIntake = async () => {
         sendIntake(baby.features.intakePre, baby.id, token.token);
-        let data = (await recargarDatos(token.token))
-        if (data && data.user && data.babies) {
-            setUser(data.user);
-            setBaby(data.babies[0]);
 
-        }
     }
     const playAudio = async () => {
         if (!playing) {

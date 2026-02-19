@@ -128,8 +128,19 @@ export const Home = (props) => {
     }
 
 
+useFocusEffect(
+        useCallback(() => {
+            recargarDatos(token.token,setBaby,setUser);
+
+            return () => {
+                // Opcional: Lógica cuando la pantalla pierde el foco
+            };
+        }, [token.token]) 
+    );
+
     return (
         <View style={styles.root}>
+            {console.log(baby.intakeRecord.length)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB

@@ -15,7 +15,6 @@ export const login = async (newBabyData) => {
 
         if (response.ok) {
             let token = await response.json()
-            console.log(token)
             return {token:token,status:200}
         } else {
             return null
@@ -28,7 +27,6 @@ export const login = async (newBabyData) => {
 }
 export const newBaby = async (newBabyData,token) => {
     try {
-        console.log("Entrando new baby")
         const response = await fetch('http://100.52.162.190:8080/BabyNanny/newBaby', {
             method: 'POST',
             headers: {
@@ -39,7 +37,6 @@ export const newBaby = async (newBabyData,token) => {
 
             body: JSON.stringify(newBabyData)
         });
-        console.log(response)
         if (response.ok) {
             return { status: 200 }
         } else {
@@ -125,9 +122,6 @@ export const deleteBaby = async(idBebe,token) => {
     }
 }
 export const newEntry = async(registro,idBebe,token) => {
-    console.log(idBebe)
-    console.log(token)
-    console.log(registro)
         try {
         console.log("Entrando new entry")
         const response = await fetch('http://100.52.162.190:8080/BabyNanny/newEntry/'+idBebe, {
