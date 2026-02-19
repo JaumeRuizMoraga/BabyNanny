@@ -139,10 +139,6 @@ export const Home = (props) => {
 
 useFocusEffect(
         useCallback(() => {
-            console.log("Bebe seleccionado:")
-            console.log(baby.name)
-            console.log("le paso")
-            console.log(baby.name)
             recargarDatos(token.token,setBaby,setUser,baby);
 
             return () => {
