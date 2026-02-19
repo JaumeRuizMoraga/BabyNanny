@@ -42,7 +42,6 @@ export const Home = (props) => {
     const [del, setDel] = useState(false);
     const { t } = useTranslation()
     const [modalVisible, setModalVisible] = useState(false);
-
     // useEffect(() => {
     //         console.log(entrys);
     //         console.log(baby.intakeRecord);
@@ -51,10 +50,9 @@ export const Home = (props) => {
         setShowModal(true)
     }
     const changeBaby = (baby) => {
-        console.log("Cambiando bebe")
+        console.log("Bebe cambiado a: ")
+                console.log(baby.name)
         setBaby(getLocalBaby(user.babies, baby.id))
-        console.log(baby);
-            console.log(baby.medicalRecord[0]);
         setShowModal(false)
     }
     const save = (newChars) => {
@@ -62,13 +60,10 @@ export const Home = (props) => {
         newBaby.assets = newChars
         console.log(newBaby)
     }
-    const DeleteBaby = async() => {
+    const erraseBaby = async() => {
         let response = await deleteBaby(baby.id,token.token)
         console.log(response)
         if (response === 204) {
-            let nuevosDatos = recargarDatos(token.token);
-            setUser(nuevosDatos.user);
-            setBaby(nuevosDatos.babies[0]);
             console.log("Todo bien")
         }
         else{
@@ -144,18 +139,22 @@ export const Home = (props) => {
 
 useFocusEffect(
         useCallback(() => {
-            recargarDatos(token.token,setBaby,setUser,getBabyPos(user.babies, baby.id));
+            console.log("Bebe seleccionado:")
+            console.log(baby.name)
+            console.log("le paso")
+            console.log(baby.name)
+            recargarDatos(token.token,setBaby,setUser,baby);
 
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
             };
-        }, [token.token]) 
+        }, [token.token,baby?.id,user?.id]) 
     );
 
     return (
         <View style={styles.root}>
+            {console.log("Bebe cargado: ")}
             {console.log(baby.name)}
-            {console.log(baby.intakeRecord.length)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB
@@ -247,7 +246,7 @@ useFocusEffect(
                 <EditarDatos baby={baby.assets} save={(newChars) => save(newChars)}></EditarDatos>
             </Modal>
             <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
-                <ModalDelete baby={baby.assets} delete={(newChars) => save(newChars)}></ModalDelete>
+                <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)}></ModalDelete>
             </Modal>
             <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>
@@ -270,7 +269,6 @@ useFocusEffect(
                     >
                         Usar Cámara
                     </Button>
-
                     <Button
                         mode="contained"
                         icon="image-album"

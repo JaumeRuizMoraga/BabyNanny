@@ -61,6 +61,7 @@ export const NewBaby = (props) => {
             events: []
         }
         let response = await newBaby(babyTemp, token.token);
+        props.navigation.navigate("Home")
 
     }
 
