@@ -18,16 +18,14 @@ export const sendSleep = async (sleep,idBebe,token) => {
      newEntry(sleepEntry,idBebe,token)
 }
 
-export const sendMedic = async (sleep,medicine,dosis,dosisTime,idBebe,token) => {
-    const date = new Date();
+export const sendMedic = async (medicine,dosis,dosisTime,idBebe,token) => {
     let medicalEntry = {
-        date: (date.getHours() + ":" + date.getMinutes() + "/" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()),
+      
         type: "medicalRecord",
-        recipe:{
-            medicine: medicine,
-            dosis: dosis,
-            dosisTime: dosisTime
-        }  
+        medicine: medicine,
+        dosis: dosis,
+        dosisTime: dosisTime
+        
     }
     console.log( await newEntry(medicalEntry,idBebe,token))
 }
