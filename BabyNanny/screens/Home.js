@@ -54,7 +54,7 @@ export const Home = (props) => {
         console.log("Cambiando bebe")
         setBaby(getLocalBaby(user.babies, baby.id))
         console.log(baby);
-            console.log(baby.medicalRecord[0]);
+        console.log(baby.medicalRecord[0]);
         setShowModal(false)
     }
     const save = (newChars) => {
@@ -64,8 +64,11 @@ export const Home = (props) => {
     }
     const erraseBaby = async() => {
         let response = await deleteBaby(baby.id,token.token)
-        console.log(response)
+        setDel(false)
         if (response === 204) {
+            await setBaby(user.babies[0])
+            let index = getBabyPos(user.babies, baby.id)
+            recargarDatos(token.token,setBaby,setUser,index);
             console.log("Todo bien")
         }
         else{
@@ -143,9 +146,7 @@ useFocusEffect(
         useCallback(() => {
             console.log("CallBack")
             let index = getBabyPos(user.babies, baby.id)
-            
             recargarDatos(token.token,setBaby,setUser,index);
-
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
             };
