@@ -1,9 +1,11 @@
+const ip = '52.6.222.21';
+
 export const login = async (newBabyData) => {
     try {
 
 
 
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/login', {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +30,7 @@ export const login = async (newBabyData) => {
 }
 export const newBaby = async (newBabyData, token) => {
     try {
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/newBaby', {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/newBaby', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,7 +54,7 @@ export const newBaby = async (newBabyData, token) => {
 export const getDataBabies = async (token) => {
     try {
         const response = await fetch(
-            'http://100.52.162.190:8080/BabyNanny/babies?token=' + token
+            'http://'+ip+'/BabyNanny/babies?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -65,7 +67,7 @@ export const getDataBabies = async (token) => {
 export const getDataUser = async (token) => {
     try {
         const response = await fetch(
-            'http://100.52.162.190:8080/BabyNanny/getUser?token=' + token
+            'http://'+ip+'/BabyNanny/getUser?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -78,7 +80,7 @@ export const getDataUser = async (token) => {
 export const logout = async (idToken) => {
     try {
         console.log("Entrando a logout")
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/logOut/' + idToken, {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/logOut/' + idToken, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,7 +103,7 @@ export const logout = async (idToken) => {
 
 export const deleteBaby = async (idBebe, token) => {
     try {
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/deleteBaby/' + idBebe, {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/deleteBaby/' + idBebe, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -127,7 +129,7 @@ export const newEntry = async (registro, idBebe, token) => {
     console.log(registro)
     try {
         console.log("Entrando new entry")
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/newEntry/' + idBebe, {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/newEntry/' + idBebe, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -155,7 +157,7 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
     console.log(idBebe);
     console.log(token);
     try {
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/changeImage/' + idBebe, {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/changeImage/' + idBebe, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

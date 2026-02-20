@@ -10,6 +10,7 @@ import Baby from '../context/Baby.js';
 import { getDataBabies } from '../services/services.js';
 import { getDataUser } from '../services/services.js';
 import { View, ActivityIndicator } from 'react-native'
+import { EventScreen } from './EventsScreen.js';
 import { MedicalRecordScreen } from './MedicalRecordScreen.js';
 import { changeLanguage } from 'i18next';
 
@@ -94,6 +95,8 @@ export const DrawerNavigator = () => {
             <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
             <Drawer.Screen name="MedicalRecordScreen" options={{ headerShown: true }} component={MedicalRecordScreen} />
+                        <Drawer.Screen name="EventScreen" options={{ headerShown: true }} component={EventScreen} />
+
 
         </Drawer.Navigator>
     );
