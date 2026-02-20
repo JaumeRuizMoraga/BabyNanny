@@ -7,14 +7,13 @@ import { changeLanguage } from 'i18next';
 
 export const UserData = (props) => {
     const { t } = useTranslation();
-    const [userName, setUserName] = useState(props.user.user);
+    const [userName, setUserName] = useState(props.user.name);
     const [leng, setLeng] = useState(props.user.config.language);
 
 
     useEffect(() => {
         changeLanguage(leng)
     }, [leng]);
-
     return (
         <View>
             <Surface style={styles.container} elevation={3}>
@@ -22,18 +21,18 @@ export const UserData = (props) => {
                 <Divider style={styles.divider}></Divider>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text>{t('configScreen.userName')}:</Text>
-                    <TextInput style={styles.input} textColor='#DA70D6' onChangeText={(newUser) => setUserName(newUser)} placeholder={userName} ></TextInput>
+                    <TextInput  mode='outlined' activeOutlineColor='#DA70D6' outlineColor='#DA70D6' style={styles.input} textColor='#DA70D6' onChangeText={(newUser) => setUserName(newUser)} placeholder={userName} ></TextInput>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text>{t('configScreen.lenguage')}:</Text>
-                    <Surface style={styles.list}>
-                        <List.Section style={{}} title={leng}>
-                            <List.Accordion style={{}} title={leng}>
+                    <View style={styles.list}>
+                        <List.Section style={{backgroundColor:'#D88FD8',borderColor:'#DA70D6',borderWidth:5}} title={leng}>
+                            <List.Accordion style={{backgroundColor:'#D88FD8'}} title={leng}>
                                 <List.Item title="es" onPress={() => setLeng("es")}></List.Item>
                                 <List.Item title="en" onPress={() => setLeng("en")}></List.Item>
                             </List.Accordion>
                         </List.Section>
-                    </Surface>
+                    </View>
                 </View>
             </Surface>
             <Button onPress={() => props.save()} >{t('configScreen.save')}</Button>
@@ -66,9 +65,11 @@ const styles = new StyleSheet.create({
     input: {
         height: 30,
         marginLeft: 10,
+        paddingLeft:60,
+        paddingRight:60
     },
     list: {
-        overflow: 'hidden',
-        margin: 20
+        overflow: 'visible',
+        margin: 20,
     }
 })

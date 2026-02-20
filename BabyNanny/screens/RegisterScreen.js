@@ -1,16 +1,19 @@
 import { View, StyleSheet, Animated, ImageBackground } from 'react-native';
 import { TextInput, Button, Text, HelperText, PaperProvider } from 'react-native-paper';
-import { useState, useRef } from 'react';
+import { useState, useRef,useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { register } from '../services/services';
 import '../assets/i18n';
+import Token from '../context/Token';
 
 export const RegisterScreen = (props) => {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [mail, setMail] = useState('');
-    const [error, SetError] = useState(false)
+    const [error, setError] = useState(false);
+    const {token, setToken} = useContext(Token)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const shake = () => {
         Animated.sequence([
@@ -21,13 +24,25 @@ export const RegisterScreen = (props) => {
         ]).start();
     };
 
-    const login = () => {
-        const response  = {status: 204};
-        if (response.status === 204) {
+    const newRegister = async () => {
+        let newUser = {
+            name: user,
+            password: password,
+            email: mail,
+            babies: [],
+            config: {
+                language: "es"
+            }
+        }
+        let response = await register(newUser);
+        console.log(response);
+        if (response.status === 200) {
+            await setToken(response.token);
+            console.log("AAAAAAAAA")
             props.navigation.navigate('DrawerNavigator')
         }
-        else {
-            SetError(true);
+        else if (response.status === 401) {
+            setError(true);
             shake();
         }
     };
@@ -35,21 +50,21 @@ export const RegisterScreen = (props) => {
     const updateUser = (user) => {
         setUser(user);
         if (error) {
-            SetError(false);
+            setError(false);
         }
     };
 
     const updatePassword = (password) => {
         setPassword(password);
         if (error) {
-            SetError(false);
+            setError(false);
         }
     };
 
     const updateMail = (mail) => {
         setMail(mail);
         if (error) {
-            SetError(false);
+            setError(false);
         }
     };
 
@@ -64,9 +79,7 @@ export const RegisterScreen = (props) => {
                         label={t('register.user')}
                         mode='outlined'
                         value={user}
-                        onChangeText={(user) => {
-                            updateUser(user);
-                        }}
+                        onChangeText={(user) => updateUser(user)}
                         style={styles.input}
                         outlineColor={error ? 'red' : '#DA70D6'}
                         activeOutlineColor={error ? 'red' : '#DA70D6'}
@@ -77,9 +90,7 @@ export const RegisterScreen = (props) => {
                         label={t('register.password')}
                         mode='outlined'
                         value={password}
-                        onChangeText={(password) => {
-                            updatePassword(password);
-                        }}
+                        onChangeText={(password) => updatePassword(password)}
                         outlineColor={error ? 'red' : '#DA70D6'}
                         activeOutlineColor={error ? 'red' : '#DA70D6'}
                         style={styles.input}
@@ -90,9 +101,7 @@ export const RegisterScreen = (props) => {
                         label={t('register.mail')}
                         mode='outlined'
                         value={mail}
-                        onChangeText={(mail) => {
-                            updateMail(mail);
-                        }}
+                        onChangeText={(mail) => updateMail(mail)}
                         outlineColor={error ? 'red' : '#DA70D6'}
                         activeOutlineColor={error ? 'red' : '#DA70D6'}
                         style={styles.input}
@@ -103,7 +112,7 @@ export const RegisterScreen = (props) => {
                 </HelperText>
                 <Button
                     mode="contained"
-                    onPress={login}
+                    onPress={() => newRegister()}
                     style={styles.button}
                 >
                     {t('register.creatUser')}
@@ -126,9 +135,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
         fontSize: 40,
-        borderRadius:16,
+        borderRadius: 16,
         backgroundColor: '#D88FD8',
-        padding:10,
+        padding: 10,
     },
     input: {
         marginBottom: 12
