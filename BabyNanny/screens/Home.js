@@ -7,9 +7,11 @@ import {
     Divider,
     Surface,
     SegmentedButtons,
-    Modal
+    Modal,
+    ActivityIndicator
 } from 'react-native-paper';
 import { useState, useContext, useTransition, useEffect, useCallback } from 'react';
+import { recargar } from '../utils/utils';
 import { useFocusEffect } from '@react-navigation/native';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
@@ -22,14 +24,12 @@ import { MedicalRecord } from '../components/RegistroMedico';
 import { IntakeRecord } from '../components/RegistroToma';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
+import { changeLanguage } from 'i18next';
 import { getLocalBaby, recargarDatos, getBabyPos } from '../utils/utils';
 import * as ImagePicker from 'expo-image-picker';
 import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
 import { ModalDelete } from '../components/ModalDelete';
-
-
-
 
 export const Home = (props) => {
     const [type, setType] = useState();
@@ -41,43 +41,8 @@ export const Home = (props) => {
     const [edit, setEdit] = useState(false);
     const [del, setDel] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [noBaby, setNoBaby] = useState()
     const { t } = useTranslation()
     const [modalVisible, setModalVisible] = useState(false);
-
-
-    // useEffect(() => {
-    //     getAllData(token);
-    // }, []);
-
-    // if (isLoading) {
-    //     return (
-    //         <View>
-    //             <ActivityIndicator size="large" color="#DA70D6" />
-    //         </View>)
-    // }
-
-
-    // const getAllData = async () => {
-    //     try {
-    //         let babies = await getDataBabies(token.token)
-    //         let userReal = await getDataUser(token.token);
-    //         userReal.babies = babies.babies;
-    //         await setUser(userReal);
-    //         await setBaby(userReal.babies[0]);
-    //         const userLang = userReal.config.language;
-    //         if (userLang === "es" || userLang === "en") {
-    //             changeLanguage(userLang);
-    //         } else {
-    //             console.log("Idioma no encontrado");
-    //         }
-    //         setNoBaby(userReal.babies.length === 0)
-    //     } catch (error) {
-    //         console.error("Error cargando datos" + error)
-    //     } finally {
-    //         setIsLoading(false)
-    //     }
-    // }
 
 
     const openModal = () => {
@@ -98,10 +63,9 @@ export const Home = (props) => {
         let response = await deleteBaby(baby.id, token.token)
         setDel(false)
         if (response === 204) {
-            await setBaby(user.babies[0])
-            let index = getBabyPos(user.babies, baby.id)
+            await setBaby(user.babies[0]);
+            let index = getBabyPos(user.babies, baby.id);
             recargarDatos(token.token, setBaby, setUser, index);
-            console.log("Todo bien")
         }
         else {
             console.log("Fallo")
@@ -168,12 +132,20 @@ export const Home = (props) => {
 
     useFocusEffect(
         useCallback(() => {
-            recargarDatos(token.token,setBaby,setUser,baby);
+            recargarDatos(token.token,setBaby,setUser,baby,setIsLoading);
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
             };
         }, [token.token, baby?.id, user?.id])
     );
+    
+
+    if (isLoading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
+    }
 
     return (
         <View style={styles.root}>
@@ -274,7 +246,7 @@ export const Home = (props) => {
             </Modal>
             <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>
-                <BabyChange goLogin={props.goLogin} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)}></BabyChange>
+                <BabyChange goLogin={() => props.navigation.navigate("LoginScreen")} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)}></BabyChange>
             </Modal>
             <Modal
                 visible={modalVisible}
