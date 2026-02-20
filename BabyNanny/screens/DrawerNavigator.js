@@ -31,7 +31,6 @@ export const DrawerNavigator = () => {
             userReal.babies = babies.babies;
             await setUser(userReal);
             await setBaby(userReal.babies[0]);
-
             const userLang = userReal.config.language;
             if (userLang === "es" || userLang === "en") {
                 changeLanguage(userLang);
@@ -68,12 +67,9 @@ export const DrawerNavigator = () => {
         headerTitleAlign: 'center',
         headerTintColor: 'white',
         headerStyle: { backgroundColor: '#dba6da' },
-
-
     }
 
     useEffect(() => {
-        console.log("Entrando en drawer")
         getAllData(token);
     }, []);
 
@@ -94,7 +90,6 @@ export const DrawerNavigator = () => {
             <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
             <Drawer.Screen name="MedicalRecordScreen" options={{ headerShown: true }} component={MedicalRecordScreen} />
-
         </Drawer.Navigator>
     );
 }

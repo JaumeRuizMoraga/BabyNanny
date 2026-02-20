@@ -40,11 +40,22 @@ export const NewBaby = (props) => {
         let tempData = new Date(date.nativeEvent.timestamp)
         setAge(getAgeMonth(tempData))
         setDate(tempData)
-
+    }
+    const createBaby = async() => {
+        let response = await newBaby(assembleBaby(), token.token);
+        console.log(response)
+        if(response.status === 200)
+        {
+            console.log("Bebe creado con exito")
+            props.navigation.navigate("Home");
+        }
+        else if (response.status === 401){
+            console.log("Error al crear al bebe");
+        }
     }
 
-    const assembleBaby = async () => {
-        let babyTemp = {
+    const assembleBaby = () => {
+        return {
             name: name,
             image: default_baby_img,
             tutors: [user.name],
@@ -60,8 +71,6 @@ export const NewBaby = (props) => {
             },
             events: []
         }
-        let response = await newBaby(babyTemp, token.token);
-
     }
 
     const checkData = (intake, sleep) => {
@@ -176,7 +185,7 @@ export const NewBaby = (props) => {
                     />
                 </View>
                 <Button mode='outlined' textColor='#DA70D6'
-                    style={styles.boton} onPress={() => assembleBaby()}>{t('newBaby.save')}</Button>
+                    style={styles.boton} onPress={() => createBaby()}>{t('newBaby.save')}</Button>
             </ScrollView>
         </View>
     );

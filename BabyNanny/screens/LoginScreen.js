@@ -30,11 +30,12 @@ export const LoginScreen = (props) => {
             password: password
         }
         let response = await login(json);
+        console.log(response);
         if (response.status === 200) {
             setToken(response.token);
             props.navigation.navigate('DrawerNavigator')
         }
-        else {
+        else if(response.status== 401){
             SetError(true);
             shake();
         }

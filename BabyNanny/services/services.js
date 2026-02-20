@@ -1,24 +1,20 @@
-export const login = async (newBabyData) => {
+export const login = async (loginData) => {
     try {
-
-
-
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/login', {
+        const response = await fetch('http://52.6.222.21:8080/BabyNanny/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
 
-            body: JSON.stringify(newBabyData)
+            body: JSON.stringify(loginData)
         });
 
         if (response.ok) {
             let token = await response.json()
-            console.log(token)
             return { token: token, status: 200 }
         } else {
-            return null
+            return { status: 401 }
         }
 
 
@@ -26,9 +22,33 @@ export const login = async (newBabyData) => {
         console.error("Error en la conexión:", error);
     }
 }
+
+export const register = async (newUserData) => {
+    try {
+        const response = await fetch('http://52.6.222.21:8080/BabyNanny/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(newUserData)
+        });
+        if (response.ok) {
+            let token = await response.json()
+            return { token: token, status: 200 }
+        } else {
+            return { status: 401 }
+        }
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+}
+
+
+
 export const newBaby = async (newBabyData, token) => {
     try {
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/newBaby', {
+        const response = await fetch('http://52.6.222.21:8080/BabyNanny/newBaby', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +61,7 @@ export const newBaby = async (newBabyData, token) => {
         if (response.ok) {
             return { status: 200 }
         } else {
-            return null
+            return { status: 401 }
         }
 
 
@@ -52,7 +72,7 @@ export const newBaby = async (newBabyData, token) => {
 export const getDataBabies = async (token) => {
     try {
         const response = await fetch(
-            'http://100.52.162.190:8080/BabyNanny/babies?token=' + token
+            'http://52.6.222.21:8080/BabyNanny/babies?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -65,7 +85,7 @@ export const getDataBabies = async (token) => {
 export const getDataUser = async (token) => {
     try {
         const response = await fetch(
-            'http://100.52.162.190:8080/BabyNanny/getUser?token=' + token
+            'http://52.6.222.21:8080/BabyNanny/getUser?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -78,7 +98,7 @@ export const getDataUser = async (token) => {
 export const logout = async (idToken) => {
     try {
         console.log("Entrando a logout")
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/logOut/' + idToken, {
+        const response = await fetch('http://52.6.222.21:8080/BabyNanny/logOut/' + idToken, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,7 +121,7 @@ export const logout = async (idToken) => {
 
 export const deleteBaby = async (idBebe, token) => {
     try {
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/deleteBaby/' + idBebe, {
+        const response = await fetch('http://52.6.222.21:8080/BabyNanny/deleteBaby/' + idBebe, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -127,7 +147,7 @@ export const newEntry = async (registro, idBebe, token) => {
     console.log(registro)
     try {
         console.log("Entrando new entry")
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/newEntry/' + idBebe, {
+        const response = await fetch('http://52.6.222.21:8080/BabyNanny/newEntry/' + idBebe, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -155,7 +175,7 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
     console.log(idBebe);
     console.log(token);
     try {
-        const response = await fetch('http://100.52.162.190:8080/BabyNanny/changeImage/' + idBebe, {
+        const response = await fetch('http://52.6.222.21:8080/BabyNanny/changeImage/' + idBebe, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
