@@ -13,7 +13,6 @@ export const BabyChange = (props) => {
     const { t } = useTranslation();
     const {token,setToken} = useContext(Token)
     const pressLogout = () =>{
-        // logout(token.id);
         props.goLogin();
     }
 

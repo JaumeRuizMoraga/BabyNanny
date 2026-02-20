@@ -18,32 +18,6 @@ import '../assets/i18n';
 import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
-    const { user, setUser } = useContext(User)
-    const { token, setToken } = useContext(Token);
-    const [isLoading, setIsLoading] = useState(true);
-    const [noBaby, setNoBaby] = useState()
-    const { baby, setBaby } = useContext(Baby);
-
-    const getAllData = async () => {
-        try {
-            let babies = await getDataBabies(token.token)
-            let userReal = await getDataUser(token.token);
-            userReal.babies = babies.babies;
-            await setUser(userReal);
-            await setBaby(userReal.babies[0]);
-            const userLang = userReal.config.language;
-            if (userLang === "es" || userLang === "en") {
-                changeLanguage(userLang);
-            } else {
-                console.log("Idioma no encontrado");
-            }
-            setNoBaby(userReal.babies.length === 0)
-        } catch (error) {
-            console.error("Error cargando datos" + error)
-        } finally {
-            setIsLoading(false)
-        } 
-    }
 
     const goLogin = () => {
         props.navigation.navigate("LoginScreen")
@@ -67,17 +41,6 @@ export const DrawerNavigator = () => {
         headerTitleAlign: 'center',
         headerTintColor: 'white',
         headerStyle: { backgroundColor: '#dba6da' },
-    }
-
-    useEffect(() => {
-        getAllData(token);
-    }, []);
-
-    if (isLoading) {
-        return (
-            <View>
-                <ActivityIndicator size="large" color="#DA70D6" />
-            </View>)
     }
 
     return (
