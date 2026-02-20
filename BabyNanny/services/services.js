@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-export const login = async (loginData) => {
-    try {
-        const response = await fetch('http://52.6.222.21:8080/BabyNanny/login', {
-=======
 const ip = '52.6.222.21';
 
-export const login = async (newBabyData) => {
+export const login = async (loginData) => {
     try {
-
-
-
         const response = await fetch('http://'+ip+':8080/BabyNanny/login', {
->>>>>>> 5886d27248d31fddf77b850e6340ae123f63c126
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,7 +11,6 @@ export const login = async (newBabyData) => {
 
             body: JSON.stringify(loginData)
         });
-
         if (response.ok) {
             let token = await response.json()
             return { token: token, status: 200 }
@@ -36,7 +26,7 @@ export const login = async (newBabyData) => {
 
 export const register = async (newUserData) => {
     try {
-        const response = await fetch('http://52.6.222.21:8080/BabyNanny/register', {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,11 +49,7 @@ export const register = async (newUserData) => {
 
 export const newBaby = async (newBabyData, token) => {
     try {
-<<<<<<< HEAD
-        const response = await fetch('http://52.6.222.21:8080/BabyNanny/newBaby', {
-=======
         const response = await fetch('http://'+ip+':8080/BabyNanny/newBaby', {
->>>>>>> 5886d27248d31fddf77b850e6340ae123f63c126
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -87,11 +73,7 @@ export const newBaby = async (newBabyData, token) => {
 export const getDataBabies = async (token) => {
     try {
         const response = await fetch(
-<<<<<<< HEAD
-            'http://52.6.222.21:8080/BabyNanny/babies?token=' + token
-=======
-            'http://'+ip+'/BabyNanny/babies?token=' + token
->>>>>>> 5886d27248d31fddf77b850e6340ae123f63c126
+            'http://'+ip+':8080/BabyNanny/babies?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -104,11 +86,7 @@ export const getDataBabies = async (token) => {
 export const getDataUser = async (token) => {
     try {
         const response = await fetch(
-<<<<<<< HEAD
-            'http://52.6.222.21:8080/BabyNanny/getUser?token=' + token
-=======
-            'http://'+ip+'/BabyNanny/getUser?token=' + token
->>>>>>> 5886d27248d31fddf77b850e6340ae123f63c126
+            'http://'+ip+':8080/BabyNanny/getUser?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -121,11 +99,7 @@ export const getDataUser = async (token) => {
 export const logout = async (idToken) => {
     try {
         console.log("Entrando a logout")
-<<<<<<< HEAD
-        const response = await fetch('http://52.6.222.21:8080/BabyNanny/logOut/' + idToken, {
-=======
         const response = await fetch('http://'+ip+':8080/BabyNanny/logOut/' + idToken, {
->>>>>>> 5886d27248d31fddf77b850e6340ae123f63c126
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -148,11 +122,7 @@ export const logout = async (idToken) => {
 
 export const deleteBaby = async (idBebe, token) => {
     try {
-<<<<<<< HEAD
-        const response = await fetch('http://52.6.222.21:8080/BabyNanny/deleteBaby/' + idBebe, {
-=======
         const response = await fetch('http://'+ip+':8080/BabyNanny/deleteBaby/' + idBebe, {
->>>>>>> 5886d27248d31fddf77b850e6340ae123f63c126
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -178,11 +148,7 @@ export const newEntry = async (registro, idBebe, token) => {
     console.log(registro)
     try {
         console.log("Entrando new entry")
-<<<<<<< HEAD
-        const response = await fetch('http://52.6.222.21:8080/BabyNanny/newEntry/' + idBebe, {
-=======
         const response = await fetch('http://'+ip+':8080/BabyNanny/newEntry/' + idBebe, {
->>>>>>> 5886d27248d31fddf77b850e6340ae123f63c126
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -210,11 +176,7 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
     console.log(idBebe);
     console.log(token);
     try {
-<<<<<<< HEAD
-        const response = await fetch('http://52.6.222.21:8080/BabyNanny/changeImage/' + idBebe, {
-=======
         const response = await fetch('http://'+ip+':8080/BabyNanny/changeImage/' + idBebe, {
->>>>>>> 5886d27248d31fddf77b850e6340ae123f63c126
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

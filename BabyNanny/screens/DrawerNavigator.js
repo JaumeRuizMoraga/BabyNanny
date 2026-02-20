@@ -23,19 +23,7 @@ export const DrawerNavigator = () => {
     const { baby, setBaby } = useContext(Baby);
     const { token, setToken } = useContext(Token);
     const [isLoading, setIsLoading] = useState(true);
-    const [noBaby, setNoBaby] = useState()
-
-    useEffect(() => {
-        getAllData(token);
-    }, []);
-
-    if (isLoading) {
-        return (
-            <View>
-                <ActivityIndicator size="large" color="#DA70D6" />
-            </View>)
-    }
-
+    const [noBaby, setNoBaby] = useState();
 
     const getAllData = async () => {
         try {
@@ -57,6 +45,11 @@ export const DrawerNavigator = () => {
             setIsLoading(false)
         }
     }
+
+    useEffect(() => {
+        getAllData();
+    }, []);
+
     const goLogin = () => {
         props.navigation.navigate("LoginScreen")
     }
@@ -79,6 +72,13 @@ export const DrawerNavigator = () => {
         headerTitleAlign: 'center',
         headerTintColor: 'white',
         headerStyle: { backgroundColor: '#dba6da' },
+    }
+
+    if (isLoading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
     }
 
     return (

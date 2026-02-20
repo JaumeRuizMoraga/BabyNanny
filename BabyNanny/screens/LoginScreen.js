@@ -25,6 +25,7 @@ export const LoginScreen = (props) => {
     };
 
     const loginFull = async () => {
+        console.log("AAA");
         let json = {
             name: user,
             password: password
@@ -60,7 +61,6 @@ export const LoginScreen = (props) => {
     return (
         <PaperProvider>
             <ImageBackground
-            
                 source={require("../assets/img/FondoBabyNannyMoons.png")}
                 resizeMode='cover' style={styles.container}>
                 <Text style={styles.title}>{t('login.welcome')}</Text>
