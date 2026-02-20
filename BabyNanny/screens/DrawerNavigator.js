@@ -12,10 +12,9 @@ import { getDataUser } from '../services/services.js';
 import { View, ActivityIndicator } from 'react-native'
 import { MedicalRecordScreen } from './MedicalRecordScreen.js';
 import { changeLanguage } from 'i18next';
-
 import '../assets/i18n';
-
 import { useContext, useState, useEffect } from 'react';
+
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
 
