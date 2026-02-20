@@ -60,7 +60,6 @@ public class Controlador {
 		baby.put("name",b.getName());
 		baby.put("tutors",b.getTutors());
 		baby.put("image",b.getImage());
-		baby.put("icon",b.getIcon());
 		baby.put("intakeRecord",intakeRecordRepository.findAllById(b.getIntakeRecord()));
 		baby.put("medicalRecord",medicalRecordRepository.findAllById(b.getMedicalRecord()));
 		baby.put("sleepRecord",sleepRecordRepository.findAllById(b.getSleepRecord()));
@@ -137,6 +136,21 @@ public class Controlador {
 			User user = optionalUser.get();
 			user.setConfig(config);
 			userRepository.save(user);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+	}
+	
+	@PutMapping("/updateFeatures/{id}")
+	public ResponseEntity<Object> updateFeatures(@PathVariable String id, @RequestHeader String token, @RequestBody Map<String, Object> features) {
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if(t.isPresent()){
+			Optional<Baby> optionalBaby = babyRepository.findById(id);
+			Baby baby = optionalBaby.get();
+			baby.setFeatures(features);
+			babyRepository.save(baby);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		else {
@@ -271,9 +285,9 @@ public class Controlador {
      */
     @PostMapping("/register")
     ResponseEntity<?> register(@RequestBody User user) {
-        Optional<User> userPassEmail = userRepository.searchUserPassEmail(user.getName(), user.getPassword(), user.getEmail());
+        Optional<User> userPassEmail = userRepository.findByName(user.getName());
         if (userPassEmail.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         else {
         		userRepository.save(user);
@@ -282,4 +296,7 @@ public class Controlador {
                 return ResponseEntity.status(HttpStatus.OK).body(token);
         	}
         }
+    public void sendEmail() {
+    	
     }
+}
