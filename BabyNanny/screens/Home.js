@@ -7,9 +7,11 @@ import {
     Divider,
     Surface,
     SegmentedButtons,
-    Modal
+    Modal,
+    ActivityIndicator
 } from 'react-native-paper';
-import { useState, useContext, useTransition,useEffect,useCallback } from 'react';
+import { useState, useContext, useTransition, useEffect, useCallback } from 'react';
+import { recargar } from '../utils/utils';
 import { useFocusEffect } from '@react-navigation/native';
 import { BabyCard } from '../components/DatosBebe'
 import { changeImage, deleteBaby } from '../services/services';
@@ -22,37 +24,34 @@ import { MedicalRecord } from '../components/RegistroMedico';
 import { IntakeRecord } from '../components/RegistroToma';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
-import { getLocalBaby,recargarDatos, getBabyPos } from '../utils/utils';
+import { changeLanguage } from 'i18next';
+import { getLocalBaby, recargarDatos, getBabyPos } from '../utils/utils';
 import * as ImagePicker from 'expo-image-picker';
 import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
 import { ModalDelete } from '../components/ModalDelete';
 import { changeFeatures } from '../services/services';
 
-
-
-
 export const Home = (props) => {
     const [type, setType] = useState();
     const { user, setUser } = useContext(User);
-    const {baby, setBaby} = useContext(Baby);
-    const {token, setToken} = useContext(Token);
+    const { baby, setBaby } = useContext(Baby);
+    const { token, setToken } = useContext(Token);
     const [showModal, setShowModal] = useState(false);
     const [entrys, setEntrys] = useState();
     const [edit, setEdit] = useState(false);
     const [del, setDel] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const { t } = useTranslation()
     const [modalVisible, setModalVisible] = useState(false);
-    // useEffect(() => {
-    //         console.log(entrys);
-    //         console.log(baby.intakeRecord);
-    //     }, [entrys]);
+
+
     const openModal = () => {
         setShowModal(true)
     }
     const changeBaby = (baby) => {
         console.log("Bebe cambiado a: ")
-                console.log(baby.name)
+        console.log(baby.name)
         setBaby(getLocalBaby(user.babies, baby.id))
         setShowModal(false)
     }
@@ -62,13 +61,15 @@ export const Home = (props) => {
         console.log(response)
         setEdit(false)
     }
-    const erraseBaby = async() => {
-        let response = await deleteBaby(baby.id,token.token)
-        console.log(response)
+    const erraseBaby = async () => {
+        let response = await deleteBaby(baby.id, token.token)
+        setDel(false)
         if (response === 204) {
-            console.log("Todo bien")
+            await setBaby(user.babies[0]);
+            let index = getBabyPos(user.babies, baby.id);
+            recargarDatos(token.token, setBaby, setUser, index);
         }
-        else{
+        else {
             console.log("Fallo")
         }
     }
@@ -95,7 +96,7 @@ export const Home = (props) => {
 
         if (!result.canceled) {
             let obj = {
-                image : "data:image/jpeg;base64," + result.assets[0].base64
+                image: "data:image/jpeg;base64," + result.assets[0].base64
             }
             changeImage(obj, baby.id, token.token)
             // Aquí se actualiza el icono del bebé
@@ -123,31 +124,30 @@ export const Home = (props) => {
             //result.assets[0].base64 esto devuelve la imagen en base64
             //result.assets[0].uri esto devuelve la ruta de la imagen en el movil
             let obj = {
-                 image : "data:image/jpeg;base64," + result.assets[0].base64
+                image: "data:image/jpeg;base64," + result.assets[0].base64
             }
             changeImage(obj, baby.id, token.token)
             // Aquí se actualiza el icono del bebé
             setModalVisible(false);
         }
     };
-    if (!baby || !user) {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Cargando datos...</Text>
-            </View>
-        );
-    }
 
-
-useFocusEffect(
+    useFocusEffect(
         useCallback(() => {
-            recargarDatos(token.token,setBaby,setUser,baby);
-
+            recargarDatos(token.token,setBaby,setUser,baby,setIsLoading);
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
             };
-        }, [token.token,baby?.id,user?.id]) 
+        }, [token.token, baby?.id, user?.id])
     );
+    
+
+    if (isLoading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
+    }
 
     return (
         <View style={styles.root}>
@@ -157,14 +157,14 @@ useFocusEffect(
                         icon={() => (
                             <Avatar.Image
                                 size={40}
-                                source={{ uri: baby.image  }}
+                                source={{ uri: baby.image }}
                                 style={{ margin: -6.7, padding: 0 }}
                             />)}
                         style={styles.fab}
                         onPress={() => openModal()}
                     />
                     <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                        <Avatar.Image size={140} source={{uri: baby.image}} />
+                        <Avatar.Image size={140} source={{ uri: baby.image }} />
                     </Pressable>
 
 
@@ -195,7 +195,7 @@ useFocusEffect(
                         {
                             value: baby.medicalRecord,
                             label: t('home.med'),
-                            labelStyle: { color: "#DA70D6" }, 
+                            labelStyle: { color: "#DA70D6" },
                             style: { backgroundColor: "white" },
                         },
                     ]}
@@ -205,13 +205,13 @@ useFocusEffect(
                 data={entrys}
                 keyExtractor={(item, index) => item + index.toString()}
                 renderItem={({ item }) => {
-                    if("intakeAmount" in item){
+                    if ("intakeAmount" in item) {
                         return <IntakeRecord entry={item} />;
                     }
-                    else if("timeSleep" in item){
+                    else if ("timeSleep" in item) {
                         return <SleepRecord entry={item} />;
                     }
-                    else{
+                    else {
                         return <MedicalRecord entry={item} />;
                     }
                 }
@@ -246,7 +246,7 @@ useFocusEffect(
             </Modal>
             <Modal visible={showModal} onDismiss={() => setShowModal(false)}
                 contentContainerStyle={styles.modal}>
-                <BabyChange goLogin={props.goLogin} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)}></BabyChange>
+                <BabyChange goLogin={() => props.navigation.navigate("LoginScreen")} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)}></BabyChange>
             </Modal>
             <Modal
                 visible={modalVisible}

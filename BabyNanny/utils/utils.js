@@ -2,6 +2,8 @@ import { newEntry } from "../services/services";
 import { getDataBabies,getDataUser } from "../services/services";
 import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
+import { changeLanguage } from 'i18next';
+import '../assets/i18n';
 
 export const sendIntake = async (intake,idBebe,token) => {
     let intakeEntry = {
@@ -111,7 +113,7 @@ export const getBabyPos = (arrayBabies,idBebe) => {
     return result
 }
 
-export const recargarDatos = async (token, setBaby, setUser, baby) => {
+export const recargarDatos = async (token, setBaby, setUser, baby,setIsLoading) => {
     try {
         const babiesResponse = await getDataBabies(token);
         const userReal = await getDataUser(token);
@@ -132,6 +134,29 @@ export const recargarDatos = async (token, setBaby, setUser, baby) => {
 
     } catch (error) {
         console.error("Error cargando datos: ", error);
+    }finally{
+        setIsLoading(false);
+    }
+};
+
+export const recargar = async (token, setBaby, setUser,setIsLoading) => {
+    try {
+        const babiesResponse = await getDataBabies(token);
+        const userReal = await getDataUser(token);
+        const listaBabies = babiesResponse.babies;
+        userReal.babies = listaBabies;
+        setUser(userReal);
+        setBaby(listaBabies[0]);
+        const userLang = userReal.config.language;
+            if (userLang === "es" || userLang === "en") {
+                changeLanguage(userLang);
+            } else {
+                console.log("Idioma no encontrado");
+            }
+    } catch (error) {
+        console.error("Error cargando datos: ", error);
+    } finally{
+        setIsLoading(false);
     }
 };
 

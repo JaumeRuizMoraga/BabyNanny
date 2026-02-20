@@ -26,16 +26,18 @@ export const LoginScreen = (props) => {
     };
 
     const loginFull = async () => {
+        console.log("AAA");
         let json = {
             name: user,
             password: password
         }
         let response = await login(json);
+        console.log(response);
         if (response.status === 200) {
             setToken(response.token);
             props.navigation.navigate('DrawerNavigator')
         }
-        else {
+        else if(response.status== 401){
             SetError(true);
             shake();
         }
@@ -60,7 +62,6 @@ export const LoginScreen = (props) => {
     return (
         <PaperProvider>
             <ImageBackground
-            
                 source={require("../assets/img/FondoBabyNannyMoons.png")}
                 resizeMode='cover' style={styles.container}>
                 <Text style={styles.title}>{t('login.welcome')}</Text>

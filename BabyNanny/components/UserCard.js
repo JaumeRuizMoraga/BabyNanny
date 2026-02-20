@@ -4,7 +4,7 @@ export const UserCard = (props) =>{
     return(
         <Surface style={styles.container} elevation={3}>
               <Avatar.Icon size={120} icon="account" />
-              <Text style={styles.title}>{props.user.user}</Text>
+              <Text style={styles.title}>{props.user.name}</Text>
         </Surface>
     );
 }
@@ -14,7 +14,8 @@ const styles = new StyleSheet.create({
         alignItems: 'center',
         margin: 10,
         borderRadius: 15,
-        padding: 15
+        padding: 15,
+        backgroundColor:'white'
     },
     title:{
         fontSize: 30,

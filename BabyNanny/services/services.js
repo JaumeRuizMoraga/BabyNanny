@@ -1,10 +1,7 @@
 const ip = '52.6.222.21';
 
-export const login = async (newBabyData) => {
+export const login = async (loginData) => {
     try {
-
-
-
         const response = await fetch('http://'+ip+':8080/BabyNanny/login', {
             method: 'POST',
             headers: {
@@ -12,15 +9,13 @@ export const login = async (newBabyData) => {
                 'Accept': 'application/json'
             },
 
-            body: JSON.stringify(newBabyData)
+            body: JSON.stringify(loginData)
         });
-        console.log(response)
         if (response.ok) {
             let token = await response.json()
-            console.log(token)
             return { token: token, status: 200 }
         } else {
-            return null
+            return { status: 401 }
         }
 
 
@@ -28,6 +23,30 @@ export const login = async (newBabyData) => {
         console.error("Error en la conexión:", error);
     }
 }
+
+export const register = async (newUserData) => {
+    try {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(newUserData)
+        });
+        if (response.ok) {
+            let token = await response.json()
+            return { token: token, status: 200 }
+        } else {
+            return { status: 401 }
+        }
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+}
+
+
+
 export const newBaby = async (newBabyData, token) => {
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/newBaby', {
@@ -43,7 +62,7 @@ export const newBaby = async (newBabyData, token) => {
         if (response.ok) {
             return { status: 200 }
         } else {
-            return null
+            return { status: 401 }
         }
 
 
