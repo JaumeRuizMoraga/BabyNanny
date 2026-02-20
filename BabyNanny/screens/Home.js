@@ -27,6 +27,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
 import { ModalDelete } from '../components/ModalDelete';
+import { changeFeatures } from '../services/services';
 
 
 
@@ -55,10 +56,11 @@ export const Home = (props) => {
         setBaby(getLocalBaby(user.babies, baby.id))
         setShowModal(false)
     }
-    const save = (newChars) => {
-        let newBaby = baby;
-        newBaby.assets = newChars
-        console.log(newBaby)
+    const save = async (newChars) => {
+        let newFeatures =  {features: newChars}
+        let response = await changeFeatures(newFeatures)
+        console.log(response)
+        setEdit(false)
     }
     const erraseBaby = async() => {
         let response = await deleteBaby(baby.id,token.token)
@@ -149,8 +151,6 @@ useFocusEffect(
 
     return (
         <View style={styles.root}>
-            {console.log("Bebe cargado: ")}
-            {console.log(baby.name)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB
@@ -239,7 +239,7 @@ useFocusEffect(
                 animated={true}
             />
             <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
-                <EditarDatos baby={baby.assets} save={(newChars) => save(newChars)}></EditarDatos>
+                <EditarDatos baby={baby.features} save={(newChars) => save(newChars)}></EditarDatos>
             </Modal>
             <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
                 <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)}></ModalDelete>

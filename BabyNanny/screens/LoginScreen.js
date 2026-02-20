@@ -14,6 +14,7 @@ export const LoginScreen = (props) => {
     const [error, SetError] = useState(false)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
     const {t} = useTranslation();
+    const [showPass,setShowPass] = useState(true);
 
     const shake = () => {
         Animated.sequence([
@@ -80,6 +81,8 @@ export const LoginScreen = (props) => {
                     <TextInput
                         label= {t('login.password')}
                         mode='outlined'
+                        secureTextEntry = {showPass}
+                        right={<TextInput.Icon icon="eye" onPress={()=>setShowPass(!showPass)} />}
                         value={password}
                         onChangeText={(password) => {
                             updatePassword(password);

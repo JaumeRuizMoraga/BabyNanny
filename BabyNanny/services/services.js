@@ -14,7 +14,7 @@ export const login = async (newBabyData) => {
 
             body: JSON.stringify(newBabyData)
         });
-
+        console.log(response)
         if (response.ok) {
             let token = await response.json()
             console.log(token)
@@ -54,7 +54,7 @@ export const newBaby = async (newBabyData, token) => {
 export const getDataBabies = async (token) => {
     try {
         const response = await fetch(
-            'http://'+ip+'/BabyNanny/babies?token=' + token
+            'http://'+ip+':8080/BabyNanny/babies?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -67,7 +67,7 @@ export const getDataBabies = async (token) => {
 export const getDataUser = async (token) => {
     try {
         const response = await fetch(
-            'http://'+ip+'/BabyNanny/getUser?token=' + token
+            'http://'+ip+':8080/BabyNanny/getUser?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -175,4 +175,29 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
         console.error("Error en la conexión:", error);
 
     }
+}
+export const changeFeatures = async (features,idBebe,token) =>{
+    try {
+        console.log("Entrando new entry")
+        const response = await fetch('http://'+ip+':8080/BabyNanny/updateFeatures/' + idBebe, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify(features)
+
+        });
+        if (response.ok) {
+            return 200
+        } else {
+            return null
+        }
+
+
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+
 }
