@@ -54,7 +54,7 @@ export const newBaby = async (newBabyData, token) => {
 export const getDataBabies = async (token) => {
     try {
         const response = await fetch(
-            'http://'+ip+'/BabyNanny/babies?token=' + token
+            'http://'+ip+':8080/BabyNanny/babies?token=' + token
         );
         if (response.ok) {
             const data = await response.json();
@@ -67,7 +67,7 @@ export const getDataBabies = async (token) => {
 export const getDataUser = async (token) => {
     try {
         const response = await fetch(
-            'http://'+ip+'/BabyNanny/getUser?token=' + token
+            'http://'+ip+':8080/BabyNanny/getUser?token=' + token
         );
         if (response.ok) {
             const data = await response.json();

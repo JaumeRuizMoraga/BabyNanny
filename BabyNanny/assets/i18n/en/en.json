@@ -29,6 +29,7 @@
         "avgIntk": "Average Intake",
         "avgSleep": "Default Sleep",
         "months":"months",
+        "hours":"hours",
         "errorWeight":"Wrong height format",
         "errorAge":"Wrong age format",
         "errorHeight":"Wrong height format",
