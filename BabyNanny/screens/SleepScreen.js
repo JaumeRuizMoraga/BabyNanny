@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { IconButton, Button, Surface, Modal, PaperProvider } from 'react-native-paper';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SelectorSleepToma } from '../components/SelectorSleepToma';
 import { useContext } from 'react';
 import { Audio } from 'expo-av';
@@ -12,6 +12,7 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
 export const SleepScreen = (props) => {
+    const songSleep = (require("../assets/audio/lullaby.mp3"))
     const { t } = useTranslation()
     const [manual, setManual] = useState(false)
     const [playing, setPlaying] = useState(false)
@@ -33,7 +34,10 @@ export const SleepScreen = (props) => {
     const playAudio = async () => {
         if (!playing) {
             const { sound } = await Audio.Sound.createAsync(
-                (user.favSongs)[0].uri
+                songSleep,{
+                shouldPlay: true, // Empieza a sonar nada más cargar
+                    isLooping: true,  // Activa el bucle infinito
+                }
             );
             setSong(sound);
             setPlaying(true)
@@ -43,6 +47,13 @@ export const SleepScreen = (props) => {
             setPlaying(false)
         }
     }
+    useEffect(() => {
+    return () => {
+        if (song) {
+            song.unloadAsync(); // Detiene y borra el audio al salir de la pantalla
+        }
+    };
+}, [song]);
 
     return (
         <PaperProvider>

@@ -46,38 +46,38 @@ export const Home = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
 
 
-    useEffect(() => {
-        getAllData(token);
-    }, []);
+    // useEffect(() => {
+    //     getAllData(token);
+    // }, []);
 
-    if (isLoading) {
-        return (
-            <View>
-                <ActivityIndicator size="large" color="#DA70D6" />
-            </View>)
-    }
+    // if (isLoading) {
+    //     return (
+    //         <View>
+    //             <ActivityIndicator size="large" color="#DA70D6" />
+    //         </View>)
+    // }
 
 
-    const getAllData = async () => {
-        try {
-            let babies = await getDataBabies(token.token)
-            let userReal = await getDataUser(token.token);
-            userReal.babies = babies.babies;
-            await setUser(userReal);
-            await setBaby(userReal.babies[0]);
-            const userLang = userReal.config.language;
-            if (userLang === "es" || userLang === "en") {
-                changeLanguage(userLang);
-            } else {
-                console.log("Idioma no encontrado");
-            }
-            setNoBaby(userReal.babies.length === 0)
-        } catch (error) {
-            console.error("Error cargando datos" + error)
-        } finally {
-            setIsLoading(false)
-        }
-    }
+    // const getAllData = async () => {
+    //     try {
+    //         let babies = await getDataBabies(token.token)
+    //         let userReal = await getDataUser(token.token);
+    //         userReal.babies = babies.babies;
+    //         await setUser(userReal);
+    //         await setBaby(userReal.babies[0]);
+    //         const userLang = userReal.config.language;
+    //         if (userLang === "es" || userLang === "en") {
+    //             changeLanguage(userLang);
+    //         } else {
+    //             console.log("Idioma no encontrado");
+    //         }
+    //         setNoBaby(userReal.babies.length === 0)
+    //     } catch (error) {
+    //         console.error("Error cargando datos" + error)
+    //     } finally {
+    //         setIsLoading(false)
+    //     }
+    // }
 
 
     const openModal = () => {
@@ -168,7 +168,7 @@ export const Home = (props) => {
 
     useFocusEffect(
         useCallback(() => {
-            recargarDatos(token.token, setBaby, setUser, baby);
+            recargarDatos(token.token,setBaby,setUser,baby);
             return () => {
                 // Opcional: Lógica cuando la pantalla pierde el foco
             };

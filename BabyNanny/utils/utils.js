@@ -105,8 +105,6 @@ export const getLocalBaby = (arrayBabies,idBebe) => {
     return result[0]
 }
 export const getBabyPos = (arrayBabies,idBebe) => {
-    console.log("Id bebe: ")
-    console.log(idBebe)
     let result = arrayBabies.findIndex(elem => elem.id == idBebe)
     console.log(result)
 
@@ -118,22 +116,17 @@ export const recargarDatos = async (token, setBaby, setUser, baby) => {
         const babiesResponse = await getDataBabies(token);
         const userReal = await getDataUser(token);
         
-        // Unimos los datos
         const listaBabies = babiesResponse.babies;
         userReal.babies = listaBabies;
         setUser(userReal);
 
         console.log("ID que buscamos:", baby?.id);
 
-        // Usamos .find() en lugar de .filter()[0] por limpieza
-        // Forzamos String() para evitar el error de Number vs String
         let babyToPut = listaBabies.find(elem => String(elem.id) === String(baby?.id));
 
         if (babyToPut) {
-            console.log("Encontrado! Manteniendo a:", babyToPut.name);
             setBaby(babyToPut);
         } else {
-            console.log("No encontrado o context vacío. Seteando el primero de la lista.");
             setBaby(listaBabies[0]);
         }
 

@@ -10,6 +10,7 @@ import Baby from '../context/Baby.js';
 import { getDataBabies } from '../services/services.js';
 import { getDataUser } from '../services/services.js';
 import { View, ActivityIndicator } from 'react-native'
+import { EventScreen } from './EventsScreen.js';
 import { MedicalRecordScreen } from './MedicalRecordScreen.js';
 import { changeLanguage } from 'i18next';
 import '../assets/i18n';
@@ -18,6 +19,44 @@ import { useContext, useState, useEffect } from 'react';
 const Drawer = createDrawerNavigator();
 export const DrawerNavigator = () => {
 
+    const { user, setUser } = useContext(User);
+    const { baby, setBaby } = useContext(Baby);
+    const { token, setToken } = useContext(Token);
+    const [isLoading, setIsLoading] = useState(true);
+    const [noBaby, setNoBaby] = useState()
+
+    useEffect(() => {
+        getAllData(token);
+    }, []);
+
+    if (isLoading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
+    }
+
+
+    const getAllData = async () => {
+        try {
+            let babies = await getDataBabies(token.token)
+            let userReal = await getDataUser(token.token);
+            userReal.babies = babies.babies;
+            await setUser(userReal);
+            await setBaby(userReal.babies[0]);
+            const userLang = userReal.config.language;
+            if (userLang === "es" || userLang === "en") {
+                changeLanguage(userLang);
+            } else {
+                console.log("Idioma no encontrado");
+            }
+            setNoBaby(userReal.babies.length === 0)
+        } catch (error) {
+            console.error("Error cargando datos" + error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
     const goLogin = () => {
         props.navigation.navigate("LoginScreen")
     }
@@ -52,6 +91,7 @@ export const DrawerNavigator = () => {
             <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
             <Drawer.Screen name="MedicalRecordScreen" options={{ headerShown: true }} component={MedicalRecordScreen} />
+            <Drawer.Screen name="EventScreen" options={{ headerShown: true }} component={EventScreen} />
         </Drawer.Navigator>
     );
 }
