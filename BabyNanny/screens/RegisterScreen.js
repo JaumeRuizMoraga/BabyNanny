@@ -2,14 +2,14 @@ import { View, StyleSheet, Animated, ImageBackground } from 'react-native';
 import { TextInput, Button, Text, HelperText, PaperProvider, Modal } from 'react-native-paper';
 import { useState, useRef,useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { register } from '../services/services';
+import { register, verify } from '../services/services';
 import '../assets/i18n';
 import Token from '../context/Token';
 
 export const RegisterScreen = (props) => {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
-    const [mail, setMail] = useState('correoDeEjemplo@gmail.com');
+    const [mail, setMail] = useState('');
     const [sendCode,setSendCode] = useState(false)
     const [error, setError] = useState(false);
     const [code,setCode] = useState('');
@@ -23,7 +23,27 @@ export const RegisterScreen = (props) => {
             Animated.timing(shakeAnimation, { toValue: -10, duration: 50, useNativeDriver: true }),
             Animated.timing(shakeAnimation, { toValue: 10, duration: 50, useNativeDriver: true }),
             Animated.timing(shakeAnimation, { toValue: 0, duration: 50, useNativeDriver: true }),
-        ]).start();
+        ]).start()
+    };
+
+    const sendEmail = async () => {
+        let newUser = {
+            name: user,
+            password: password,
+            email: mail,
+            babies: [],
+            config: {
+                language: "es"
+            }
+        }
+        let response = await register(newUser);
+        if (response.status === 200) {
+            setSendCode(true)
+        }
+        else if (response.status === 401) {
+            setError(true);
+            shake();
+        }
     };
 
     const newRegister = async () => {
@@ -36,11 +56,10 @@ export const RegisterScreen = (props) => {
                 language: "es"
             }
         }
-        let response = await register(newUser);
+        let response = await verify(newUser,code);
         if (response.status === 200) {
             await setToken(response.token);
-            setSendCode(true)
-            // props.navigation.navigate('DrawerNavigator')
+            props.navigation.navigate("DrawerNavigator")
         }
         else if (response.status === 401) {
             setError(true);
@@ -120,7 +139,7 @@ export const RegisterScreen = (props) => {
                 </HelperText>
                 <Button
                     mode="contained"
-                    onPress={() => newRegister()}
+                    onPress={() => sendEmail()}
                     style={styles.button}
                 >
                     {t('register.creatUser')}
@@ -129,6 +148,16 @@ export const RegisterScreen = (props) => {
             <Modal visible={sendCode} onDismiss={()=>setSendCode(false)} contentContainerStyle={styles.modal}>
                 <Text style={{textAlign: 'center'}}>Hemos enviado un codigo al correo <Text style={{color:'#DA70D6'}}>{mail}</Text>. Introducelo para confirmar el correo</Text>
                 <TextInput style={styles.modalInput} value={code} mode='outlined' onChangeText={(newCode) => updateCode(newCode)}></TextInput>
+                <Button
+                    mode="contained"
+                    onPress={() => newRegister()}
+                    style={styles.button}
+                >
+                    {t('register.creatUser')}
+                </Button>
+                <HelperText type="error" visible={error} style={styles.error}>
+                    {t('register.error')}
+                </HelperText>
             </Modal>
         </PaperProvider>
     );

@@ -1,0 +1,61 @@
+package babbynannyapi.model;
+
+public class Features {
+
+	public Features() {
+	}
+
+	public Features(double sleepPre, double intakePre, int weight, int height, int age) {
+		this.sleepPre = sleepPre;
+		this.intakePre = intakePre;
+		this.weight = weight;
+		this.height = height;
+		this.age = age;
+	}
+
+	private double sleepPre;
+	private double intakePre;
+	private int weight;
+	private int height;
+	private int age;
+
+	public double getSleepPre() {
+		return sleepPre;
+	}
+
+	public void setSleepPre(double sleepPre) {
+		this.sleepPre = sleepPre;
+	}
+
+	public double getIntakePre() {
+		return intakePre;
+	}
+
+	public void setIntakePre(double intakePre) {
+		this.intakePre = intakePre;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+}

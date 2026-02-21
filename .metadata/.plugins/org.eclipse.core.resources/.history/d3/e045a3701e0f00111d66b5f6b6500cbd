@@ -1,0 +1,13 @@
+package babbynannyapi.repository;
+import babbynannyapi.model.Emails;
+import babbynannyapi.model.User;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Optional;
+
+public interface EMailRepository extends MongoRepository<Emails, String> {
+	
+	Optional<User> findByCodeAndEmail(String code,String email);
+
+}
