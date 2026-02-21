@@ -99,11 +99,7 @@ public class Controlador {
 		if(t.isPresent()){
 			Optional<Baby> optionalBaby = babyRepository.findById(id);
 			Baby baby = optionalBaby.get();
-			deleteBabyFromUser(baby);    
-			intakeRecordRepository.deleteAllById(baby.getIntakeRecord());
-			sleepRecordRepository.deleteAllById(baby.getSleepRecord());
-			medicalRecordRepository.deleteAllById(baby.getMedicalRecord());
-			featuresRecordRepository.deleteAllById(baby.getFeaturesRecord());
+			deleteBabyFromUser(baby);
 			babyRepository.deleteById(id);
 	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
@@ -125,6 +121,9 @@ public class Controlador {
 	                user.setBabies(new ArrayList<>(babyList));
 	                userRepository.save(user);
 	            }
+				else{
+					System.out.println("AAAAAAAAAAAAAAAAAAAA");
+				}
 			}
 		}
     }
