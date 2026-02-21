@@ -99,7 +99,11 @@ public class Controlador {
 		if(t.isPresent()){
 			Optional<Baby> optionalBaby = babyRepository.findById(id);
 			Baby baby = optionalBaby.get();
-			deleteBabyFromUser(baby);
+			deleteBabyFromUser(baby);    
+			intakeRecordRepository.deleteAllById(baby.getIntakeRecord());
+			sleepRecordRepository.deleteAllById(baby.getSleepRecord());
+			medicalRecordRepository.deleteAllById(baby.getMedicalRecord());
+			featuresRecordRepository.deleteAllById(baby.getFeaturesRecord());
 			babyRepository.deleteById(id);
 	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
@@ -121,9 +125,6 @@ public class Controlador {
 	                user.setBabies(new ArrayList<>(babyList));
 	                userRepository.save(user);
 	            }
-				else{
-					System.out.println("AAAAAAAAAAAAAAAAAAAA");
-				}
 			}
 		}
     }
@@ -144,7 +145,7 @@ public class Controlador {
     }
 	
 	@PutMapping("/createEvent/{id}")
-	public ResponseEntity<Object> changeImage(@PathVariable String id, @RequestHeader String token, @RequestBody List<Event> events) {
+	public ResponseEntity<Object> changeImage(@PathVariable String id, @RequestHeader String token, @RequestBody Event events) {
 		Optional<Token> t = tokenRepository.searchToken(token);
 		if(t.isPresent()){
 			Optional<Baby> optionalBaby = babyRepository.findById(id);

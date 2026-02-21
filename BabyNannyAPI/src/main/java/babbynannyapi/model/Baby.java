@@ -20,11 +20,11 @@ public class Baby {
     private List<String> medicalRecord = new ArrayList<>();
     private Features features;
     private List<String> featuresRecord = new ArrayList<>();
-    private List<Event> events = new ArrayList<Event>();
+    private Event events;
 
     public Baby() {
     }
-    public Baby(String id, String name, List<String> tutors, String image, List<String> intakeRecord, List<String> sleepRecord, List<String> medicalRecord, Features features,List<String> featuresRecord, List<Event> events) {
+    public Baby(String id, String name, List<String> tutors, String image, List<String> intakeRecord, List<String> sleepRecord, List<String> medicalRecord, Features features,List<String> featuresRecord, Event events) {
         this.id = id;
         this.name = name;
         this.tutors = tutors;
@@ -101,11 +101,11 @@ public class Baby {
         this.features = features;
     }
 
-    public List<Event> getEvents() {
+    public Event getEvents() {
         return events;
     }
 
-    public void setEvents(List<Event> events) {
+    public void setEvents(Event events) {
         this.events = events;
     }
 	public List<String> getFeaturesRecord() {
