@@ -1,6 +1,8 @@
 package babbynannyapi.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.data.annotation.Id;
@@ -11,7 +13,7 @@ public class User {
 	@Id
 	private String id;
 	private String name;
-	private List<String> babies;
+	private List<String> babies = new ArrayList<>();
 	private String password;
 	private String email;
 	private Map<String, Object> config;

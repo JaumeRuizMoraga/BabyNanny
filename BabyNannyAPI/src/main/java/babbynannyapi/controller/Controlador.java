@@ -2,6 +2,7 @@ package babbynannyapi.controller;
 
 import babbynannyapi.model.*;
 import babbynannyapi.repository.*;
+import babbynannyapi.service.EmailService;
 
 import org.bson.json.JsonObject;
 import org.json.JSONException;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 @RestController
@@ -35,20 +37,32 @@ public class Controlador {
 
     @Autowired
     private MedicalRecordRepository medicalRecordRepository;
+    
+    @Autowired
+    private EmailRepository emailRepository;
+    
+    @Autowired
+    private FeaturesRecordRepository featuresRecordRepository;
+    
+    @Autowired
+    private EmailService emailService;
 
 
 	@GetMapping("/babies")
-	ResponseEntity<?> getBabies(@RequestParam(name = "token") String token) throws JSONException{
+	ResponseEntity<?> getBabies(@RequestParam(name = "token") String token) throws JSONException {
 		Optional<Token> t = tokenRepository.searchToken(token);
+		Map<String, List<Map<String, Object>>> response = new HashMap<>();
 		if (t.isPresent()) {
-			List<Baby> babyList = babyRepository.searchBabies(t.get().getUser());
-			List<Map<String, Object>> list = new ArrayList<>();
-			System.out.println(babyList.size());
-			for(Baby b : babyList) {
-				list.add(createParsedBaby(b));
+			Optional<User> optionalUser = userRepository.findByName(t.get().getUser());
+			if (optionalUser.isPresent()) {
+				List<Baby> babyList = babyRepository.searchBabies(optionalUser.get().getId());
+				List<Map<String, Object>> list = new ArrayList<>();
+				System.out.println(babyList.size());
+				for (Baby b : babyList) {
+					list.add(createParsedBaby(b));
+				}
+				response.put("babies", list);
 			}
-		    Map<String, List<Map<String, Object>>> response = new HashMap<>();
-		    response.put("babies", list);
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -64,6 +78,7 @@ public class Controlador {
 		baby.put("medicalRecord",medicalRecordRepository.findAllById(b.getMedicalRecord()));
 		baby.put("sleepRecord",sleepRecordRepository.findAllById(b.getSleepRecord()));
 		baby.put("features",b.getFeatures());
+		baby.put("featuresRecord",featuresRecordRepository.findAllById(b.getFeaturesRecord()));
 		baby.put("events",b.getEvents());
 		return baby;
 	}
@@ -107,7 +122,7 @@ public class Controlador {
 	                userRepository.save(user);
 	            }
 				else{
-					System.out.println("AAAAAAAAAAAAAAAAAAAAaa");
+					System.out.println("AAAAAAAAAAAAAAAAAAAA");
 				}
 			}
 		}
@@ -120,6 +135,21 @@ public class Controlador {
 			Optional<Baby> optionalBaby = babyRepository.findById(id);
 			Baby baby = optionalBaby.get();
 			baby.setImage(image.get("image").toString());
+			babyRepository.save(baby);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+    }
+	
+	@PutMapping("/createEvent/{id}")
+	public ResponseEntity<Object> changeImage(@PathVariable String id, @RequestHeader String token, @RequestBody List<Event> events) {
+		Optional<Token> t = tokenRepository.searchToken(token);
+		if(t.isPresent()){
+			Optional<Baby> optionalBaby = babyRepository.findById(id);
+			Baby baby = optionalBaby.get();
+			baby.setEvents(events);
 			babyRepository.save(baby);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
@@ -144,11 +174,16 @@ public class Controlador {
 	}
 	
 	@PutMapping("/updateFeatures/{id}")
-	public ResponseEntity<Object> updateFeatures(@PathVariable String id, @RequestHeader String token, @RequestBody Map<String, Object> features) {
+	public ResponseEntity<Object> updateFeatures(@PathVariable String id, @RequestHeader String token, @RequestBody Features features) {
 		Optional<Token> t = tokenRepository.searchToken(token);
 		if(t.isPresent()){
 			Optional<Baby> optionalBaby = babyRepository.findById(id);
 			Baby baby = optionalBaby.get();
+			FeaturesRecord fRecord = new FeaturesRecord(baby.getFeatures());
+			featuresRecordRepository.save(fRecord);
+			List<String> featuresList= baby.getFeaturesRecord();
+			featuresList.add(fRecord.getId());
+            baby.setFeaturesRecord(featuresList);
 			baby.setFeatures(features);
 			babyRepository.save(baby);
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -264,13 +299,17 @@ public class Controlador {
     public ResponseEntity<Object> newBaby(@RequestBody Baby baby, @RequestHeader String token){
     	Optional<Token> t = tokenRepository.searchToken(token);
     	if (t.isPresent()) {
-            babyRepository.save(baby);
+            Optional<User> optionalUser = userRepository.findByName(t.get().getUser());
+            User user = optionalUser.get();
             List<String> babyList;
-            Optional<User> user = userRepository.findByName(t.get().getUser());
-            babyList = user.get().getBabies();
+            List<String> userList = baby.getTutors();
+            userList.add(user.getId());
+            baby.setTutors(userList);
+            babyList = user.getBabies();
+            babyRepository.save(baby);
             babyList.add(baby.getId());
-            user.get().setBabies(babyList);
-            userRepository.save(user.get());
+            user.setBabies(babyList);
+            userRepository.save(user);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -278,25 +317,63 @@ public class Controlador {
     }
 
     /**
-     * Creates a new user in the database with the information provided in the request body.
-     * @param user The user object containing the registration details.
-     * @return a {@code ResponseEntity} with HTTP 200 OK if the user is created successfully, 
-     * or HTTP 403 Forbidden if the user already exists.
-     */
-    @PostMapping("/register")
-    ResponseEntity<?> register(@RequestBody User user) {
-        Optional<User> userPassEmail = userRepository.findByName(user.getName());
-        if (userPassEmail.isPresent()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        else {
-        		userRepository.save(user);
-        		Token token = new Token(user.getName());
-                tokenRepository.save(token);
-                return ResponseEntity.status(HttpStatus.OK).body(token);
-        	}
-        }
-    public void sendEmail() {
-    	
+	 * Creates a new user in the database with the information provided in the
+	 * request body.
+	 * 
+	 * @param user The user object containing the registration details.
+	 * @return a {@code ResponseEntity} with HTTP 200 OK if the user is created
+	 *         successfully, or HTTP 403 Forbidden if the user already exists.
+	 */
+	@PostMapping("/register")
+	ResponseEntity<?> register(@RequestBody User user) {
+		Optional<User> newUser = userRepository.findByName(user.getName());
+		Optional<User> newEmail = userRepository.findByEmail(user.getEmail());
+		if (newUser.isPresent()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} else {
+			if (newEmail.isPresent()) {
+				
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			}
+			else {
+				String code = createCode();
+				emailService.sendConfirmationEmail(user.getEmail(), code );
+				Emails email = new Emails(code,user.getEmail());
+				emailRepository.save(email);
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			}
+		}
+	}
+    
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyCode(@RequestBody User user,@RequestHeader String code) {
+    	Optional<User> newUser = userRepository.findByName(user.getName());
+		Optional<User> newEmail = userRepository.findByEmail(user.getName());
+		Optional<Emails> email = emailRepository.findByCodeAndEmail(code,user.getEmail());
+		if (newUser.isPresent()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} else {
+			if (newEmail.isPresent()) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			}
+			else {
+				if(email.isPresent()) {
+					Emails deleteEmail = email.get();
+					Token token = new Token(user.getName());
+					userRepository.save(user);
+					tokenRepository.save(token);
+					emailRepository.delete(deleteEmail);
+					return ResponseEntity.status(HttpStatus.OK).body(token);
+				}
+				else {
+					return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+				}
+			}
+		}
+    }
+    
+    public String createCode() {
+        int numero = ThreadLocalRandom.current().nextInt(100000, 1000000);
+        return String.valueOf(numero);
     }
 }

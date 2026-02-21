@@ -3,6 +3,7 @@ package babbynannyapi.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,17 +13,18 @@ public class Baby {
     @Id
     private String id;
     private String name;
-    private List<String> tutors;
+    private List<String> tutors = new ArrayList<>();
     private String image;
-    private List<String> intakeRecord;
-    private List<String> sleepRecord;
-    private List<String> medicalRecord;
-    private Map<String, Object> features;
-    private List<String> events;
+    private List<String> intakeRecord = new ArrayList<>();
+    private List<String> sleepRecord = new ArrayList<>();
+    private List<String> medicalRecord = new ArrayList<>();
+    private Features features;
+    private List<String> featuresRecord = new ArrayList<>();
+    private List<Event> events = new ArrayList<Event>();
 
     public Baby() {
     }
-    public Baby(String id, String name, List<String> tutors, String image, List<String> intakeRecord, List<String> sleepRecord, List<String> medicalRecord, Map<String, Object> features, List<String> events) {
+    public Baby(String id, String name, List<String> tutors, String image, List<String> intakeRecord, List<String> sleepRecord, List<String> medicalRecord, Features features,List<String> featuresRecord, List<Event> events) {
         this.id = id;
         this.name = name;
         this.tutors = tutors;
@@ -31,6 +33,7 @@ public class Baby {
         this.sleepRecord = sleepRecord;
         this.medicalRecord = medicalRecord;
         this.features = features;
+        this.featuresRecord = featuresRecord;
         this.events = events;
     }
 
@@ -90,19 +93,25 @@ public class Baby {
         this.medicalRecord = medicalRecord;
     }
 
-    public Map<String, Object> getFeatures() {
+    public Features getFeatures() {
         return features;
     }
 
-    public void setFeatures(Map<String, Object> features) {
+    public void setFeatures(Features features) {
         this.features = features;
     }
 
-    public List<String> getEvents() {
+    public List<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(List<String> events) {
+    public void setEvents(List<Event> events) {
         this.events = events;
     }
+	public List<String> getFeaturesRecord() {
+		return featuresRecord;
+	}
+	public void setFeaturesRecord(List<String> featuresRecord) {
+		this.featuresRecord = featuresRecord;
+	}
 }
