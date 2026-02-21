@@ -14,7 +14,7 @@ import { useState, useContext, useTransition, useEffect, useCallback } from 'rea
 import { recargar } from '../utils/utils';
 import { useFocusEffect } from '@react-navigation/native';
 import { BabyCard } from '../components/DatosBebe'
-import { changeImage, deleteBaby } from '../services/services';
+import { changeImage, deleteBaby,changeFeatures } from '../services/services';
 import User from '../context/User';
 import Token from '../context/Token';
 import { BabyChange } from '../components/CambioBebe';
@@ -55,9 +55,7 @@ export const Home = (props) => {
         setShowModal(false)
     }
     const save = (newChars) => {
-        let newBaby = baby;
-        newBaby.assets = newChars
-        console.log(newBaby)
+        changeFeatures(newChars,baby.id, token.token);
     }
     const erraseBaby = async () => {
         let response = await deleteBaby(baby.id, token.token)
@@ -238,7 +236,7 @@ export const Home = (props) => {
                 animated={true}
             />
             <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
-                <EditarDatos baby={baby.assets} save={(newChars) => save(newChars)}></EditarDatos>
+                <EditarDatos baby={baby.features} save={(newChars) => save(newChars)}></EditarDatos>
             </Modal>
             <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
                 <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)}></ModalDelete>
