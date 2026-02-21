@@ -43,7 +43,7 @@ export const EventScreen = () => {
         useCallback(() => {
             recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
             return () => {
-                createEvent(events,baby.id,token.token);
+                createEvent({dates:events},baby.id,token.token);
             };
         }, [token.token, baby?.id, user?.id])
     );
