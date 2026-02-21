@@ -53,7 +53,7 @@ const weightFormat = /^(\d+)$|^(\d*\.(\d|\d\d|\d\d\d))$/
 //     }
 // }
 
-export const comprobarDatosCompleto = (intake, sleep, age, height, weight) => {
+export const checkDataFull = (intake, sleep, age, height, weight) => {
     const errors = { intake: false, sleep: false, height: false, weight: false, age: false };
     if (!intakeFormat.test(intake)) {
         if (!(intake === '')) {
@@ -212,3 +212,7 @@ export const recargar = async (token, setBaby, setUser,setIsLoading) => {
 //     return null;
 //   }
 // };
+
+export const parseDate = (date) =>{
+    return date.toISOString().split('T')[0]
+}

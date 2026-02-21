@@ -195,3 +195,28 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
 
     }
 }
+export const changeFeatures = async (features,idBebe,token) =>{
+    try {
+        console.log("Entrando new entry")
+        const response = await fetch('http://'+ip+':8080/BabyNanny/updateFeatures/' + idBebe, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify(features)
+
+        });
+        if (response.ok) {
+            return 200
+        } else {
+            return null
+        }
+
+
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+
+}
