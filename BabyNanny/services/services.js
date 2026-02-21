@@ -37,6 +37,28 @@ export const register = async (newUserData) => {
         console.log(response)
         if (response.ok) {
             let token = await response.json()
+            return { status: 200 }
+        } else {
+            return { status: 401 }
+        }
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+}
+
+export const verify = async (newUserData) => {
+    try {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(newUserData)
+        });
+        console.log(response)
+        if (response.ok) {
+            let token = await response.json()
             return { token: token, status: 200 }
         } else {
             return { status: 401 }
@@ -196,6 +218,30 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
 
     }
 }
+
+export const createEvent = async (evento, idBebe, token) => {
+    try {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/createEvent/' + idBebe, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify(evento)
+
+        });
+        console.log(response)
+        if (response.ok) {
+            return 204
+        }
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+
+    }
+}
+
+
 export const changeFeatures = async (features,idBebe,token) =>{
     try {
         console.log("Entrando new entry")
@@ -219,5 +265,4 @@ export const changeFeatures = async (features,idBebe,token) =>{
     } catch (error) {
         console.error("Error en la conexión:", error);
     }
-
 }

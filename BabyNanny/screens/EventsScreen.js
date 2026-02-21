@@ -57,7 +57,7 @@ export const EventScreen = () => {
                     <Text style={styles.title}>Upcoming events</Text>
                 </View>
                 <FlatList
-                    data={filterEvents(4)}
+                    data={filterEvents(2)}
                     keyExtractor={(item, index) => item + index.toString()}
                     renderItem={({ item }) => { return (<DayItemDate Delete={(eventName) => props.deleteEvent(props.day.dateString, eventName)} item={item}></DayItemDate>); }
                     }
@@ -82,7 +82,7 @@ export const EventScreen = () => {
     );
 }
 const styles = StyleSheet.create({
-    container: { height: '55%', padding: 10, width: '100%' },
+    container: { height: '40%', padding: 10, width: '100%' },
     calendarIn: {
         todayTextColor: '#DA70D6',
         selectedDayBackgroundColor: '#b8b8f7',
