@@ -30,7 +30,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
 import { ModalDelete } from '../components/ModalDelete';
-import { changeFeatures } from '../services/services';
 
 export const Home = (props) => {
     const [type, setType] = useState();
@@ -55,11 +54,10 @@ export const Home = (props) => {
         setBaby(getLocalBaby(user.babies, baby.id))
         setShowModal(false)
     }
-    const save = async (newChars) => {
-        let newFeatures =  {features: newChars}
-        let response = await changeFeatures(newFeatures)
-        console.log(response)
-        setEdit(false)
+    const save = (newChars) => {
+        let newBaby = baby;
+        newBaby.assets = newChars
+        console.log(newBaby)
     }
     const erraseBaby = async () => {
         let response = await deleteBaby(baby.id, token.token)
@@ -148,9 +146,10 @@ export const Home = (props) => {
                 <ActivityIndicator size="large" color="#DA70D6" />
             </View>)
     }
-
-    return (
+    if(!(user.babies.length === 0)){
+        return (
         <View style={styles.root}>
+            {console.log("Bebe cargado: ")}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB
@@ -239,7 +238,7 @@ export const Home = (props) => {
                 animated={true}
             />
             <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
-                <EditarDatos baby={baby.features} save={(newChars) => save(newChars)}></EditarDatos>
+                <EditarDatos baby={baby.assets} save={(newChars) => save(newChars)}></EditarDatos>
             </Modal>
             <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
                 <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)}></ModalDelete>
@@ -286,6 +285,11 @@ export const Home = (props) => {
             </Modal>
         </View>
     );
+    }
+    else{
+        setIsLoading(true);
+        props.navigation.navigate("NoBaby");
+    }
 };
 
 const styles = StyleSheet.create({
