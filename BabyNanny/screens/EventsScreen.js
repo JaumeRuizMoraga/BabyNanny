@@ -1,36 +1,24 @@
 import User from "../context/User";
 import Baby from "../context/Baby";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { useContext, useState } from "react";
+import Token from "../context/Token";
+import { recargarDatos } from "../utils/utils";
+import { View, Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
+import { useContext, useState,useCallback } from "react";
+import { createEvent } from "../services/services";
 import { Calendar } from 'react-native-calendars';
 import { Modal } from "react-native-paper";
 import { TarjetaDia } from "../components/TarjetaDia";
 import { DayItemDate } from "../components/DayItemDate";
 
 export const EventScreen = () => {
+    const { token, setToken } = useContext(Token)
     const { user, setUser } = useContext(User)
     const { baby, setBaby } = useContext(Baby);
     const [isLoading, setIsLoading] = useState(true);
-
-
     const [showModal, setShowModal] = useState(false)
     const [day, setDay] = useState()
-    const [events, setEvents] = useState({
-        '2026-02-25': {
-            dots: [
-                { key: 'trabajo;20:30', color: '#2ecc71', selectedDotColor: 'white' },
-                { key: 'personal;19:30', color: '#e74c3c' },
-                { key: 'pago;18:30', color: 'orange' }
-            ],
-        },
-        '2026-02-26': {
-            dots: [
-                { key: 'urgente', color: 'black' }
-            ]
-        }
-    }
-
-    );
+    const [events, setEvents] = useState(baby.events);
     const addEvent = (event) => {
         let newEvents = events
         newEvents[event.date] = event.dots;
@@ -55,7 +43,7 @@ export const EventScreen = () => {
         useCallback(() => {
             recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
             return () => {
-                // Opcional: Lógica cuando la pantalla pierde el foco
+                createEvent(events,baby.id,token.token);
             };
         }, [token.token, baby?.id, user?.id])
     );

@@ -36,7 +36,6 @@ export const register = async (newUserData) => {
         });
         console.log(response)
         if (response.ok) {
-            let token = await response.json()
             return { status: 200 }
         } else {
             return { status: 401 }
@@ -46,13 +45,14 @@ export const register = async (newUserData) => {
     }
 }
 
-export const verify = async (newUserData) => {
+export const verify = async (newUserData,code) => {
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/verify', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'code': code
             },
             body: JSON.stringify(newUserData)
         });
@@ -195,9 +195,6 @@ export const newEntry = async (registro, idBebe, token) => {
 }
 
 export const changeImage = async (imagenBase64, idBebe, token) => {
-    console.log(imagenBase64);
-    console.log(idBebe);
-    console.log(token);
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/changeImage/' + idBebe, {
             method: 'PUT',
