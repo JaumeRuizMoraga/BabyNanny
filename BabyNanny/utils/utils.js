@@ -115,9 +115,12 @@ export const getBabyPos = (arrayBabies,idBebe) => {
 
 export const recargarDatos = async (token, setBaby, setUser, baby,setIsLoading) => {
     try {
+        console.log("BabieREsponse")
         const babiesResponse = await getDataBabies(token);
+        console.log(babiesResponse)
+        console.log("UserResponse")
         const userReal = await getDataUser(token);
-        
+        console.log(userReal)
         const listaBabies = babiesResponse.babies;
         userReal.babies = listaBabies;
         setUser(userReal);
@@ -135,27 +138,6 @@ export const recargarDatos = async (token, setBaby, setUser, baby,setIsLoading) 
     } catch (error) {
         console.error("Error cargando datos: ", error);
     }finally{
-        setIsLoading(false);
-    }
-};
-
-export const recargar = async (token, setBaby, setUser,setIsLoading) => {
-    try {
-        const babiesResponse = await getDataBabies(token);
-        const userReal = await getDataUser(token);
-        const listaBabies = babiesResponse.babies;
-        userReal.babies = listaBabies;
-        setUser(userReal);
-        setBaby(listaBabies[0]);
-        const userLang = userReal.config.language;
-            if (userLang === "es" || userLang === "en") {
-                changeLanguage(userLang);
-            } else {
-                console.log("Idioma no encontrado");
-            }
-    } catch (error) {
-        console.error("Error cargando datos: ", error);
-    } finally{
         setIsLoading(false);
     }
 };

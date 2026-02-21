@@ -26,7 +26,6 @@ export const LoginScreen = (props) => {
     };
 
     const loginFull = async () => {
-        console.log("AAA");
         let json = {
             name: user,
             password: password

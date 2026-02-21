@@ -31,7 +31,7 @@ export const EventScreen = () => {
         setEvents(newEvents)
     }
     const filterEvents = (entryNumber) => {
-        if (babies?.events in "dates") {
+        if ("dates" in baby?.events) {
             const todayDate = new Date().toISOString().split('T')[0];
             let dates = [];
             let dates2 = [];
@@ -45,6 +45,7 @@ export const EventScreen = () => {
     }
     useFocusEffect(
         useCallback(() => {
+            console.log("AAAAAAAAA")
             recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
             return () => {
                 createEvent({ dates: events }, baby.id, token.token);
@@ -60,7 +61,6 @@ export const EventScreen = () => {
     }
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-            {console.log(baby)}
             <View style={styles.container}>
                 <View style={{ borderWidth: 1.5, borderColor: '#DA70D6', padding: 10, borderRadius: 10, margin: 5 }}>
                     <Text style={styles.title}>Upcoming events</Text>

@@ -147,7 +147,6 @@ export const Home = (props) => {
     if(!(user.babies.length === 0)){
         return (
         <View style={styles.root}>
-            {console.log("Bebe cargado: ")}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB
