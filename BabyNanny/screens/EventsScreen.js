@@ -22,13 +22,13 @@ export const EventScreen = () => {
     const addEvent = (event) => {
         let newEvents = events
         newEvents[event.date] = event.dots;
-        console.log(newEvents)
+        setEvents(newEvents)
     }
     const deleteEvent = (eventDate, eventName) => {
         let newEvents = events
         newEvents[eventDate].dots = newEvents[eventDate].dots.filter(elem => elem.key.split(';')[0] != eventName)
         console.log(newEvents[eventDate].dots)
-        console.log(newEvents)
+        setEvents(newEvents)
     }
     const filterEvents = (entryNumber) => {
         const todayDate = new Date().toISOString().split('T')[0];
