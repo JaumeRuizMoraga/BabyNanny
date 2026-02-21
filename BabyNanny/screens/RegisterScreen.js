@@ -1,5 +1,5 @@
 import { View, StyleSheet, Animated, ImageBackground } from 'react-native';
-import { TextInput, Button, Text, HelperText, PaperProvider } from 'react-native-paper';
+import { TextInput, Button, Text, HelperText, PaperProvider, Modal } from 'react-native-paper';
 import { useState, useRef,useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { register } from '../services/services';
@@ -9,8 +9,10 @@ import Token from '../context/Token';
 export const RegisterScreen = (props) => {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
-    const [mail, setMail] = useState('');
+    const [mail, setMail] = useState('correoDeEjemplo@gmail.com');
+    const [sendCode,setSendCode] = useState(false)
     const [error, setError] = useState(false);
+    const [code,setCode] = useState('');
     const {token, setToken} = useContext(Token)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
     const { t } = useTranslation();
@@ -35,11 +37,10 @@ export const RegisterScreen = (props) => {
             }
         }
         let response = await register(newUser);
-        console.log(response);
         if (response.status === 200) {
             await setToken(response.token);
-            console.log("AAAAAAAAA")
-            props.navigation.navigate('DrawerNavigator')
+            setSendCode(true)
+            // props.navigation.navigate('DrawerNavigator')
         }
         else if (response.status === 401) {
             setError(true);
@@ -67,6 +68,13 @@ export const RegisterScreen = (props) => {
             setError(false);
         }
     };
+    const updateCode = (newCode) =>{
+        setCode(newCode);
+        if(error){
+            setError(false)
+        }
+    }
+
 
     return (
         <PaperProvider>
@@ -118,6 +126,10 @@ export const RegisterScreen = (props) => {
                     {t('register.creatUser')}
                 </Button>
             </ImageBackground>
+            <Modal visible={sendCode} onDismiss={()=>setSendCode(false)} contentContainerStyle={styles.modal}>
+                <Text style={{textAlign: 'center'}}>Hemos enviado un codigo al correo <Text style={{color:'#DA70D6'}}>{mail}</Text>. Introducelo para confirmar el correo</Text>
+                <TextInput style={styles.modalInput} value={code} mode='outlined' onChangeText={(newCode) => updateCode(newCode)}></TextInput>
+            </Modal>
         </PaperProvider>
     );
 };
@@ -148,4 +160,17 @@ const styles = StyleSheet.create({
     error: {
         color: "red",
     },
+    modal:{
+        borderWidth: 2,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#DA70D6',
+        borderRadius: 10,
+    },  
+    modalInput:{
+        height: '10%',
+        width: '80%',
+        margin: 20
+    }
 });

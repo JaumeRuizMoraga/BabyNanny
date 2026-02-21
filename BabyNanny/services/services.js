@@ -34,6 +34,7 @@ export const register = async (newUserData) => {
             },
             body: JSON.stringify(newUserData)
         });
+        console.log(response)
         if (response.ok) {
             let token = await response.json()
             return { token: token, status: 200 }
