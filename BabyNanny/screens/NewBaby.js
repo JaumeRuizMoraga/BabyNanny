@@ -70,7 +70,7 @@ export const NewBaby = (props) => {
                 intakePre: intakePre,
                 sleepPre: sleepPre,
             },
-            events: []
+            events:{}
         }
     }
 
