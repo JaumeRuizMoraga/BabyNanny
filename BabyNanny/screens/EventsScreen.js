@@ -1,6 +1,6 @@
 import User from "../context/User";
 import Baby from "../context/Baby";
-import { View, Text, StyleSheet,FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { useContext, useState } from "react";
 import { Calendar } from 'react-native-calendars';
 import { Modal } from "react-native-paper";
@@ -10,6 +10,9 @@ import { DayItemDate } from "../components/DayItemDate";
 export const EventScreen = () => {
     const { user, setUser } = useContext(User)
     const { baby, setBaby } = useContext(Baby);
+    const [isLoading, setIsLoading] = useState(true);
+
+
     const [showModal, setShowModal] = useState(false)
     const [day, setDay] = useState()
     const [events, setEvents] = useState({
@@ -48,7 +51,21 @@ export const EventScreen = () => {
         (dates.forEach(([fecha, dots]) => dots.dots.forEach(elem => dates2.push({ key: elem.key, date: fecha }))))
         return (dates2.slice(0, entryNumber))
     }
+    useFocusEffect(
+        useCallback(() => {
+            recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
+            return () => {
+                // Opcional: Lógica cuando la pantalla pierde el foco
+            };
+        }, [token.token, baby?.id, user?.id])
+    );
 
+    if (isLoading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
+    }
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
             {console.log(events)}

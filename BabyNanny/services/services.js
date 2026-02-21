@@ -255,6 +255,7 @@ export const changeFeatures = async (features,idBebe,token) =>{
             body: JSON.stringify(features)
 
         });
+        console.log(response)
         if (response.ok) {
             return 200
         } else {

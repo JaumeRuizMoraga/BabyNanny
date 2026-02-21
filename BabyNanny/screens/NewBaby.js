@@ -62,6 +62,7 @@ export const NewBaby = (props) => {
             intakeRecord: [],
             sleepRecord: [],
             medicalRecord: [],
+            featuresRecord:[],
             features: {
                 height: height,
                 weight: weight,
