@@ -15,14 +15,14 @@ const GrowthChart = ({ growRegister }) => {
         color="#DA70D6"
         thickness={3}
         dataPointsColor="#dba6da"
-        noOfSections={5}      // Divisiones horizontales
+        noOfSections={5}
         yAxisLabelSuffix=" kg"
         xAxisLabelTextStyle={{ fontSize: 10 }}
-        areaChart             // Esto le da un sombreado bonito debajo de la línea
+        areaChart
         startFillColor="#DA70D6"
         startOpacity={0.2}
         endOpacity={0.05}
-        curved                // Hace que la curva sea suave, no picos rectos
+        curved
       />
     </View>
   );

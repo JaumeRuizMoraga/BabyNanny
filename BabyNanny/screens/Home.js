@@ -146,11 +146,10 @@ export const Home = (props) => {
                 <ActivityIndicator size="large" color="#DA70D6" />
             </View>)
     }
-
-    return (
+    if(!(user.babies.length === 0)){
+        return (
         <View style={styles.root}>
             {console.log("Bebe cargado: ")}
-            {console.log(baby.name)}
             <View style={styles.container}>
                 <Surface style={styles.header} elevation={2}>
                     <FAB
@@ -286,6 +285,11 @@ export const Home = (props) => {
             </Modal>
         </View>
     );
+    }
+    else{
+        setIsLoading(true);
+        props.navigation.navigate("NoBaby");
+    }
 };
 
 const styles = StyleSheet.create({
