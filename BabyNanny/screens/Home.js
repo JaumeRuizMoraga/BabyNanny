@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView, FlatList, Pressable } from 'react-native';
+import { View, StyleSheet, ScrollView, FlatList, Pressable, RefreshControl } from 'react-native';
 import {
     Button,
     Text,
@@ -41,6 +41,7 @@ export const Home = (props) => {
     const [edit, setEdit] = useState(false);
     const [del, setDel] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const { t } = useTranslation()
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -128,164 +129,144 @@ export const Home = (props) => {
         }
     };
 
-    useFocusEffect(
-        useCallback(() => {
-            recargarDatos(token.token,setBaby,setUser,baby,setIsLoading);
-            return () => {
-                // Opcional: Lógica cuando la pantalla pierde el foco
-            };
-        }, [token.token, baby?.id, user?.id])
-    );
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         recargarDatos(token.token,setBaby,setUser,baby,setIsLoading);
+    //         return () => {
+    //             // Opcional: Lógica cuando la pantalla pierde el foco
+    //         };
+    //     }, [token.token, baby?.id, user?.id])
+    // );
+
+
+    const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      // Aquí ejecutas la lógica que tenías antes
+      await recargarDatos(token.token,setBaby,setUser,baby,setIsLoading); 
+    } catch (error) {
+      console.error("Error al recargar:", error);
+    } finally {
+      // Importante: detener el spinner
+      setRefreshing(false);
+    }
+  }, [token, baby, user]);
     
 
-    if (isLoading) {
-        return (
-            <View>
-                <ActivityIndicator size="large" color="#DA70D6" />
-            </View>)
-    }
-    if(!(user.babies.length === 0)){
-        return (
-        <View style={styles.root}>
-            <View style={styles.container}>
-                <Surface style={styles.header} elevation={2}>
-                    <FAB
-                        icon={() => (
-                            <Avatar.Image
-                                size={40}
-                                source={{ uri: baby.image }}
-                                style={{ margin: -6.7, padding: 0 }}
-                            />)}
-                        style={styles.fab}
-                        onPress={() => openModal()}
-                    />
-                    <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                        <Avatar.Image size={140} source={{ uri: baby.image }} />
-                    </Pressable>
-
-
-                    <Text variant="headlineMedium" style={styles.title}>
-                        {baby.name}
-                    </Text>
-                    <Text variant="bodyMedium" style={styles.subtitle}>
-
-                    </Text>
-                </Surface>
-                <BabyCard baby={baby.features} />
-                <SegmentedButtons
-                    value={entrys}
-                    onValueChange={setEntrys}
-                    buttons={[
-                        {
-                            value: baby.intakeRecord,
-                            labelStyle: { color: "#DA70D6" },
-                            label: t('home.intk'),
-                            style: { backgroundColor: "white" },
-                        },
-                        {
-                            value: baby.sleepRecord,
-                            labelStyle: { color: "#DA70D6" },
-                            label: t('home.sleep'),
-                            style: { backgroundColor: "white" },
-                        },
-                        {
-                            value: baby.medicalRecord,
-                            label: t('home.med'),
-                            labelStyle: { color: "#DA70D6" },
-                            style: { backgroundColor: "white" },
-                        },
-                    ]}
+    // if (isLoading) {
+    //     return (
+    //         <View>
+    //             <ActivityIndicator size="large" color="#DA70D6" />
+    //         </View>)
+    // }
+    const renderHeader = () => (
+        <View style={styles.container}>
+            <Surface style={styles.header} elevation={2}>
+                <FAB
+                    icon={() => (
+                        <Avatar.Image
+                            size={40}
+                            source={{ uri: baby.image }}
+                            style={{ margin: -6.7, padding: 0 }}
+                        />)}
+                    style={styles.fab}
+                    onPress={() => openModal()}
                 />
-            </View>
-            <FlatList
-                data={entrys}
-                keyExtractor={(item, index) => item + index.toString()}
-                renderItem={({ item }) => {
-                    if ("intakeAmount" in item) {
-                        return <IntakeRecord entry={item} />;
-                    }
-                    else if ("timeSleep" in item) {
-                        return <SleepRecord entry={item} />;
-                    }
-                    else {
-                        return <MedicalRecord entry={item} />;
-                    }
-                }
-                }
-            />
-            <FAB
-                icon="pencil"
-                style={styles.fabEdit}
-                size='small'
-                onPress={() => setEdit(true)}
-                animated={true}
-            />
-            <FAB
-                icon="account"
-                style={styles.fabUser}
-                size='small'
-                onPress={() => goConfig()}
-                animated={true}
-            />
-            <FAB
-                icon="delete"
-                style={styles.fabDelete}
-                size='small'
-                onPress={() => setDel(true)}
-                animated={true}
-            />
-            <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
-                <EditarDatos baby={baby.features} save={(newChars) => save(newChars)}></EditarDatos>
-            </Modal>
-            <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
-                <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)}></ModalDelete>
-            </Modal>
-            <Modal visible={showModal} onDismiss={() => setShowModal(false)}
-                contentContainerStyle={styles.modal}>
-                <BabyChange goLogin={() => props.navigation.navigate("LoginScreen")} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)}></BabyChange>
-            </Modal>
-            <Modal
-                visible={modalVisible}
-                onDismiss={() => setModalVisible(false)}
-                contentContainerStyle={styles.imagePickerModal}
-            >
-                <Text style={styles.modalTitle}>{t('home.selectImage')}</Text>
+                <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                    <Avatar.Image size={140} source={{ uri: baby.image }} />
+                </Pressable>
 
-                <View style={styles.buttonContainer}>
-                    <Button
-                        mode="contained"
-                        icon="camera"
-                        onPress={openCamera}
-                        style={styles.optionButton}
-                        buttonColor="#DA70D6"
-                    >
-                        {t('home.useCamera')}
-                    </Button>
-                    <Button
-                        mode="contained"
-                        icon="image-album"
-                        onPress={openLibrary}
-                        style={styles.optionButton}
-                        buttonColor="#DA70D6"
-                    >
-                        {t('home.openGaleri')}
-                    </Button>
-                </View>
+                <Text variant="headlineMedium" style={styles.title}>
+                    {baby.name}
+                </Text>
+            </Surface>
 
-                <Button
-                    onPress={() => setModalVisible(false)}
-                    textColor="red"
-                    style={{ marginTop: 10 }}
-                >
-                    {t('home.cancel')}
-                </Button>
-            </Modal>
+            <BabyCard baby={baby.features} />
+
+            {/* AQUÍ PODRÁS AÑADIR TU GRÁFICA DE CRECIMIENTO EN EL FUTURO */}
+            {/* <TuGrafica baby={baby} /> */}
+
+            <SegmentedButtons
+                value={entrys}
+                onValueChange={setEntrys}
+                style={{ marginTop: 15 }}
+                buttons={[
+                    {
+                        value: baby.intakeRecord,
+                        labelStyle: { color: "#DA70D6" },
+                        label: t('home.intk'),
+                        style: { backgroundColor: "white" },
+                    },
+                    {
+                        value: baby.sleepRecord,
+                        labelStyle: { color: "#DA70D6" },
+                        label: t('home.sleep'),
+                        style: { backgroundColor: "white" },
+                    },
+                    {
+                        value: baby.medicalRecord,
+                        label: t('home.med'),
+                        labelStyle: { color: "#DA70D6" },
+                        style: { backgroundColor: "white" },
+                    },
+                ]}
+            />
         </View>
     );
-    }
-    else{
-        setIsLoading(true);
+
+    if (!(user.babies.length === 0)) {
+        return (
+            <View style={{ flex: 1, backgroundColor: '#E6E6FA' }}>
+                <FlatList
+                    data={entrys}
+                    keyExtractor={(item, index) => index.toString()}
+                    ListHeaderComponent={renderHeader} // <--- Metemos el contenido arriba
+                    refreshControl={
+                        <RefreshControl 
+                            refreshing={refreshing} 
+                            onRefresh={onRefresh} 
+                            colors={['#DA70D6']} 
+                        />
+                    }
+                    renderItem={({ item }) => {
+                        if ("intakeAmount" in item) {
+                            return <IntakeRecord entry={item} />;
+                        } else if ("timeSleep" in item) {
+                            return <SleepRecord entry={item} />;
+                        } else {
+                            return <MedicalRecord entry={item} />;
+                        }
+                    }}
+                    contentContainerStyle={{ paddingBottom: 100 }} // Espacio para que los FAB no tapen el último item
+                />
+
+                {/* LOS FABS Y MODALES SE QUEDAN FUERA DE LA LISTA */}
+                <FAB icon="pencil" style={styles.fabEdit} size='small' onPress={() => setEdit(true)} />
+                <FAB icon="account" style={styles.fabUser} size='small' onPress={() => goConfig()} />
+                <FAB icon="delete" style={styles.fabDelete} size='small' onPress={() => setDel(true)} />
+
+                <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
+                    <EditarDatos baby={baby.features} save={(newChars) => save(newChars)} />
+                </Modal>
+                <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
+                    <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)} />
+                </Modal>
+                <Modal visible={showModal} onDismiss={() => setShowModal(false)} contentContainerStyle={styles.modal}>
+                    <BabyChange goLogin={() => props.navigation.navigate("LoginScreen")} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)} />
+                </Modal>
+                <Modal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={styles.imagePickerModal}>
+                    <Text style={styles.modalTitle}>{t('home.selectImage')}</Text>
+                    <View style={styles.buttonContainer}>
+                        <Button mode="contained" icon="camera" onPress={openCamera} style={styles.optionButton} buttonColor="#DA70D6">{t('home.useCamera')}</Button>
+                        <Button mode="contained" icon="image-album" onPress={openLibrary} style={styles.optionButton} buttonColor="#DA70D6">{t('home.openGaleri')}</Button>
+                    </View>
+                    <Button onPress={() => setModalVisible(false)} textColor="red" style={{ marginTop: 10 }}>{t('home.cancel')}</Button>
+                </Modal>
+            </View>
+        );
+    } else {
         props.navigation.navigate("NoBaby");
+        return null;
     }
 };
 
@@ -324,14 +305,14 @@ const styles = StyleSheet.create({
     fabEdit: {
         position: 'absolute',
         margin: 16,
-        right: 20,
-        top: 270,
+        right: 14,
+        top: 250,
     },
     fabDelete: {
         position: 'absolute',
         margin: 16,
-        right: 20,
-        top: 190,
+        right: 14,
+        top: 180,
     },
     fabUser: {
         position: 'absolute',
