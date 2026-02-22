@@ -6,9 +6,10 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
 export const ModalDelete = (props) => {
+    const {t} = useTranslation();
     return (
         <View>
-            <Text style={styles.modalTitle}>Estas seguro de que quieres eliminar al bebe?</Text>
+            <Text style={styles.modalTitle}>{t('home.deleteConfirmation')}</Text>
             <View style={styles.modalView}>
                 <Button
                     mode="contained"
@@ -16,7 +17,7 @@ export const ModalDelete = (props) => {
                     onPress={() => props.delete()}
                     buttonColor="#DA70D6"
                 >
-                    Si
+                    {t('home.yes')}
                 </Button>
 
                 <Button
@@ -25,7 +26,7 @@ export const ModalDelete = (props) => {
                     onPress={() => props.exit()}
                     buttonColor="#DA70D6"
                 >
-                    No
+                    {t('home.no')}
                 </Button>
             </View>
         </View>

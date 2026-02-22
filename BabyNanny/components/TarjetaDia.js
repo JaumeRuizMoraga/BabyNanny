@@ -2,12 +2,15 @@ import { View, Text, StyleSheet, FlatList } from "react-native"
 import { Button, Surface, IconButton, TextInput } from "react-native-paper"
 import { useState } from "react"
 import DateTimePicker from '@react-native-community/datetimepicker';
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 
 import { DayItem } from "./DayItem"
 
 
 export const TarjetaDia = (props) => {
 
+    const {t} = useTranslation()
     const [events, setEvents] = useState(props.events[props.day.dateString]?.dots ?? [])
     const [showForm, setShowForm] = useState(false);
     const [eventName, setEventName] = useState('');
@@ -56,7 +59,7 @@ export const TarjetaDia = (props) => {
             </View>
             <View style={{ borderWidth: 2, borderRadius: 2, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', borderRadius: 5, margin: 10, borderColor: '#b8b8f7' }}>
 
-                <Text style={styles.subTitle}>Events:</Text>
+                <Text style={styles.subTitle}>{t('eventScreen.events')}:</Text>
                 <IconButton style={{ backgroundColor: '#b8b8f7' }} icon={'plus'} size={20} onPress={() => setShowForm(!showForm)}></IconButton>
 
             </View>
@@ -83,7 +86,7 @@ export const TarjetaDia = (props) => {
                         />
 
                     }
-            <Button onPress={() => props.addEvent(createEvent())}>Add</Button>
+            <Button onPress={() => props.addEvent(createEvent())}>{t('eventScreen.add')}</Button>
                 </View>
             )
 

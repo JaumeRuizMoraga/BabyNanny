@@ -250,7 +250,7 @@ export const Home = (props) => {
                 onDismiss={() => setModalVisible(false)}
                 contentContainerStyle={styles.imagePickerModal}
             >
-                <Text style={styles.modalTitle}>Seleccionar imagen</Text>
+                <Text style={styles.modalTitle}>{t('home.selectImage')}</Text>
 
                 <View style={styles.buttonContainer}>
                     <Button
@@ -260,7 +260,7 @@ export const Home = (props) => {
                         style={styles.optionButton}
                         buttonColor="#DA70D6"
                     >
-                        Usar Cámara
+                        {t('home.useCamera')}
                     </Button>
                     <Button
                         mode="contained"
@@ -269,7 +269,7 @@ export const Home = (props) => {
                         style={styles.optionButton}
                         buttonColor="#DA70D6"
                     >
-                        Abrir Galería
+                        {t('home.openGaleri')}
                     </Button>
                 </View>
 
@@ -278,7 +278,7 @@ export const Home = (props) => {
                     textColor="red"
                     style={{ marginTop: 10 }}
                 >
-                    Cancelar
+                    {t('home.cancel')}
                 </Button>
             </Modal>
         </View>
