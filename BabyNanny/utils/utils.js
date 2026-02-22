@@ -115,16 +115,11 @@ export const getBabyPos = (arrayBabies,idBebe) => {
 
 export const recargarDatos = async (token, setBaby, setUser, baby,setIsLoading) => {
     try {
-        console.log("BabieREsponse")
         const babiesResponse = await getDataBabies(token);
-        console.log(babiesResponse)
-        console.log("UserResponse")
         const userReal = await getDataUser(token);
-        console.log(userReal)
         const listaBabies = babiesResponse.babies;
         userReal.babies = listaBabies;
         setUser(userReal);
-
         console.log("ID que buscamos:", baby?.id);
 
         let babyToPut = listaBabies.find(elem => String(elem.id) === String(baby?.id));

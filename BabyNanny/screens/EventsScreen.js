@@ -19,6 +19,7 @@ export const EventScreen = () => {
     const [showModal, setShowModal] = useState(false)
     const [day, setDay] = useState()
     const [events, setEvents] = useState(baby.events.dates);
+
     const addEvent = (event) => {
         let newEvents = events
         newEvents[event.date] = event.dots;
@@ -45,8 +46,8 @@ export const EventScreen = () => {
     }
     useFocusEffect(
         useCallback(() => {
-            console.log("AAAAAAAAA")
             recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
+            setEvents(baby.events.dates);
             return () => {
                 createEvent({ dates: events }, baby.id, token.token);
             };
@@ -61,6 +62,7 @@ export const EventScreen = () => {
     }
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
+            {console.log(events)}
             <View style={styles.container}>
                 <View style={{ borderWidth: 1.5, borderColor: '#DA70D6', padding: 10, borderRadius: 10, margin: 5 }}>
                     <Text style={styles.title}>Upcoming events</Text>

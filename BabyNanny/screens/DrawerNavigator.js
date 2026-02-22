@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { SleepScreen } from './SleepScreen';
+import { BabyGrowth } from './BabyGrowth.js';
 import { Home } from './Home.js';
 import { NoBaby } from './NoBaby.js';
 import { ConfigScreen } from './ConfigScreen.js';
@@ -92,6 +93,7 @@ export const DrawerNavigator = () => {
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
             <Drawer.Screen name="MedicalRecordScreen" options={{ headerShown: true }} component={MedicalRecordScreen} />
             <Drawer.Screen name="EventScreen" options={{ headerShown: true }} component={EventScreen} />
+            <Drawer.Screen name="BabyGrowth" options={{ headerShown: true }} component={BabyGrowth} />
         </Drawer.Navigator>
     );
 }

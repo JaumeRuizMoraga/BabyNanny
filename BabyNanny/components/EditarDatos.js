@@ -9,7 +9,7 @@ export const EditarDatos = (props) => {
     const {t} = useTranslation()
     const [newAge, setNewAge] = useState(props.baby.age);
     const [newHeight, setNewHeight] = useState(props.baby.height);
-    const [newWeight, setNewWeight] = useState(props.baby.height);
+    const [newWeight, setNewWeight] = useState(props.baby.weight);
     const [newIntakePre, setNewIntakePre] = useState(props.baby.intakePre);
     const [newSleepPre, setNewSleepPre] = useState(props.baby.sleepPre);
     const [errors, setErrors] = useState({ intake: false, sleep: false, height: false, weight: false, age: false });
