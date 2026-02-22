@@ -19,10 +19,23 @@
         "password": "Password",
         "mail": "Email",
         "creatUser": "Create User",
-        "error": "The user already exist"
+        "error": "The user already exist",
+
+        "mailMessage":"We have sent a code to the mail {mail}. Write it to confirm the mail"
     },
     "home": {
         "babyData": "Baby's Data",
+
+        "logout":"Logout",
+        "deleteConfirmation":"Are you shure you want to delete the baby?",
+        "yes":"Yes",
+        "no":"No",
+        "hours":"hours",
+        "selectImage":"Select image",
+        "useCamera":"Use camera",
+        "openGaleri":"Local imagen",
+        "cancel":"Cancel",
+
         "age": "Age",
         "height": "Height",
         "weight": "Weight",
@@ -60,5 +73,15 @@
     },
     "noBaby": {
         "message": "Oh...! It looks like you don't have any babies registered"
+    },
+    "eventScreen":{
+        "events":"Events",
+        "add":"Add",
+        "title":"Upcoming events"
+    },
+    "medicalRecordScreen":{
+        "newEntry":"New health entry",
+        "cancel":"Cancel",
+        "save":"Save"
     }
 }

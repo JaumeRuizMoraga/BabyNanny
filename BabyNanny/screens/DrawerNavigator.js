@@ -33,8 +33,9 @@ export const DrawerNavigator = () => {
             userReal.babies = babies.babies;
             await setUser(userReal);
             await setBaby(userReal.babies[0]);
+            console.log(userReal)
             const userLang = userReal.config.language;
-            if (userLang === "es" || userLang === "en") {
+            if (userLang == "es" || userLang == "en") {
                 changeLanguage(userLang);
             } else {
                 console.log("Idioma no encontrado");

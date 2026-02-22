@@ -1,19 +1,22 @@
 import { View, StyleSheet, Animated, ImageBackground } from 'react-native';
 import { TextInput, Button, Text, HelperText, PaperProvider, Modal } from 'react-native-paper';
-import { useState, useRef,useContext } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { register, verify } from '../services/services';
 import '../assets/i18n';
+import { Trans } from 'react-i18next';
 import Token from '../context/Token';
+import * as Localization from 'expo-localization'
+
 
 export const RegisterScreen = (props) => {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [mail, setMail] = useState('');
-    const [sendCode,setSendCode] = useState(false)
+    const [sendCode, setSendCode] = useState(false)
     const [error, setError] = useState(false);
-    const [code,setCode] = useState('');
-    const {token, setToken} = useContext(Token)
+    const [code, setCode] = useState('');
+    const { token, setToken } = useContext(Token)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
     const { t } = useTranslation();
 
@@ -27,13 +30,14 @@ export const RegisterScreen = (props) => {
     };
 
     const sendEmail = async () => {
+        const deviceLanguage = Localization.getLocales()[0]?.languageCode ?? 'en'
         let newUser = {
             name: user,
             password: password,
             email: mail,
             babies: [],
             config: {
-                language: "es"
+                language: deviceLanguage
             }
         }
         let response = await register(newUser);
@@ -56,7 +60,7 @@ export const RegisterScreen = (props) => {
                 language: "es"
             }
         }
-        let response = await verify(newUser,code);
+        let response = await verify(newUser, code);
         if (response.status === 200) {
             await setToken(response.token);
             props.navigation.navigate("DrawerNavigator")
@@ -87,9 +91,9 @@ export const RegisterScreen = (props) => {
             setError(false);
         }
     };
-    const updateCode = (newCode) =>{
+    const updateCode = (newCode) => {
         setCode(newCode);
-        if(error){
+        if (error) {
             setError(false)
         }
     }
@@ -145,8 +149,14 @@ export const RegisterScreen = (props) => {
                     {t('register.creatUser')}
                 </Button>
             </ImageBackground>
-            <Modal visible={sendCode} onDismiss={()=>setSendCode(false)} contentContainerStyle={styles.modal}>
-                <Text style={{textAlign: 'center'}}>Hemos enviado un codigo al correo <Text style={{color:'#DA70D6'}}>{mail}</Text>. Introducelo para confirmar el correo</Text>
+            <Modal visible={sendCode} onDismiss={() => setSendCode(false)} contentContainerStyle={styles.modal}>
+                <Text style={{ textAlign: 'center' }}><Trans
+                    i18nKey="register.mailMessage"
+                    values={{ mail: mail }}
+                    components={[
+                        <Text style={{ color: '#DA70D6' }} />
+                    ]}
+                /></Text>
                 <TextInput style={styles.modalInput} value={code} mode='outlined' onChangeText={(newCode) => updateCode(newCode)}></TextInput>
                 <Button
                     mode="contained"
@@ -189,15 +199,15 @@ const styles = StyleSheet.create({
     error: {
         color: "red",
     },
-    modal:{
+    modal: {
         borderWidth: 2,
         backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#DA70D6',
         borderRadius: 10,
-    },  
-    modalInput:{
+    },
+    modalInput: {
         height: '10%',
         width: '80%',
         margin: 20

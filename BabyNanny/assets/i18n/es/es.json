@@ -19,10 +19,23 @@
         "password":"Contraseña",
         "mail":"Gmail",
         "creatUser": "Crear Usuario",
-         "error": "El Usuario ya existe"
+         "error": "El Usuario ya existe",
+                 "mailMessage":"Hemos enviado un código a la direccion {mail}. Introducelo para confirmar el correo"
+
     },
     "home":{
         "babyData":"Datos del bebe",
+
+                "logout":"Cerrar sesión",
+        "deleteConfirmation":"Estas seguro de que quieres eliminar a este bebé?",
+        "yes":"Si",
+        "no":"No",
+        "hours":"horas",
+        "selectImage":"Selecciona una imagen",
+        "useCamera":"Usar la camara",
+        "openGaleri":"Abrir la galeria",
+        "cancel":"Cancelar",
+
         "age":"Edad",
         "height":"Altura",
         "weight":"Peso",
@@ -60,6 +73,18 @@
     },
     "noBaby":{
         "message":"Oh...! Parece que no tienes ningún bebé registrado"
+    },
+
+
+    "eventScreen":{
+        "events":"Eventos",
+        "add":"Añadir",
+        "title":"Eventos proximos"
+    },
+    "medicalRecordScreen":{
+        "newEntry":"Nueva entrada médica",
+        "cancel":"Cancelar",
+        "save":"Guardar"
     }
 
 }

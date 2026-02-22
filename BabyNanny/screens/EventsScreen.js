@@ -8,6 +8,8 @@ import { useContext, useState, useCallback } from "react";
 import { createEvent } from "../services/services";
 import { Calendar } from 'react-native-calendars';
 import { Modal } from "react-native-paper";
+import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 import { TarjetaDia } from "../components/TarjetaDia";
 import { DayItemDate } from "../components/DayItemDate";
 
@@ -17,6 +19,7 @@ export const EventScreen = () => {
     const { baby, setBaby } = useContext(Baby);
     const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false)
+    const { t } = useTranslation()
     const [day, setDay] = useState()
     const [events, setEvents] = useState(baby.events.dates);
 
@@ -65,7 +68,7 @@ export const EventScreen = () => {
             {console.log(events)}
             <View style={styles.container}>
                 <View style={{ borderWidth: 1.5, borderColor: '#DA70D6', padding: 10, borderRadius: 10, margin: 5 }}>
-                    <Text style={styles.title}>Upcoming events</Text>
+                    <Text style={styles.title}>{t("eventScreen.title")}</Text>
                 </View>
                 <FlatList
                     data={filterEvents(2)}

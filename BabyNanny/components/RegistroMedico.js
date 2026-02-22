@@ -11,7 +11,7 @@ export const MedicalRecord = (props) => {
                     <Text>{t('home.date')}: <Text style={{color:"#DA70D6"}}>{props.entry.date}</Text></Text>
                     <Text>{t('home.medicine')}: <Text style={{color:"#DA70D6"}}>{props.entry.recipe.medicine}</Text></Text>
                     <Text>{t('home.dosis')}: <Text style={{color:"#DA70D6"}}>{props.entry.recipe.dosis} mg</Text></Text>
-                    <Text>{t('home.treatTime')} <Text style={{color:"#DA70D6"}}>{props.entry.recipe.dosisTime} horas</Text></Text>
+                    <Text>{t('home.treatTime')} <Text style={{color:"#DA70D6"}}>{props.entry.recipe.dosisTime} {t('home.hours')}</Text></Text>
                 </Card.Content>
             </Card>
         </View>
