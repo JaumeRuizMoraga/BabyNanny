@@ -1,0 +1,29 @@
+package babbynannyapi.model;
+
+public static class Dot {
+	public Dot() {
+	}
+	public Dot(String color, String key) {
+		this.key = key;
+		this.color = color;
+	}
+
+	private String key;
+	private String color;
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+}

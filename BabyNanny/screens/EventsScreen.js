@@ -4,7 +4,7 @@ import Token from "../context/Token";
 import { recargarDatos } from "../utils/utils";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
-import { useContext, useState,useCallback } from "react";
+import { useContext, useState, useCallback } from "react";
 import { createEvent } from "../services/services";
 import { Calendar } from 'react-native-calendars';
 import { Modal } from "react-native-paper";
@@ -18,7 +18,7 @@ export const EventScreen = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [showModal, setShowModal] = useState(false)
     const [day, setDay] = useState()
-    const [events, setEvents] = useState(baby.events);
+    const [events, setEvents] = useState(baby.events.dates);
     const addEvent = (event) => {
         let newEvents = events
         newEvents[event.date] = event.dots;
@@ -31,19 +31,24 @@ export const EventScreen = () => {
         setEvents(newEvents)
     }
     const filterEvents = (entryNumber) => {
-        const todayDate = new Date().toISOString().split('T')[0];
-        let dates = [];
-        let dates2 = [];
-        dates = (Object.entries(events).filter(([fecha, info]) => fecha >= todayDate));
-
-        (dates.forEach(([fecha, dots]) => dots.dots.forEach(elem => dates2.push({ key: elem.key, date: fecha }))))
-        return (dates2.slice(0, entryNumber))
+        if ("dates" in baby?.events) {
+            const todayDate = new Date().toISOString().split('T')[0];
+            let dates = [];
+            let dates2 = [];
+            dates = (Object.entries(events).filter(([fecha, info]) => fecha >= todayDate));
+            (dates?.forEach(([fecha, dots]) => dots.dots.forEach(elem => dates2.push({ key: elem.key, date: fecha }))))
+            return (dates2.slice(0, entryNumber))
+        }
+        else{
+            return [];
+        }
     }
     useFocusEffect(
         useCallback(() => {
+            console.log("AAAAAAAAA")
             recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
             return () => {
-                createEvent({dates:events},baby.id,token.token);
+                createEvent({ dates: events }, baby.id, token.token);
             };
         }, [token.token, baby?.id, user?.id])
     );
@@ -56,7 +61,6 @@ export const EventScreen = () => {
     }
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-            {console.log(events)}
             <View style={styles.container}>
                 <View style={{ borderWidth: 1.5, borderColor: '#DA70D6', padding: 10, borderRadius: 10, margin: 5 }}>
                     <Text style={styles.title}>Upcoming events</Text>
