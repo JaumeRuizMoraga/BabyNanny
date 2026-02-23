@@ -79,14 +79,13 @@ useEffect(() => {
         setDel(false)
         if (response === 204) {
             let index = getBabyPos(user.babies, baby.id);
-            recargarDatos(token.token, setBaby, setUser, index);
+            await recargarDatos(token.token, setBaby, setUser, index, setIsLoading);
             await setBaby(user.babies[0]);
 
         }
         else {
             console.log("Fallo")
         }
-        setIsLoading(false)
     }
     const goConfig = () => {
         props.navigation.navigate("Config");

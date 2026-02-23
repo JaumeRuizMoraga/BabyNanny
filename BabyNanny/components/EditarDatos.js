@@ -64,6 +64,7 @@ export const EditarDatos = (props) => {
 
     return (
         <Card style={styles.card} mode="elevated">
+            {console.log(errors)}
             <Card.Content>
                 <Text variant="titleMedium" style={styles.title}>
                     {t('home.babyData')}                </Text>
@@ -96,7 +97,7 @@ export const EditarDatos = (props) => {
                         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                             <Text style={styles.label}>{t('home.avgIntk')}:</Text>
                             <TextInput textColor='#DA70D6' placeholder={String(props.baby.intakePre)} activeOutlineColor='#DA70D6' right={<TextInput.Affix text=".ml" textStyle={{ color: '#DA70D6' }} />} defaultValue={props.baby.intakePre} value={newIntakePre} onChangeText={(dato) => changeToma(dato)} style={styles.input} mode='outlined'></TextInput>
-                            <HelperText type='error' visible={errors.toma}>{t('home.errorIntk')}</HelperText>
+                            <HelperText type='error' visible={errors.intake}>{t('home.errorIntk')}</HelperText>
 
                         </View>
                         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
