@@ -37,28 +37,13 @@ export const Home = (props) => {
     const { baby, setBaby } = useContext(Baby);
     const { token, setToken } = useContext(Token);
     const [showModal, setShowModal] = useState(false);
-    const [entrys, setEntrys] = useState(baby?.intakeRecord);
+    const [entrys, setEntrys] = useState();
     const [edit, setEdit] = useState(false);
     const [del, setDel] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const { t } = useTranslation()
     const [modalVisible, setModalVisible] = useState(false);
-
-
-useEffect(() => {
-    if (user.babies.length === 0 && (!isLoading && !refreshing)) {
-        props.navigation.navigate("NoBaby");
-    }
-}, [user.babies, props.navigation]);
-useEffect(() => {
-    const cargaInicial = async () => {
-        setIsLoading(true); // Empezamos a cargar
-        await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
-    };
-    cargaInicial();
-}, []); // Solo una vez al montar
-
 
 
     const openModal = () => {
@@ -74,19 +59,16 @@ useEffect(() => {
         changeFeatures(newChars,baby.id, token.token);
     }
     const erraseBaby = async () => {
-        setIsLoading(true)
         let response = await deleteBaby(baby.id, token.token)
         setDel(false)
         if (response === 204) {
+            await setBaby(user.babies[0]);
             let index = getBabyPos(user.babies, baby.id);
             recargarDatos(token.token, setBaby, setUser, index);
-            await setBaby(user.babies[0]);
-
         }
         else {
             console.log("Fallo")
         }
-        setIsLoading(false)
     }
     const goConfig = () => {
         props.navigation.navigate("Config");
@@ -170,12 +152,13 @@ useEffect(() => {
     }
   }, [token, baby, user]);
     
-    if (isLoading || user.babies.length === 0) {
-        return (
-            <View>
-                <ActivityIndicator size="large" color="#DA70D6" />
-            </View>)
-    }
+
+    // if (isLoading) {
+    //     return (
+    //         <View>
+    //             <ActivityIndicator size="large" color="#DA70D6" />
+    //         </View>)
+    // }
     const renderHeader = () => (
         <View style={styles.container}>
             <Surface style={styles.header} elevation={2}>
@@ -199,6 +182,9 @@ useEffect(() => {
             </Surface>
 
             <BabyCard baby={baby.features} />
+
+            {/* AQUÍ PODRÁS AÑADIR TU GRÁFICA DE CRECIMIENTO EN EL FUTURO */}
+            {/* <TuGrafica baby={baby} /> */}
 
             <SegmentedButtons
                 value={entrys}
@@ -262,8 +248,8 @@ useEffect(() => {
                 <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
                     <EditarDatos baby={baby.features} save={(newChars) => save(newChars)} />
                 </Modal>
-                <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
-                    <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)} />
+                <Modal visible={del} onDismiss={() => setDel(false)}>
+                    <ModalDelete baby={baby.assets} onDelete={() => erraseBaby()} exit={() => setDel(false)} />
                 </Modal>
                 <Modal visible={showModal} onDismiss={() => setShowModal(false)} contentContainerStyle={styles.modal}>
                     <BabyChange goLogin={() => props.navigation.navigate("LoginScreen")} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)} />
@@ -278,6 +264,9 @@ useEffect(() => {
                 </Modal>
             </View>
         );
+    } else {
+        props.navigation.navigate("NoBaby");
+        return null;
     }
 };
 

@@ -5,7 +5,7 @@ import { default_baby_img } from "../assets/img/baby_icon";
 export const TarjetaBebe = (props) => {
     return (
         <Pressable onLongPress={()=>props.funCom(props.baby)}>
-        <Surface style={styles.container} elevation={4}>
+        <Surface style={styles.container}>
             <Avatar.Image size={60} source={{uri : props.baby.image}}></Avatar.Image>
             <Text style={styles.label}>{props.baby.name}</Text>
         </Surface>
@@ -15,7 +15,6 @@ export const TarjetaBebe = (props) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection:"row",
-        borderWidth: 2,
         borderRadius: 10,
         width: "100%",
         justifyContent:"space-evenly",
