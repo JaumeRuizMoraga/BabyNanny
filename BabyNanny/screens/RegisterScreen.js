@@ -150,7 +150,8 @@ export const RegisterScreen = (props) => {
                 </Button>
             </ImageBackground>
             <Modal visible={sendCode} onDismiss={() => setSendCode(false)} contentContainerStyle={styles.modal}>
-                <Text style={{ textAlign: 'center' }}><Trans
+                <Text style={{ textAlign: 'center' }}>
+                    <Trans
                     i18nKey="register.mailMessage"
                     values={{ mail: mail }}
                     components={[

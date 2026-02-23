@@ -217,6 +217,9 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
 }
 
 export const createEvent = async (evento, idBebe, token) => {
+    console.log(evento)
+    console.log(idBebe)
+    console.log(token)
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/createEvent/' + idBebe, {
             method: 'PUT',

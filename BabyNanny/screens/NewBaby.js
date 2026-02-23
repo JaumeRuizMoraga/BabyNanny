@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Animated, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Animated, FlatList,ActivityIndicator, ScrollView } from 'react-native';
 import { Icon, FAB, TextInput, Surface, HelperText, Button } from 'react-native-paper';
 import { RulerPicker } from 'react-native-ruler-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -29,6 +29,7 @@ export const NewBaby = (props) => {
     const [errorIntake, setErrorIntake] = useState(false)
     const [date, setDate] = useState(new Date);
     const [showDate, setShowDate] = useState(false)
+    const [isLoading,setIsLoading] = useState(false);
     const { token, setToken } = useContext(Token);
 
 
@@ -47,6 +48,8 @@ export const NewBaby = (props) => {
         if(response.status === 200)
         {
             console.log("Bebe creado con exito")
+            setIsLoading(true)
+            await recargarDatos(token.token,setBaby,setUser,baby,setIsLoading); 
             props.navigation.navigate("Home");
         }
         else if (response.status === 401){
@@ -107,6 +110,12 @@ export const NewBaby = (props) => {
         console.log("Entrando en get img default")
         return await imageToBase64(require('../assets/img/baby_icon.jpg'))
     };
+        if (isLoading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
+    }
 
     return (
         <View style={styles.layout}>

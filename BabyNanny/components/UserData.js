@@ -35,7 +35,6 @@ export const UserData = (props) => {
                     </View>
                 </View>
             </Surface>
-            <Button onPress={() => props.save()} >{t('configScreen.save')}</Button>
         </View>
     );
 }

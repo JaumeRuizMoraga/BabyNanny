@@ -37,13 +37,28 @@ export const Home = (props) => {
     const { baby, setBaby } = useContext(Baby);
     const { token, setToken } = useContext(Token);
     const [showModal, setShowModal] = useState(false);
-    const [entrys, setEntrys] = useState();
+    const [entrys, setEntrys] = useState(baby?.intakeRecord);
     const [edit, setEdit] = useState(false);
     const [del, setDel] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const { t } = useTranslation()
     const [modalVisible, setModalVisible] = useState(false);
+
+
+useEffect(() => {
+    if (user.babies.length === 0 && (!isLoading && !refreshing)) {
+        props.navigation.navigate("NoBaby");
+    }
+}, [user.babies, props.navigation]);
+useEffect(() => {
+    const cargaInicial = async () => {
+        setIsLoading(true); // Empezamos a cargar
+        await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
+    };
+    cargaInicial();
+}, []); // Solo una vez al montar
+
 
 
     const openModal = () => {
@@ -59,16 +74,19 @@ export const Home = (props) => {
         changeFeatures(newChars,baby.id, token.token);
     }
     const erraseBaby = async () => {
+        setIsLoading(true)
         let response = await deleteBaby(baby.id, token.token)
         setDel(false)
         if (response === 204) {
-            await setBaby(user.babies[0]);
             let index = getBabyPos(user.babies, baby.id);
             recargarDatos(token.token, setBaby, setUser, index);
+            await setBaby(user.babies[0]);
+
         }
         else {
             console.log("Fallo")
         }
+        setIsLoading(false)
     }
     const goConfig = () => {
         props.navigation.navigate("Config");
@@ -152,13 +170,12 @@ export const Home = (props) => {
     }
   }, [token, baby, user]);
     
-
-    // if (isLoading) {
-    //     return (
-    //         <View>
-    //             <ActivityIndicator size="large" color="#DA70D6" />
-    //         </View>)
-    // }
+    if (isLoading || user.babies.length === 0) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
+    }
     const renderHeader = () => (
         <View style={styles.container}>
             <Surface style={styles.header} elevation={2}>
@@ -182,9 +199,6 @@ export const Home = (props) => {
             </Surface>
 
             <BabyCard baby={baby.features} />
-
-            {/* AQUÍ PODRÁS AÑADIR TU GRÁFICA DE CRECIMIENTO EN EL FUTURO */}
-            {/* <TuGrafica baby={baby} /> */}
 
             <SegmentedButtons
                 value={entrys}
@@ -264,9 +278,6 @@ export const Home = (props) => {
                 </Modal>
             </View>
         );
-    } else {
-        props.navigation.navigate("NoBaby");
-        return null;
     }
 };
 

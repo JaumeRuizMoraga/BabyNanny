@@ -20,11 +20,9 @@
     "expo-av": "~16.0.8",
     "expo-file-system": "~19.0.21",
     "expo-image-picker": "~17.0.10",
-<<<<<<< HEAD
     "expo-linear-gradient": "~15.0.8",
-=======
+
     "expo-localization": "^17.0.8",
->>>>>>> c5140d363fea77561212cfb46e043c25c8bb6cca
     "expo-status-bar": "~3.0.9",
     "i18next": "^25.8.9",
     "lodash": "^4.17.23",

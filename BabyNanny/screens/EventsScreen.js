@@ -4,7 +4,7 @@ import Token from "../context/Token";
 import { recargarDatos } from "../utils/utils";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
-import { useContext, useState, useCallback } from "react";
+import { useContext, useState, useCallback, useEffect } from "react";
 import { createEvent } from "../services/services";
 import { Calendar } from 'react-native-calendars';
 import { Modal } from "react-native-paper";
@@ -21,18 +21,22 @@ export const EventScreen = () => {
     const [showModal, setShowModal] = useState(false)
     const { t } = useTranslation()
     const [day, setDay] = useState()
-    const [events, setEvents] = useState(baby.events.dates);
+    const [events, setEvents] = useState(baby?.events?.dates ?? {});
+
+
 
     const addEvent = (event) => {
         let newEvents = events
         newEvents[event.date] = event.dots;
         setEvents(newEvents)
+        createEvent(({ dates: newEvents }, baby.id, token.token));
     }
     const deleteEvent = (eventDate, eventName) => {
         let newEvents = events
         newEvents[eventDate].dots = newEvents[eventDate].dots.filter(elem => elem.key.split(';')[0] != eventName)
         console.log(newEvents[eventDate].dots)
         setEvents(newEvents)
+        createEvent(({ dates: newEvents }, baby.id, token.token));
     }
     const filterEvents = (entryNumber) => {
         if ("dates" in baby?.events) {
@@ -47,25 +51,26 @@ export const EventScreen = () => {
             return [];
         }
     }
-    useFocusEffect(
-        useCallback(() => {
-            recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
-            setEvents(baby.events.dates);
-            return () => {
-                createEvent({ dates: events }, baby.id, token.token);
-            };
-        }, [token.token, baby?.id, user?.id])
-    );
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
+    //         setEvents(baby.events.dates);
+    //         return () => {
+    //             createEvent({ dates: events }, baby.id, token.token);
+    //         };
+    //     }, [token.token, baby?.id, user?.id])
+    // );
 
-    if (isLoading) {
-        return (
-            <View>
-                <ActivityIndicator size="large" color="#DA70D6" />
-            </View>)
-    }
+    // if (isLoading) {
+    //     return (
+    //         <View>
+    //             <ActivityIndicator size="large" color="#DA70D6" />
+    //         </View>)
+    // }
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-            {console.log(events)}
+            {console.log("Events")}
+            {console.log(baby)}
             <View style={styles.container}>
                 <View style={{ borderWidth: 1.5, borderColor: '#DA70D6', padding: 10, borderRadius: 10, margin: 5 }}>
                     <Text style={styles.title}>{t("eventScreen.title")}</Text>
