@@ -43,6 +43,7 @@
         "avgSleep":"Sueño por defecto",
         "intk":"Tomas",
         "months":"meses",
+        "hours":"horas",
         "errorWeight":"Formato de peso incorrecto",
         "errorAge":"Formato de edad incorrecto",
         "errorHeight":"Formato de altura incorrecto",
