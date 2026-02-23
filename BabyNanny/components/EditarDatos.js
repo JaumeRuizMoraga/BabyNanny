@@ -6,7 +6,7 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
 export const EditarDatos = (props) => {
-    const { t } = useTranslation()
+    const {t} = useTranslation()
     const [newAge, setNewAge] = useState(props.baby.age);
     const [newHeight, setNewHeight] = useState(props.baby.height);
     const [newWeight, setNewWeight] = useState(props.baby.weight);
@@ -71,23 +71,11 @@ export const EditarDatos = (props) => {
                 <View style={{ flexDirection: 'column', justifyContent: "space-between" }}>
                     <View style={{ flexDirection: 'column' }}>
 
-                        <View style={styles.inputSection}>
-                            <View style={styles.row}>
-                                <Text style={styles.label}>{t('home.age')}:</Text>
-                                <TextInput
-                                    mode='outlined'
-                                    style={styles.input}
-                                    outlineColor="#E0E0E0"
-                                    activeOutlineColor="#DA70D6"
-                                    textColor='#555'
-                                    right={<TextInput.Affix text="m" />}
-                                    value={newAge}
-                                    onChangeText={changeAge}
-                                />
-                            </View>
-                            <HelperText type='error' visible={errors.age} style={styles.helper}>
-                                {t('home.errorAge')}
-                            </HelperText>
+                        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+                            <Text style={styles.label}>{t('home.age')}: </Text>
+                            <TextInput textColor='#DA70D6' placeholder={String(props.baby.age)} activeOutlineColor='#DA70D6' right={<TextInput.Affix text="months" textStyle={{ color: '#DA70D6' }} />}
+                                defaultValue={props.baby.age} value={newAge} onChangeText={(dato) => changeAge(dato)} style={styles.input} mode='outlined'></TextInput>
+                            <HelperText type='error' visible={errors.age}>{t('home.errorAge')}</HelperText>
                         </View>
                         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                             <Text style={styles.label}>{t('home.height')}: </Text>
@@ -120,6 +108,7 @@ export const EditarDatos = (props) => {
                     </View>
                 </View>
                 <Divider style={styles.divider}></Divider>
+                <Button textColor='#DA70D6' style={styles.button} onPress={() => props.save(checkVoids({sleepPre:newSleepPre,intakePre:newIntakePre,weight:newWeight,height:newHeight,age:newAge}))}>{t('home.save')}</Button>
             </Card.Content>
         </Card>
     );
@@ -127,57 +116,44 @@ export const EditarDatos = (props) => {
 
 const styles = StyleSheet.create({
     card: {
-        borderRadius: 20,
-        margin: 16,
-        backgroundColor: '#FFFFFF',
-        elevation: 4, // Sombra en Android
-        shadowColor: '#000', // Sombra en iOS
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
+        borderRadius: 16,
+        marginVertical: 12,
+        backgroundColor: '#FFF',
+        height: '100%',
+        width: '100%',
     },
     title: {
-        fontWeight: '700',
+        fontWeight: 'bold',
         color: '#DA70D6',
-        fontSize: 22,
-        textAlign: 'center',
-        letterSpacing: 0.5,
+        marginBottom: 6,
+        fontSize: 25
     },
     divider: {
-        height: 1,
-        backgroundColor: '#F0F0F0',
-        marginVertical: 15,
-    },
-    inputSection: {
-        marginBottom: 8,
+        marginVertical: 10,
     },
     row: {
         flexDirection: 'row',
-        alignItems: 'center', // Alinea verticalmente label e input
         justifyContent: 'space-between',
-        marginBottom: 4,
+        paddingVertical: 6,
     },
     label: {
-        flex: 1,
-        fontSize: 16,
-        color: '#444',
-        fontWeight: '500',
+        color: '#555',
+        margin: '5',
+        fontSize: 15,
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 107,
     },
     input: {
-        flex: 1.5,
-        height: 45, // Un poco más alto para mejor usabilidad
-        backgroundColor: '#FBFAFB',
-        fontSize: 14,
-    },
-    helper: {
-        textAlign: 'right',
-        marginTop: -5,
-        marginBottom: 5,
+        height: 30,
+        width: '35%',
     },
     button: {
-        marginTop: 10,
-        borderRadius: 12,
-        borderWidth: 1.5,
         borderColor: "#DA70D6",
+        borderWidth: 2,
     }
+
 });

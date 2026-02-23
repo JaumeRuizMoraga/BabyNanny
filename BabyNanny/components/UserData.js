@@ -10,65 +10,98 @@ export const UserData = (props) => {
     const [userName, setUserName] = useState(props.user.name);
     const [leng, setLeng] = useState(props.user.config.language);
 
-
     useEffect(() => {
-        changeLanguage(leng)
+        changeLanguage(leng);
     }, [leng]);
+
     return (
-        <View>
-            <Surface style={styles.container} elevation={3}>
-                <Text style={styles.title}>{t('configScreen.data')}</Text>
-                <Divider style={styles.divider}></Divider>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>{t('configScreen.userName')}:</Text>
-                    <TextInput  mode='outlined' activeOutlineColor='#DA70D6' outlineColor='#DA70D6' style={styles.input} textColor='#DA70D6' onChangeText={(newUser) => setUserName(newUser)} placeholder={userName} ></TextInput>
+        <Surface style={styles.container} elevation={2}>
+            <Text style={styles.title}>{t('configScreen.data')}</Text>
+            <Divider style={styles.divider} />
+
+            {/* Campo: Idioma */}
+            <View style={styles.settingRow}>
+                <Text style={styles.label}>{t('configScreen.lenguage')}</Text>
+                <View style={styles.accordionContainer}>
+                    <List.Accordion
+                        title={leng.toUpperCase()}
+                        style={styles.accordion}
+                        titleStyle={{ color: '#DA70D6', fontWeight: 'bold' }}
+                        left={props => <List.Icon {...props} icon="translate" color="#DA70D6" />}
+                    >
+                        <List.Item 
+                            title="Español (ES)" 
+                            onPress={() => setLeng("es")} 
+                            style={styles.listItem}
+                        />
+                        <List.Item 
+                            title="English (EN)" 
+                            onPress={() => setLeng("en")} 
+                            style={styles.listItem}
+                        />
+                    </List.Accordion>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>{t('configScreen.lenguage')}:</Text>
-                    <View style={styles.list}>
-                        <List.Section style={{backgroundColor:'#D88FD8',borderColor:'#DA70D6',borderWidth:5}} title={leng}>
-                            <List.Accordion style={{backgroundColor:'#D88FD8'}} title={leng}>
-                                <List.Item title="es" onPress={() => setLeng("es")}></List.Item>
-                                <List.Item title="en" onPress={() => setLeng("en")}></List.Item>
-                            </List.Accordion>
-                        </List.Section>
-                    </View>
-                </View>
-            </Surface>
-        </View>
+            </View>
+        </Surface>
     );
-}
-const styles = new StyleSheet.create({
+};
+const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 10,
-        borderRadius: 15,
-        padding: 15,
-        backgroundColor: "white"
+        padding: 20,
+        margin: 16,
+        borderRadius: 25,
+        backgroundColor: "white",
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
     },
     title: {
-        fontSize: 23,
+        fontSize: 20,
         color: '#DA70D6',
-        fontWeight: 'bold',
-        margin: 10
+        fontWeight: '800',
+        textAlign: 'center',
+        marginBottom: 10,
+        textTransform: 'uppercase',
+        letterSpacing: 1,
     },
     divider: {
-        height: 20,
-        color: 'red'
+        height: 1,
+        backgroundColor: '#F0F0F0',
+        marginBottom: 20,
     },
-    data: {
-        color: '#DA70D6',
-        fontWeight: 'bold',
+    settingRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 15,
+        width: '100%',
+    },
+    label: {
+        fontSize: 15,
+        color: '#666',
+        fontWeight: '600',
+        flex: 1,
     },
     input: {
-        height: 30,
-        marginLeft: 10,
-        paddingLeft:60,
-        paddingRight:60
+        flex: 2,
+        height: 40,
+        backgroundColor: '#FFF',
+        fontSize: 14,
     },
-    list: {
-        overflow: 'visible',
-        margin: 20,
+    accordionContainer: {
+        flex: 2,
+        borderRadius: 12,
+        overflow: 'hidden', // Importante para que el redondeado funcione
+        borderWidth: 1,
+        borderColor: '#DA70D6',
+    },
+    accordion: {
+        backgroundColor: '#FDF7FD', // Un rosa muy sutil
+        paddingVertical: 0,
+    },
+    listItem: {
+        backgroundColor: '#FFF',
     }
-})
+});
