@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Animated, FlatList, ScrollView } from 'r
 import { Icon, FAB, TextInput, Surface, HelperText, Button } from 'react-native-paper';
 import { RulerPicker } from 'react-native-ruler-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { getAgeMonth, recargarDatos } from '../utils/utils';
 import { newBaby } from '../services/services';
 import Token from '../context/Token';
@@ -22,7 +22,7 @@ export const NewBaby = (props) => {
 
     const [weight, setWeight] = useState(0);
     const [age, setAge] = useState(0);
-    const [name, setName] = useState("Nombreejemplo");
+    const [name, setName] = useState(null);
     const [intakePre, setIntakePre] = useState(0);
     const [sleepPre, setSleepPre] = useState(0);
     const [errorSleep, setErrorSleep] = useState(false)
@@ -30,6 +30,7 @@ export const NewBaby = (props) => {
     const [date, setDate] = useState(new Date);
     const [showDate, setShowDate] = useState(false)
     const { token, setToken } = useContext(Token);
+    const [isName, setIsname] = useState(true);
 
 
     const intakeFormat = /^(\d+)$|^(\d*\.\d+)$/;
@@ -100,9 +101,18 @@ export const NewBaby = (props) => {
         checkData(intakePre, newSleep)
     }
 
+    
     const changeName = (newName) => {
+       
         setName(newName)
+        if(newName === '' || newName === null) {
+            setIsname(true);
+        }
+        else {
+            setIsname(false);
+        }
     }
+
     const getImageDeffault = async () => {
         console.log("Entrando en get img default")
         return await imageToBase64(require('../assets/img/baby_icon.jpg'))
@@ -185,7 +195,8 @@ export const NewBaby = (props) => {
                         shortStepColor='#c9c9db'
                     />
                 </View>
-                <Button mode='outlined' textColor='#DA70D6'
+                
+                <Button mode='outlined' textColor='#DA70D6' disabled={isName}
                     style={styles.boton} onPress={() => createBaby()}>{t('newBaby.save')}</Button>
             </ScrollView>
         </View>
