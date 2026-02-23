@@ -14,7 +14,7 @@ import { useState, useContext, useTransition, useEffect, useCallback } from 'rea
 import { recargar } from '../utils/utils';
 import { useFocusEffect } from '@react-navigation/native';
 import { BabyCard } from '../components/DatosBebe'
-import { changeImage, deleteBaby,changeFeatures } from '../services/services';
+import { changeImage, deleteBaby, changeFeatures } from '../services/services';
 import User from '../context/User';
 import Token from '../context/Token';
 import { BabyChange } from '../components/CambioBebe';
@@ -46,18 +46,18 @@ export const Home = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
 
 
-useEffect(() => {
-    if (user.babies.length === 0 && (!isLoading && !refreshing)) {
-        props.navigation.navigate("NoBaby");
-    }
-}, [user.babies, props.navigation]);
-useEffect(() => {
-    const cargaInicial = async () => {
-        setIsLoading(true); // Empezamos a cargar
-        await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
-    };
-    cargaInicial();
-}, []); // Solo una vez al montar
+    useEffect(() => {
+        if (user.babies.length === 0 && (!isLoading && !refreshing)) {
+            props.navigation.navigate("NoBaby");
+        }
+    }, [user.babies, props.navigation]);
+    useEffect(() => {
+        const cargaInicial = async () => {
+            setIsLoading(true); // Empezamos a cargar
+            await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
+        };
+        cargaInicial();
+    }, []); // Solo una vez al montar
 
 
 
@@ -71,7 +71,7 @@ useEffect(() => {
         setShowModal(false)
     }
     const save = (newChars) => {
-        changeFeatures(newChars,baby.id, token.token);
+        changeFeatures(newChars, baby.id, token.token);
     }
     const erraseBaby = async () => {
         setIsLoading(true)
@@ -157,18 +157,18 @@ useEffect(() => {
 
 
     const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    try {
-      // Aquí ejecutas la lógica que tenías antes
-      await recargarDatos(token.token,setBaby,setUser,baby,setIsLoading); 
-    } catch (error) {
-      console.error("Error al recargar:", error);
-    } finally {
-      // Importante: detener el spinner
-      setRefreshing(false);
-    }
-  }, [token, baby, user]);
-    
+        setRefreshing(true);
+        try {
+            // Aquí ejecutas la lógica que tenías antes
+            await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
+        } catch (error) {
+            console.error("Error al recargar:", error);
+        } finally {
+            // Importante: detener el spinner
+            setRefreshing(false);
+        }
+    }, [token, baby, user]);
+
     if (isLoading || user.babies.length === 0) {
         return (
             <View>
@@ -235,10 +235,10 @@ useEffect(() => {
                     keyExtractor={(item, index) => index.toString()}
                     ListHeaderComponent={renderHeader} // <--- Metemos el contenido arriba
                     refreshControl={
-                        <RefreshControl 
-                            refreshing={refreshing} 
-                            onRefresh={onRefresh} 
-                            colors={['#DA70D6']} 
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                            colors={['#DA70D6']}
                         />
                     }
                     renderItem={({ item }) => {
