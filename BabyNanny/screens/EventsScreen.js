@@ -29,14 +29,18 @@ export const EventScreen = () => {
         let newEvents = events
         newEvents[event.date] = event.dots;
         setEvents(newEvents)
-        createEvent(({ dates: newEvents }, baby.id, token.token));
+        console.log("Lo que le entra a al endPoint")
+        console.log({ dates: newEvents })
+        console.log(baby.id)
+        console.log(token.token)
+        createEvent({ dates: newEvents }, baby.id, token.token);
     }
     const deleteEvent = (eventDate, eventName) => {
         let newEvents = events
         newEvents[eventDate].dots = newEvents[eventDate].dots.filter(elem => elem.key.split(';')[0] != eventName)
         console.log(newEvents[eventDate].dots)
         setEvents(newEvents)
-        createEvent(({ dates: newEvents }, baby.id, token.token));
+        createEvent({ dates: newEvents }, baby.id, token.token);
     }
     const filterEvents = (entryNumber) => {
         if ("dates" in baby?.events) {
