@@ -34,6 +34,29 @@ export const register = async (newUserData) => {
             },
             body: JSON.stringify(newUserData)
         });
+        console.log(response)
+        if (response.ok) {
+            return { status: 200 }
+        } else {
+            return { status: 401 }
+        }
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+    }
+}
+
+export const verify = async (newUserData,code) => {
+    try {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'code': code
+            },
+            body: JSON.stringify(newUserData)
+        });
+        console.log(response)
         if (response.ok) {
             let token = await response.json()
             return { token: token, status: 200 }
@@ -172,9 +195,6 @@ export const newEntry = async (registro, idBebe, token) => {
 }
 
 export const changeImage = async (imagenBase64, idBebe, token) => {
-    console.log(imagenBase64);
-    console.log(idBebe);
-    console.log(token);
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/changeImage/' + idBebe, {
             method: 'PUT',
@@ -193,5 +213,54 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
     } catch (error) {
         console.error("Error en la conexión:", error);
 
+    }
+}
+
+export const createEvent = async (evento, idBebe, token) => {
+    try {
+        const response = await fetch('http://'+ip+':8080/BabyNanny/createEvent/' + idBebe, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify(evento)
+
+        });
+        console.log(response)
+        if (response.ok) {
+            return 204
+        }
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+
+    }
+}
+
+
+export const changeFeatures = async (features,idBebe,token) =>{
+    try {
+        console.log("Entrando new entry")
+        const response = await fetch('http://'+ip+':8080/BabyNanny/updateFeatures/' + idBebe, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'token': token
+            },
+            body: JSON.stringify(features)
+
+        });
+        console.log(response)
+        if (response.ok) {
+            return 200
+        } else {
+            return null
+        }
+
+
+    } catch (error) {
+        console.error("Error en la conexión:", error);
     }
 }

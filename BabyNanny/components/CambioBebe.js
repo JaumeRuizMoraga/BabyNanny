@@ -2,7 +2,6 @@ import { Text, View, FlatList, StyleSheet } from "react-native"
 import { useContext, useState } from "react";
 import { TarjetaBebe } from "./TarjetaBebe";
 import { Button } from "react-native-paper";
-import { logout } from "../services/services";
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import Token from "../context/Token";

@@ -2,6 +2,8 @@ import { newEntry } from "../services/services";
 import { getDataBabies,getDataUser } from "../services/services";
 import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
+import { changeLanguage } from 'i18next';
+import '../assets/i18n';
 
 export const sendIntake = async (intake,idBebe,token) => {
     let intakeEntry = {
@@ -51,7 +53,7 @@ const weightFormat = /^(\d+)$|^(\d*\.(\d|\d\d|\d\d\d))$/
 //     }
 // }
 
-export const comprobarDatosCompleto = (intake, sleep, age, height, weight) => {
+export const checkDataFull = (intake, sleep, age, height, weight) => {
     const errors = { intake: false, sleep: false, height: false, weight: false, age: false };
     if (!intakeFormat.test(intake)) {
         if (!(intake === '')) {
@@ -111,15 +113,13 @@ export const getBabyPos = (arrayBabies,idBebe) => {
     return result
 }
 
-export const recargarDatos = async (token, setBaby, setUser, baby) => {
+export const recargarDatos = async (token, setBaby, setUser, baby,setIsLoading) => {
     try {
         const babiesResponse = await getDataBabies(token);
         const userReal = await getDataUser(token);
-        
         const listaBabies = babiesResponse.babies;
         userReal.babies = listaBabies;
         setUser(userReal);
-
         console.log("ID que buscamos:", baby?.id);
 
         let babyToPut = listaBabies.find(elem => String(elem.id) === String(baby?.id));
@@ -132,6 +132,8 @@ export const recargarDatos = async (token, setBaby, setUser, baby) => {
 
     } catch (error) {
         console.error("Error cargando datos: ", error);
+    }finally{
+        setIsLoading(false);
     }
 };
 
@@ -187,3 +189,7 @@ export const recargarDatos = async (token, setBaby, setUser, baby) => {
 //     return null;
 //   }
 // };
+
+export const parseDate = (date) =>{
+    return date.toISOString().split('T')[0]
+}

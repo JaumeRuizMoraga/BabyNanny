@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { SleepScreen } from './SleepScreen';
+import { BabyGrowth } from './BabyGrowth.js';
 import { Home } from './Home.js';
 import { NoBaby } from './NoBaby.js';
 import { ConfigScreen } from './ConfigScreen.js';
@@ -32,8 +33,9 @@ export const DrawerNavigator = () => {
             userReal.babies = babies.babies;
             await setUser(userReal);
             await setBaby(userReal.babies[0]);
+            console.log(userReal)
             const userLang = userReal.config.language;
-            if (userLang === "es" || userLang === "en") {
+            if (userLang == "es" || userLang == "en") {
                 changeLanguage(userLang);
             } else {
                 console.log("Idioma no encontrado");
@@ -83,7 +85,7 @@ export const DrawerNavigator = () => {
 
     return (
         <Drawer.Navigator screenOptions={draweOptrions} initialRouteName={noBaby ? "NoBaby" : "Home"}>
-            <Drawer.Screen name="Home" options={{ headerShown: true }} goLogin={goLogin} component={Home} />
+            <Drawer.Screen name="Home" options={{ headerShown: true }} component={Home} />
             {noBaby &&
                 <Drawer.Screen name="NoBaby" options={{ headerShown: false }} component={NoBaby} />
             }
@@ -92,6 +94,7 @@ export const DrawerNavigator = () => {
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
             <Drawer.Screen name="MedicalRecordScreen" options={{ headerShown: true }} component={MedicalRecordScreen} />
             <Drawer.Screen name="EventScreen" options={{ headerShown: true }} component={EventScreen} />
+            <Drawer.Screen name="BabyGrowth" options={{ headerShown: true }} component={BabyGrowth} />
         </Drawer.Navigator>
     );
 }

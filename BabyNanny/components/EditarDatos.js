@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, } from 'react-native'
 import { Card, Divider, TextInput, HelperText, Button } from 'react-native-paper';
 import { useState } from 'react';
-import { comprobarDatosCompleto } from '../utils/utils';
+import { checkDataFull } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ export const EditarDatos = (props) => {
     const {t} = useTranslation()
     const [newAge, setNewAge] = useState(props.baby.age);
     const [newHeight, setNewHeight] = useState(props.baby.height);
-    const [newWeight, setNewWeight] = useState(props.baby.height);
+    const [newWeight, setNewWeight] = useState(props.baby.weight);
     const [newIntakePre, setNewIntakePre] = useState(props.baby.intakePre);
     const [newSleepPre, setNewSleepPre] = useState(props.baby.sleepPre);
     const [errors, setErrors] = useState({ intake: false, sleep: false, height: false, weight: false, age: false });
@@ -18,7 +18,7 @@ export const EditarDatos = (props) => {
 
     const changeAge = (dato) => {
         setNewAge(dato)
-        setErrors(checkDataFull(newIntakePre, newSleepPre, dato, newAltura, newWeight))
+        setErrors(checkDataFull(newIntakePre, newSleepPre, dato, newHeight, newWeight))
 
     }
     const changeHeight = (dato) => {
@@ -32,7 +32,7 @@ export const EditarDatos = (props) => {
     }
     const changeToma = (date) => {
         setNewIntakePre(date)
-        setErrors(checkDataFull(date, newSleepPre, newEdad, newAltura, newWeight))
+        setErrors(checkDataFull(date, newSleepPre, newAge, newHeight, newWeight))
 
     }
     const changeSleep = (date) => {
