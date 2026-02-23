@@ -44,10 +44,10 @@ export const MedicalRecordScreen = (props) => {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalTitle}>Nuevo Registro Médico</Text>
+                        <Text style={styles.modalTitle}>New Medical Record</Text>
 
                         <TextInput
-                            placeholder="Medicina"
+                            placeholder="Medicine"
                             style={styles.input}
                             value={newEntry.recipe.medicine}
                             onChangeText={(text) => setNewEntry({
@@ -72,7 +72,7 @@ export const MedicalRecordScreen = (props) => {
                         />
 
                         <TextInput
-                            placeholder="Duración"
+                            placeholder="Dosis Time"
                             style={[styles.input, { height: 80 }]}
                             multiline
                             value={newEntry.recipe.dosisTime}
@@ -86,10 +86,10 @@ export const MedicalRecordScreen = (props) => {
 
                         <View style={styles.buttonContainer}>
                             <Button mode="outlined" onPress={() => setModalVisible(false)} style={styles.btn}>
-                                Cancelar
+                                Discard
                             </Button>
                             <Button mode="contained" onPress={() => handleSave()} style={styles.btn}>
-                                Guardar
+                                Save
                             </Button>
                         </View>
                     </View>
