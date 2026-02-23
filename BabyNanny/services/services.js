@@ -217,8 +217,13 @@ export const changeImage = async (imagenBase64, idBebe, token) => {
 }
 
 export const createEvent = async (evento, idBebe, token) => {
+    console.log("1º par")
     console.log(evento)
+        console.log("2º par")
+
     console.log(idBebe)
+        console.log("3º par")
+
     console.log(token)
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/createEvent/' + idBebe, {
