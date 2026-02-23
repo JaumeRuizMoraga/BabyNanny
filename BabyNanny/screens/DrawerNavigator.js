@@ -86,9 +86,7 @@ export const DrawerNavigator = () => {
     return (
         <Drawer.Navigator screenOptions={draweOptrions} initialRouteName={noBaby ? "NoBaby" : "Home"}>
             <Drawer.Screen name="Home" options={{ headerShown: true }} component={Home} />
-            {noBaby &&
-                <Drawer.Screen name="NoBaby" options={{ headerShown: false }} component={NoBaby} />
-            }
+                <Drawer.Screen name="NoBaby" options={{ headerShown: false,drawerItemStyle:{display: 'none'} }} component={NoBaby} />
             <Drawer.Screen name="NewBaby" options={{ headerShown: !noBaby }} component={NewBaby} />
             <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
