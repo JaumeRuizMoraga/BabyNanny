@@ -24,7 +24,7 @@
 
     },
     "home":{
-        "babyData":"Datos del bebe",
+        "babyData":"Datos del bebé",
 
                 "logout":"Cerrar sesión",
         "deleteConfirmation":"Estas seguro de que quieres eliminar a este bebé?",
@@ -43,7 +43,6 @@
         "avgSleep":"Sueño por defecto",
         "intk":"Tomas",
         "months":"meses",
-        "hours":"horas",
         "errorWeight":"Formato de peso incorrecto",
         "errorAge":"Formato de edad incorrecto",
         "errorHeight":"Formato de altura incorrecto",
