@@ -5,12 +5,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+/**
+ * Represents a medical record of a Baby stored in the "medicalRecord" MongoDB collection.
+ *
+ * Each document stores information about medical treatments or prescriptions
+ * given to the baby on a specific date. The record includes a Recipe object
+ * that details the medicine, dosage, and administration time.
+ */
 @Document(collection = "medicalRecord")
 public class MedicalRecord {
 
+    /** Unique identifier of the medical record document. */
     @Id
     private String id;
+
+    /** Date when the medical record was created or the treatment was administered. */
     private Date date;
+
+    /** Details of the medical treatment or prescription. */
     private Recipe recipe;
 
     public MedicalRecord() {

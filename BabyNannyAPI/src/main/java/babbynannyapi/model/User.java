@@ -7,16 +7,36 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.data.annotation.Id;
 
+/**
+ * Represents a User in the BabyNanny application, stored in the "user" MongoDB collection.
+ *
+ * Each user has personal information such as name, email, and password,
+ * a list of associated babies, configuration settings, and optional saved songs.
+ * This class is used to manage user accounts and their relationships to babies in the system.
+ */
 @Document(collection = "user")
 public class User {
-	
+
+	/** Unique identifier of the user document. */
 	@Id
 	private String id;
+
+	/** Username of the user. */
 	private String name;
+
+	/** List of IDs of babies associated with this user. */
 	private List<String> babies = new ArrayList<>();
+
+	/** Password of the user (should be stored securely). */
 	private String password;
+
+	/** Email address of the user. */
 	private String email;
+
+	/** Configuration settings for the user stored as key-value pairs. */
 	private Map<String, Object> config;
+
+	/** List of song identifiers associated with the user. */
 	private List<String> songs;
 
 	public User() {}

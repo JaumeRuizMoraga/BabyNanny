@@ -7,23 +7,54 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents a Baby entity stored in the "baby" MongoDB collection.
+ *
+ * This class models all information related to a baby, including personal data,
+ * associated tutors, image, and various types of records such as intake, sleep,
+ * and medical records. It also keeps track of feature history and events.
+ *
+ * The class is designed to be stored as a document in MongoDB using Spring Data.
+ */
+
 @Document(collection = "baby")
 public class Baby {
 
+    /** Unique identifier of the baby. */
     @Id
     private String id;
+
+    /** Name of the baby. */
     private String name;
+
+    /** List of usernames or identifiers of the baby's tutors. */
     private List<String> tutors = new ArrayList<>();
+
+    /** URL or path to the baby's image. */
     private String image;
+
+    /** List of IDs referencing the baby's intake records. */
     private List<String> intakeRecord = new ArrayList<>();
+
+    /** List of IDs referencing the baby's sleep records. */
     private List<String> sleepRecord = new ArrayList<>();
+
+    /** List of IDs referencing the baby's medical records. */
     private List<String> medicalRecord = new ArrayList<>();
+
+    /** Current features of the baby. */
     private Features features;
+
+    /** History of features stored as a list of FeaturesRecord IDs. */
     private List<String> featuresRecord = new ArrayList<>();
+
+    /** Events associated with the baby. */
     private Event events;
 
+    /** Default constructor for serialization. */
     public Baby() {
     }
+
     public Baby(String id, String name, List<String> tutors, String image, List<String> intakeRecord, List<String> sleepRecord, List<String> medicalRecord, Features features,List<String> featuresRecord, Event events) {
         this.id = id;
         this.name = name;

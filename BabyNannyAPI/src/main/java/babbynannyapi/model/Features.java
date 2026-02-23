@@ -1,5 +1,13 @@
 package babbynannyapi.model;
 
+/**
+ * Represents the features or characteristics of a baby.
+ *
+ * This class stores basic measurable attributes such as sleep,
+ * intake, weight, height, and age. It can be used to track
+ * a baby's development and current status.
+ */
+
 public class Features {
 
 	public Features() {
@@ -13,10 +21,19 @@ public class Features {
 		this.age = age;
 	}
 
+	/** Average or predicted sleep duration. */
 	private double sleepPre;
+
+	/** Average or predicted intake amount. */
 	private double intakePre;
+
+	/** Baby's weight. */
 	private double weight;
+
+	/** Baby's height. */
 	private double height;
+
+	/** Baby's age. */
 	private double age;
 
 	public double getSleepPre() {

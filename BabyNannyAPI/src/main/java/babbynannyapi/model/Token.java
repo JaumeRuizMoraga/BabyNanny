@@ -7,14 +7,28 @@ import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Represents an authentication token for a user, stored in the "tokens" MongoDB collection.
+ *
+ * Each token is linked to a specific user and includes a creation date.
+ * The token string is generated as the first segment of a UUID to provide a
+ * unique identifier for authentication purposes.
+ */
 @Document(collection = "tokens")
 public class Token {
+	/** Unique identifier of the token document. */
 	@Id
 	private String id;
+
+	/** The token string used for authentication. */
 	private String token;
+
+	/** Username of the user associated with this token. */
 	private String user;
+
+	/** Date when the token was created. */
 	private Date date;
-	
+
 	public Token(String user) {
 		String uuid = UUID.randomUUID().toString();
 		this.user = user;

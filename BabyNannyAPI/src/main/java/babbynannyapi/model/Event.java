@@ -3,7 +3,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Event {
-	
+
+	/**
+	 * Contains all the dayConfigs of a user
+	 */
+
 	public Event() {
 	}
 	
@@ -13,6 +17,9 @@ public class Event {
 
 	private Map<String, DayConfig> dates;
 
+	/**
+	 * Class created to manage an event of a user
+	 */
 	public static class DayConfig {
 		
 		public DayConfig() {
@@ -32,7 +39,9 @@ public class Event {
 			this.dots = dots;
 		}
 	}
-
+	/**
+	 * Contains the inner information of an event, such as description or the Date
+	 */
 	public static class Dot {
 		public Dot() {
 		}

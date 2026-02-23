@@ -1,11 +1,21 @@
 package babbynannyapi.model;
 
+/**
+ * Represents a prescription or medication instruction for a Baby.
+ *
+ * This class stores the name of the medicine, the dosage amount, and
+ * the number of times the dose should be administered. It is used
+ * within a MedicalRecord to describe treatment details.
+ */
 public class Recipe{
-
+    /** Name of the medicine. */
     private String medicine;
-    private double dosis;
-    private int dosisTime;
 
+    /** Dosage amount of the medicine. */
+    private double dosis;
+
+    /** Number of times the dose should be administered. */
+    private int dosisTime;
     public Recipe() {
     }
 
