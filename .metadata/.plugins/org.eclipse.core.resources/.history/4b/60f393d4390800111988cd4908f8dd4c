@@ -1,5 +1,0 @@
-package babbynannyapi.repository;
-
-public class TokenRepository {
-
-}
