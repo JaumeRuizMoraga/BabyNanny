@@ -1,21 +1,34 @@
 import { View, StyleSheet, Animated, ImageBackground } from 'react-native';
 import { TextInput, Button, Text, HelperText, PaperProvider } from 'react-native-paper';
-import { useState, useRef,useContext } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { login } from '../services/services';
 import Token from '../context/Token';
 import User from '../context/User';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * LoginScreen Component
+ * * Provides a user interface for authentication. It features a controlled form, and
+ * input validation feedback
+ * * @param {Object} props - Component properties.
+ * @param {Object} props.navigation - React Navigation object used for routing 
+ * (to 'DrawerNavigator' on success or 'RegisterScreen').
+ * * @returns {JSX.Element} A screen with a background image, login form, and error handling.
+ */
+
 export const LoginScreen = (props) => {
-    const {token,setToken} = useContext(Token);
+    const { token, setToken } = useContext(Token);
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [error, SetError] = useState(false)
     const shakeAnimation = useRef(new Animated.Value(0)).current;
-    const {t} = useTranslation();
-    const [showPass,setShowPass] = useState(true);
+    const { t } = useTranslation();
+    const [showPass, setShowPass] = useState(true);
 
+    /**
+     * shake function that triggers a shaking animation on the login form when there is an error during login.
+     */
     const shake = () => {
         Animated.sequence([
             Animated.timing(shakeAnimation, { toValue: 10, duration: 50, useNativeDriver: true }),
@@ -24,6 +37,10 @@ export const LoginScreen = (props) => {
             Animated.timing(shakeAnimation, { toValue: 0, duration: 50, useNativeDriver: true }),
         ]).start();
     };
+
+    /**
+     * loginFull function that handles the complete login process. It sends the user's credentials to the backend,
+     */
 
     const loginFull = async () => {
         let json = {
@@ -36,12 +53,18 @@ export const LoginScreen = (props) => {
             setToken(response.token);
             props.navigation.navigate('DrawerNavigator')
         }
-        else if(response.status== 401){
+        else if (response.status == 401) {
             SetError(true);
             shake();
         }
     };
 
+    /**
+     * updateUser function that updates the user state with the input from the login form. 
+     * If there is an error, it resets the error state to false to allow for new input without showing the error message.
+     * 
+     * @param {String} user - The user String to update the state with.
+     */
     const updateUser = (user) => {
         setUser(user);
         if (error) {
@@ -49,6 +72,13 @@ export const LoginScreen = (props) => {
         }
     };
 
+    /**
+     * updatePassword function that updates the password state with the input from the login form. 
+     * Similar to updateUser, if there is an error, it resets the error state to false to allow for new
+     *  input without showing the error message.
+     * 
+     * @param {String} password - The password String to update the state with.
+     */
     const updatePassword = (password) => {
         setPassword(password);
         if (error) {
@@ -79,10 +109,10 @@ export const LoginScreen = (props) => {
                 </Animated.View>
                 <Animated.View style={{ transform: [{ translateX: shakeAnimation }] }}>
                     <TextInput
-                        label= {t('login.password')}
+                        label={t('login.password')}
                         mode='outlined'
-                        secureTextEntry = {showPass}
-                        right={<TextInput.Icon icon="eye" onPress={()=>setShowPass(!showPass)} />}
+                        secureTextEntry={showPass}
+                        right={<TextInput.Icon icon="eye" onPress={() => setShowPass(!showPass)} />}
                         value={password}
                         onChangeText={(password) => {
                             updatePassword(password);

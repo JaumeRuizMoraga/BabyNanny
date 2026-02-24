@@ -13,6 +13,13 @@ import { useTranslation } from 'react-i18next';
 import { TarjetaDia } from "../components/TarjetaDia";
 import { DayItemDate } from "../components/DayItemDate";
 
+/**
+ * EventScreen component responsible for displaying the calendar with the baby's events, allowing users to view, add, and delete events for specific days.
+ * 
+ * @returns it returns a calendar view with marked dates based on the baby's events. Users can click on a date to open a modal where they can add new events or delete existing ones. 
+ * The component also handles fetching and updating the events data from the backend.
+ */
+
 export const EventScreen = () => {
     const { token, setToken } = useContext(Token)
     const { user, setUser } = useContext(User)
@@ -24,7 +31,11 @@ export const EventScreen = () => {
     const [events, setEvents] = useState(baby?.events?.dates ?? {});
 
 
-
+    /**
+     * Function responsible for adding a new event to the calendar. It updates the local state with the new event and then sends the updated events data to the backend to be saved.
+     * 
+     * @param {Object} event - The event object to be added to the calendar.
+     */
     const addEvent = (event) => {
         let newEvents = events
         newEvents[event.date] = event.dots;
@@ -35,6 +46,14 @@ export const EventScreen = () => {
         console.log(token.token)
         createEvent({ dates: newEvents }, baby.id, token.token);
     }
+
+    /**
+     * Function responsible for deleting an event from the calendar. It updates the local state by removing the specified event and then sends the updated events data to the backend to be saved.
+     * 
+     * @param {String} eventDate it is the date of the event to be deleted, used to identify which date's events need to be updated after deletion.
+     * @param {String} eventName it is the name of the event to be deleted, used to identify which specific event needs to be removed from the list of events for the given date.
+     * 
+     */
     const deleteEvent = (eventDate, eventName) => {
         let newEvents = events
         newEvents[eventDate].dots = newEvents[eventDate].dots.filter(elem => elem.key.split(';')[0] != eventName)
@@ -42,6 +61,13 @@ export const EventScreen = () => {
         setEvents(newEvents)
         createEvent({ dates: newEvents }, baby.id, token.token);
     }
+
+    /**
+     * filterEvents function responsible for filtering the events to be displayed on the calendar. It checks the current date and filters out past events, showing only upcoming events. It also limits the number of events returned based on the entryNumber parameter.
+     * 
+     * @param {Int16Array} entryNumber it is used to limit the events that is showed on the screen
+     * @returns it returns a filtered list of events based on the current date, showing only those that are upcoming and limiting the number of events returned based on the entryNumber parameter. 
+     */
     const filterEvents = (entryNumber) => {
         if ("dates" in baby?.events) {
             const todayDate = new Date().toISOString().split('T')[0];
@@ -51,26 +77,10 @@ export const EventScreen = () => {
             (dates?.forEach(([fecha, dots]) => dots.dots.forEach(elem => dates2.push({ key: elem.key, date: fecha }))))
             return (dates2.slice(0, entryNumber))
         }
-        else{
+        else {
             return [];
         }
     }
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
-    //         setEvents(baby.events.dates);
-    //         return () => {
-    //             createEvent({ dates: events }, baby.id, token.token);
-    //         };
-    //     }, [token.token, baby?.id, user?.id])
-    // );
-
-    // if (isLoading) {
-    //     return (
-    //         <View>
-    //             <ActivityIndicator size="large" color="#DA70D6" />
-    //         </View>)
-    // }
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
             {console.log("Events")}
@@ -79,6 +89,12 @@ export const EventScreen = () => {
                 <View style={{ borderWidth: 1.5, borderColor: '#DA70D6', padding: 10, borderRadius: 10, margin: 5 }}>
                     <Text style={styles.title}>{t("eventScreen.title")}</Text>
                 </View>
+
+                {
+                    /**
+                     * FlatList component that displays a list of upcoming events for the baby. It uses the filterEvents function to get the relevant events and renders each event using the DayItemDate component. Users can also delete events directly from this list.
+                     */
+                }
                 <FlatList
                     data={filterEvents(2)}
                     keyExtractor={(item, index) => item + index.toString()}
@@ -87,16 +103,22 @@ export const EventScreen = () => {
                 />
             </View>
             <Calendar
-                // Maneja el click en un día
+
                 onDayPress={day => {
                     [setShowModal(true), setDay(day)];
                 }}
-                // Estilos básicos
+
                 theme={styles.calendarIn}
                 markedDates={events}
                 markingType="multi-dot"
                 style={styles.calendarOut}
             />
+            {
+                /**
+                 * Modal component that displays the events for a specific day.
+                 * It is shown when a user taps on a day in the calendar.
+                 */
+            }
             <Modal style={{ flex: 2 }} visible={showModal} onDismiss={() => setShowModal(false)} contentContainerStyle={styles.container}>
                 <TarjetaDia day={day} events={events} deleteEvent={deleteEvent} addEvent={addEvent}></TarjetaDia>
             </Modal>

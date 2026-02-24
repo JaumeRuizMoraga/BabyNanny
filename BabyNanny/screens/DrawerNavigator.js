@@ -18,6 +18,16 @@ import '../assets/i18n';
 import { useContext, useState, useEffect } from 'react';
 
 const Drawer = createDrawerNavigator();
+
+/**
+ * Component responsible for displaying the side menu, providing navigation options 
+ * throughout the app, such as Home, Profile, Settings, etc.
+ *
+ * @returns {JSX.element} Returns a loading screen if data is still fetching. 
+ * Once loaded, it returns either a "No Baby" screen (if the user has no 
+ * registered babies) or the main dashboard (if the user has at least one 
+ * registered baby), along with the app's navigation options.
+ */
 export const DrawerNavigator = () => {
 
     const { user, setUser } = useContext(User);
@@ -26,6 +36,12 @@ export const DrawerNavigator = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [noBaby, setNoBaby] = useState();
 
+    /**
+     * Function responsible for fetching the user's data and their babies from the backend,
+     * and then setting the user and baby contexts accordingly. It also checks the user's 
+     * preferred language and applies it to the app. Finally, it updates the loading state.
+     * 
+     */
     const getAllData = async () => {
         try {
             let babies = await getDataBabies(token.token)
@@ -48,13 +64,15 @@ export const DrawerNavigator = () => {
         }
     }
 
+    /**
+     * useEffect hook that triggers the getAllData function when the component mounts,
+     * ensuring that the user's data and babies are fetched and the app is set up 
+     * correctly before rendering the main content.
+     */
     useEffect(() => {
         getAllData();
     }, []);
 
-    const goLogin = () => {
-        props.navigation.navigate("LoginScreen")
-    }
 
     const draweOptrions = {
         drawerType: 'slide',
@@ -84,9 +102,15 @@ export const DrawerNavigator = () => {
     }
 
     return (
+        /**
+         * Drawer.Navigator component that defines the structure of the side menu and the screens it contains.
+         * It conditionally renders the "NoBaby" screen if the user has no registered babies, 
+         * and the "Home" screen if they do. It also includes screens for adding a new baby, 
+         * configuring settings, viewing sleep data, medical records, events, and baby growth.
+         */
         <Drawer.Navigator screenOptions={draweOptrions} initialRouteName={noBaby ? "NoBaby" : "Home"}>
             <Drawer.Screen name="Home" options={{ headerShown: true }} component={Home} />
-                <Drawer.Screen name="NoBaby" options={{ headerShown: false,drawerItemStyle:{display: 'none'} }} component={NoBaby} />
+            <Drawer.Screen name="NoBaby" options={{ headerShown: false, drawerItemStyle: { display: 'none' } }} component={NoBaby} />
             <Drawer.Screen name="NewBaby" options={{ headerShown: !noBaby }} component={NewBaby} />
             <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
             <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />

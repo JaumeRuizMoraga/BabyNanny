@@ -39,20 +39,6 @@ const heightFormat = /^(\d+)$|^(\d*\.(\d|\d\d))$/
 const weightFormat = /^(\d+)$|^(\d*\.(\d|\d\d|\d\d\d))$/
 
 
-// export const comprobarDatos = (intake, sleep) => {
-//     if (intakeFormat.test(intake)) {
-//         setTomaIncorrecta(false);
-//     } else {
-//         setTomaIncorrecta(true);
-//     }
-//     if (sleepFormat.test(sleep)) {
-//         setSleepIncorrecto(false)
-
-//     } else {
-//         setSleepIncorrecto(true);
-//     }
-// }
-
 export const checkDataFull = (intake, sleep, age, height, weight) => {
     const errors = { intake: false, sleep: false, height: false, weight: false, age: false };
     if (!intakeFormat.test(intake)) {
@@ -136,59 +122,6 @@ export const recargarDatos = async (token, setBaby, setUser, baby,setIsLoading) 
         setIsLoading(false);
     }
 };
-
-// export const recargarDatos = async (token,setBaby,setUser,baby) => {
-//     console.log("Le entra:")
-//     console.log(baby.name)
-//     try {
-//         let babies = await getDataBabies(token)
-//         let userReal = await getDataUser(token);
-//         userReal.babies = babies.babies;
-//         setUser(userReal);
-//             let babyToPut = (babies.babies.filter(elem => elem.id == baby.id))[0]
-//             if(babyToPut){
-//                 console.log("Se cuela en el if")
-//                 console.log("Bebe a colocar:")
-//                 console.log(babyToPut.name)
-//                 setBaby(babyToPut)
-//             }else{
-//                             console.log("No se cuela en el if")
-//                 console.log("Bebe a colocar:")
-//                 console.log(babies.babies[0].name)
-//                 setBaby(babies.babies[0])
-//             }
-
-//     } catch (error) {
-//         console.error("Error cargando datos" + error)
-//     }
-// }
-
-
-// export const imageLocalToBase64 = async (staticResource) => {
-//     console.log("Entrando en bas64")
-//   try {
-
-//     const asset = Asset.fromModule(staticResource);
-//     await asset.downloadAsync();
-
-//     const uri = asset.localUri || asset.uri;
-
-
-//     const base64 = await FileSystem.readAsStringAsync(uri, {
-//       encoding: 'base64',
-//     });
-
-//     const extension = asset.type === 'jpg' ? 'jpeg' : (asset.type || 'png');
-//     let image = `data:image/${extension};base64,${base64}`
-//     console.log(image)
-    
-//     return image;
-    
-//   } catch (error) {
-//     console.error("Error al convertir la imagen local:", error);
-//     return null;
-//   }
-// };
 
 export const parseDate = (date) =>{
     return date.toISOString().split('T')[0]

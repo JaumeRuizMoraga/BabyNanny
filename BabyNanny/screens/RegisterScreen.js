@@ -8,6 +8,15 @@ import { Trans } from 'react-i18next';
 import Token from '../context/Token';
 import * as Localization from 'expo-localization'
 
+/**
+ * RegisterScreen Component
+ * * Handles the user registration workflow in two steps:
+ * 1. Initial data collection (user, password, email) and sending a verification code.
+ * 2. Verification of the code via a modal to finalize account creation.
+ * * @param {Object} props - Component properties.
+ * @param {Object} props.navigation - React Navigation object for screen transitions.
+ * * @returns {JSX.Element} A multi-step registration form with verification modal.
+ */
 
 export const RegisterScreen = (props) => {
     const [user, setUser] = useState('');
@@ -20,6 +29,10 @@ export const RegisterScreen = (props) => {
     const shakeAnimation = useRef(new Animated.Value(0)).current;
     const { t } = useTranslation();
 
+    /**
+     * shake function that triggers a shaking animation on the registration form when there is an
+     *  error during registration or code verification.
+     */
     const shake = () => {
         Animated.sequence([
             Animated.timing(shakeAnimation, { toValue: 10, duration: 50, useNativeDriver: true }),
@@ -29,6 +42,10 @@ export const RegisterScreen = (props) => {
         ]).start()
     };
 
+    /**
+     * sendEmail function that handles the initial registration step. It collects the user's input
+     *  for username, password, and email,
+     */
     const sendEmail = async () => {
         const deviceLanguage = Localization.getLocales()[0]?.languageCode ?? 'en'
         let newUser = {
@@ -50,6 +67,11 @@ export const RegisterScreen = (props) => {
         }
     };
 
+    /**
+     * newRegister function that handles the second step of the registration process. 
+     * It verifies the code entered by the user in the modal and, if successful, finalizes the account 
+     * creation by setting the token and navigating to the main app screen.
+     */
     const newRegister = async () => {
         let newUser = {
             name: user,
@@ -71,6 +93,11 @@ export const RegisterScreen = (props) => {
         }
     };
 
+    /**
+     * This function updates the user state with the input from the registration form. 
+     * @param {String} user - The username input from the registration form. 
+     * 
+     */
     const updateUser = (user) => {
         setUser(user);
         if (error) {
@@ -78,6 +105,10 @@ export const RegisterScreen = (props) => {
         }
     };
 
+    /**
+     * updatePassword function that updates the password state with the input from the registration form.
+     * @param {String} password password is the input from the registration form for the user's password. 
+     */
     const updatePassword = (password) => {
         setPassword(password);
         if (error) {
@@ -91,6 +122,12 @@ export const RegisterScreen = (props) => {
             setError(false);
         }
     };
+
+    /**
+     *  updateCode function that updates the code state with the input from the modal for the
+     *  verification code sent to the user's email.
+     * @param {Int16Array} newCode newCode is the input from the modal for the verification code sent to the user's email.
+     */
     const updateCode = (newCode) => {
         setCode(newCode);
         if (error) {
@@ -152,12 +189,12 @@ export const RegisterScreen = (props) => {
             <Modal visible={sendCode} onDismiss={() => setSendCode(false)} contentContainerStyle={styles.modal}>
                 <Text style={{ textAlign: 'center' }}>
                     <Trans
-                    i18nKey="register.mailMessage"
-                    values={{ mail: mail }}
-                    components={[
-                        <Text style={{ color: '#DA70D6' }} />
-                    ]}
-                /></Text>
+                        i18nKey="register.mailMessage"
+                        values={{ mail: mail }}
+                        components={[
+                            <Text style={{ color: '#DA70D6' }} />
+                        ]}
+                    /></Text>
                 <TextInput style={styles.modalInput} value={code} mode='outlined' onChangeText={(newCode) => updateCode(newCode)}></TextInput>
                 <Button
                     mode="contained"

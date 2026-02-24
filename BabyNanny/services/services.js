@@ -1,5 +1,12 @@
 const ip = '52.6.222.21';
 
+/**
+ *  login function that sends a POST request to the backend with the user's login credentials.
+ * 
+ * @param {Object} loginData - An object containing the user's login credentials (username and password).
+ * @returns 
+ */
+
 export const login = async (loginData) => {
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/login', {
@@ -24,6 +31,13 @@ export const login = async (loginData) => {
     }
 }
 
+/**
+ *  register function that sends a POST request to the backend with the user's registration data.
+ * 
+ * @param {Object} newUserData newUserData returns the object that contains the userData to register
+ * @returns 
+ */
+
 export const register = async (newUserData) => {
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/register', {
@@ -45,6 +59,12 @@ export const register = async (newUserData) => {
     }
 }
 
+/**
+ * 
+ * @param {*} newUserData 
+ * @param {*} code 
+ * @returns 
+ */
 export const verify = async (newUserData,code) => {
     try {
         const response = await fetch('http://'+ip+':8080/BabyNanny/verify', {
