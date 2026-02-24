@@ -3,6 +3,7 @@ import { View, Text, ScrollView, ImageBackground } from "react-native";
 import {
   Surface, PaperProvider
 } from 'react-native-paper';
+//Comentario a eliminar
 import { useContext } from 'react';
 import Baby from "../context/Baby";
 import { averageGrowthData } from "../assets/averageBabyGrowth";
