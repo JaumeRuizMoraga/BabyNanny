@@ -37,7 +37,7 @@ export const Home = (props) => {
     const { baby, setBaby } = useContext(Baby);
     const { token, setToken } = useContext(Token);
     const [showModal, setShowModal] = useState(false);
-    const [entrys, setEntrys] = useState(baby?.intakeRecord);
+    const [entrys, setEntrys] = useState();
     const [edit, setEdit] = useState(false);
     const [del, setDel] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -74,13 +74,13 @@ export const Home = (props) => {
         changeFeatures(newChars, baby.id, token.token);
     }
     const erraseBaby = async () => {
-        setIsLoading(true)
         let response = await deleteBaby(baby.id, token.token)
         setDel(false)
         if (response === 204) {
             let index = getBabyPos(user.babies, baby.id);
             await recargarDatos(token.token, setBaby, setUser, index, setIsLoading);
             await setBaby(user.babies[0]);
+
 
         }
         else {
@@ -199,6 +199,9 @@ export const Home = (props) => {
 
             <BabyCard baby={baby.features} />
 
+            {/* AQUÍ PODRÁS AÑADIR TU GRÁFICA DE CRECIMIENTO EN EL FUTURO */}
+            {/* <TuGrafica baby={baby} /> */}
+
             <SegmentedButtons
                 value={entrys}
                 onValueChange={setEntrys}
@@ -261,8 +264,8 @@ export const Home = (props) => {
                 <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
                     <EditarDatos baby={baby.features} save={(newChars) => save(newChars)} />
                 </Modal>
-                <Modal visible={del} onDismiss={() => setDel(false)} contentContainerStyle={styles.modal}>
-                    <ModalDelete baby={baby.assets} delete={() => erraseBaby()} exit={() => setDel(false)} />
+                <Modal visible={del} onDismiss={() => setDel(false)}>
+                    <ModalDelete baby={baby.assets} onDelete={() => erraseBaby()} exit={() => setDel(false)} />
                 </Modal>
                 <Modal visible={showModal} onDismiss={() => setShowModal(false)} contentContainerStyle={styles.modal}>
                     <BabyChange goLogin={() => props.navigation.navigate("LoginScreen")} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)} />
@@ -277,6 +280,9 @@ export const Home = (props) => {
                 </Modal>
             </View>
         );
+    } else {
+        props.navigation.navigate("NoBaby");
+        return null;
     }
 };
 

@@ -1,29 +1,63 @@
-import React, { useState, useContext } from 'react'; // Corregido useState
-import { View, StyleSheet, FlatList, Modal, TextInput, Text, Pressable } from 'react-native';
+import React, { useState, useContext, useCallback } from 'react'; // Corregido useState
+import { View, StyleSheet, FlatList, Modal, TextInput, Text, Pressable, RefreshControl } from 'react-native';
 import { FAB, Button, Card } from 'react-native-paper';
 import { MedicalRecord } from '../components/RegistroMedico';
 import Baby from '../context/Baby';
 import Token from '../context/Token'
+import User from '../context/User'
 import { sendMedic } from '../utils/utils';
+import { recargarDatos } from '../utils/utils';
 
 export const MedicalRecordScreen = (props) => {
     const { baby, setBaby } = useContext(Baby);
     const { token, setToken } = useContext(Token);
+    const { user, setUser } = useContext(User);
+    const [refreshing, setRefreshing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(true);
 
     // Estado para controlar si el modal es visible
     const [modalVisible, setModalVisible] = useState(false);
 
     // Estado para los campos del nuevo registro
-    const [newEntry, setNewEntry] = useState({ recipe: { medicine: "", dosis: 0.0, dosisTime: 0 }});
+    const [newEntry, setNewEntry] = useState({ recipe: { medicine: "", dosis: 0.0, dosisTime: 0 } });
 
     const handleSave = () => {
-            console.log(newEntry.recipe.medicine, newEntry.recipe.dosis, newEntry.recipe.dosisTime, baby.id, token.token)
-            sendMedic(newEntry.recipe.medicine, newEntry.recipe.dosis, newEntry.recipe.dosisTime, baby.id, token.token)
-            // Limpiamos y cerramos
-            setNewEntry({recipe: { medicine: "", dosis: 0.0, dosisTime: 0 }});
-            setModalVisible(false);
-        
+        console.log(newEntry.recipe.medicine, newEntry.recipe.dosis, newEntry.recipe.dosisTime, baby.id, token.token)
+        sendMedic(newEntry.recipe.medicine, newEntry.recipe.dosis, newEntry.recipe.dosisTime, baby.id, token.token)
+        // Limpiamos y cerramos
+        setNewEntry({ recipe: { medicine: "", dosis: 0.0, dosisTime: 0 } });
+        setModalVisible(false);
+
     };
+
+    const handlePressMedicine = (text) => {
+        setNewEntry({
+                                ...newEntry, recipe: {
+                                    ...newEntry.recipe,
+                                    medicine: text      // Cambia solo medicine
+                                }
+                            })
+    if (text === null || text === '') {
+        setIsEmpty(true)
+    }
+    else {
+        setIsEmpty(false)
+    }
+    }
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        try {
+            // Aquí ejecutas la lógica que tenías antes
+            await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
+        } catch (error) {
+            console.error("Error al recargar:", error);
+        } finally {
+            // Importante: detener el spinner
+            setRefreshing(false);
+        }
+    }, [token, baby, user]);
 
     return (
         <View style={styles.layout}>
@@ -31,6 +65,15 @@ export const MedicalRecordScreen = (props) => {
             <FlatList
                 data={baby.medicalRecord}
                 keyExtractor={(item, index) => index.toString()}
+                // 1. EL REFRESHCONTROL DEBE IR AQUÍ
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        colors={['#DA70D6']} // Android
+                        tintColor={'#DA70D6'} // iOS
+                    />
+                }
                 renderItem={({ item }) => <MedicalRecord entry={item} />}
                 style={{ width: '100%' }}
             />
@@ -50,12 +93,7 @@ export const MedicalRecordScreen = (props) => {
                             placeholder="Medicine"
                             style={styles.input}
                             value={newEntry.recipe.medicine}
-                            onChangeText={(text) => setNewEntry({
-                                ...newEntry, recipe: {
-                                    ...newEntry.recipe, 
-                                    medicine: text      // Cambia solo medicine
-                                }
-                            })}
+                            onChangeText={(text) => handlePressMedicine(text)}
                         />
 
                         <TextInput
@@ -63,7 +101,7 @@ export const MedicalRecordScreen = (props) => {
                             style={[styles.input, { height: 80 }]}
                             multiline
                             value={newEntry.recipe.dosis}
-                             onChangeText={(text) => setNewEntry({
+                            onChangeText={(text) => setNewEntry({
                                 ...newEntry, recipe: {
                                     ...newEntry.recipe,
                                     dosis: text      // Cambia solo dosis
@@ -76,7 +114,7 @@ export const MedicalRecordScreen = (props) => {
                             style={[styles.input, { height: 80 }]}
                             multiline
                             value={newEntry.recipe.dosisTime}
-                             onChangeText={(text) => setNewEntry({
+                            onChangeText={(text) => setNewEntry({
                                 ...newEntry, recipe: {
                                     ...newEntry.recipe,
                                     dosisTime: text      // Cambia solo dosisTime
@@ -85,10 +123,10 @@ export const MedicalRecordScreen = (props) => {
                         />
 
                         <View style={styles.buttonContainer}>
-                            <Button mode="outlined" onPress={() => setModalVisible(false)} style={styles.btn}>
+                            <Button mode="contained" onPress={() => setModalVisible(false)} style={styles.btn}>
                                 Discard
                             </Button>
-                            <Button mode="contained" onPress={() => handleSave()} style={styles.btn}>
+                            <Button disabled={isEmpty} mode="contained" onPress={() => handleSave()} style={styles.btn}>
                                 Save
                             </Button>
                         </View>
@@ -156,5 +194,6 @@ const styles = StyleSheet.create({
     btn: {
         flex: 1,
         marginHorizontal: 5,
+        backgroundColor: '#DA70D6'
     }
 });
