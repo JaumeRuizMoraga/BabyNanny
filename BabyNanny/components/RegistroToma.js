@@ -7,11 +7,11 @@ import { useContext } from 'react';
 export const IntakeRecord = (props) => {
     const { t } = useTranslation();
     const { user, setUser } = useContext(User);
-    const language = () =>{
-        if(user.config.language == "es"){
+    const language = () => {
+        if (user.config.language == "es") {
             return "es-ES"
         }
-        else if(user.config.language == "en"){
+        else if (user.config.language == "en") {
             return "en-EN"
         }
     }

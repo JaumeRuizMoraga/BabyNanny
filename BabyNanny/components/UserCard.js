@@ -1,18 +1,21 @@
-import {View,Text,StyleSheet} from 'react-native'
-import { Surface,Avatar } from 'react-native-paper';
+import { View, Text, StyleSheet } from 'react-native'
+import { Surface, Avatar } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import '../assets/i18n';
 export const UserCard = (props) => {
+    const { t } = useTranslation();
     return (
         <Surface style={styles.container} elevation={2}>
             <View style={styles.avatarContainer}>
-                <Avatar.Icon 
-                    size={110} 
-                    icon="account" 
-                    color="#DA70D6" 
-                    style={{ backgroundColor: 'transparent' }} 
+                <Avatar.Icon
+                    size={110}
+                    icon="account"
+                    color="#DA70D6"
+                    style={{ backgroundColor: 'transparent' }}
                 />
             </View>
             <Text style={styles.title}>{props.user.name}</Text>
-            <Text style={styles.subtitle}>Tutor</Text>
+            <Text style={styles.subtitle}>{t('configScreen.userName')}</Text>
         </Surface>
     );
 }
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.15,
         shadowRadius: 15,
         borderWidth: 1,
-        borderColor: 'rgba(218, 112, 214, 0.1)', 
+        borderColor: 'rgba(218, 112, 214, 0.1)',
     },
     avatarContainer: {
         backgroundColor: '#F8F0F8',

@@ -13,8 +13,9 @@ import { getDataUser } from '../services/services.js';
 import { View, ActivityIndicator } from 'react-native'
 import { EventScreen } from './EventsScreen.js';
 import { MedicalRecordScreen } from './MedicalRecordScreen.js';
-import { changeLanguage } from 'i18next';
+import { changeLanguage, t } from 'i18next';
 import '../assets/i18n';
+import { useTranslation } from 'react-i18next';
 import { useContext, useState, useEffect } from 'react';
 
 const Drawer = createDrawerNavigator();
@@ -35,7 +36,7 @@ export const DrawerNavigator = () => {
     const { token, setToken } = useContext(Token);
     const [isLoading, setIsLoading] = useState(true);
     const [noBaby, setNoBaby] = useState();
-
+    const { t } = useTranslation();
     /**
      * Function responsible for fetching the user's data and their babies from the backend,
      * and then setting the user and baby contexts accordingly. It also checks the user's 
@@ -76,7 +77,7 @@ export const DrawerNavigator = () => {
 
     const draweOptrions = {
         drawerType: 'slide',
-        gestureEnabled: false ,
+        gestureEnabled: false,
         drawerActiveTintColor: 'white',
         drawerActiveBackgroundColor: '#DA70D6',
         drawerInactiveBackgroundColor: 'white',
@@ -85,7 +86,7 @@ export const DrawerNavigator = () => {
             width: 240,
         },
         drawerItemStyle: {
-            marginVertical: 10, 
+            marginVertical: 10,
             borderColor: 'black',
             borderWidth: 2,
             borderRadiues: 0,
@@ -113,12 +114,12 @@ export const DrawerNavigator = () => {
         <Drawer.Navigator screenOptions={draweOptrions} initialRouteName={noBaby ? "NoBaby" : "Home"}>
             <Drawer.Screen name="Home" options={{ headerShown: true }} component={Home} />
             <Drawer.Screen name="NoBaby" options={{ headerShown: false, drawerItemStyle: { display: 'none' } }} component={NoBaby} />
-            <Drawer.Screen name="NewBaby" options={{ headerShown: !noBaby }} component={NewBaby} />
+            <Drawer.Screen name="New Baby" options={{ headerShown: !noBaby }} component={NewBaby} />
             <Drawer.Screen name="Config" options={{ headerShown: true }} component={ConfigScreen} />
-            <Drawer.Screen name="SleepScreen" options={{ headerShown: true }} component={SleepScreen} />
-            <Drawer.Screen name="MedicalRecordScreen" options={{ headerShown: true }} component={MedicalRecordScreen} />
-            <Drawer.Screen name="EventScreen" options={{ headerShown: true }} component={EventScreen} />
-            <Drawer.Screen name="BabyGrowth" options={{ headerShown: true }} component={BabyGrowth} />
+            <Drawer.Screen name="Sleep Screen" options={{ headerShown: true }} component={SleepScreen} />
+            <Drawer.Screen name="Medical Record Screen" options={{ headerShown: true }} component={MedicalRecordScreen} />
+            <Drawer.Screen name="Event Screen" options={{ headerShown: true }} component={EventScreen} />
+            <Drawer.Screen name="Baby Growth" options={{ headerShown: true }} component={BabyGrowth} />
         </Drawer.Navigator>
     );
 }

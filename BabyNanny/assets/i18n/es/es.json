@@ -1,4 +1,13 @@
 {
+    "screens":{
+        "home":"Inicio",
+        "growth":"Crecimiento",
+        "sleep":"Sueño",
+        "config":"Configuración",
+        "newBaby":"Nuevo bebé",
+        "events":"Eventos",
+        "medicalRecord":"Historial médico"
+    },
     "configScreen":{
         "data":"Datos",
         "userName":"Nombre de usuario",
@@ -74,8 +83,13 @@
     "noBaby":{
         "message":"Oh...! Parece que no tienes ningún bebé registrado"
     },
-
-
+    "growthScreen":{
+        "heightLabel":"Evolución de Altura (cm)",
+        "weightLabel":"Evolución de Peso (kg)",
+        "weight":"Peso (kg)",
+        "height":"Altura (cm)",
+        "age":"Edad (meses)"
+    },
     "eventScreen":{
         "events":"Eventos",
         "add":"Añadir",

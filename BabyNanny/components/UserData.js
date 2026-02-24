@@ -45,7 +45,7 @@ export const UserData = (props) => {
                 onPress={() => changeConfig({ language: leng }, props.user.id, props.token.token)}
                 textColor="#757575"
             >
-                Save
+                {t('configScreen.save')}
             </Button>
         </Surface>
     );

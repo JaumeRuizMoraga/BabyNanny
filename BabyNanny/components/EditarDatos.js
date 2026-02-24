@@ -6,7 +6,7 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
 export const EditarDatos = (props) => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [newAge, setNewAge] = useState(props.baby.age);
     const [newHeight, setNewHeight] = useState(props.baby.height);
     const [newWeight, setNewWeight] = useState(props.baby.weight);
@@ -109,7 +109,7 @@ export const EditarDatos = (props) => {
                     </View>
                 </View>
                 <Divider style={styles.divider}></Divider>
-                <Button textColor='#DA70D6' style={styles.button} onPress={() => {props.save(checkVoids({sleepPre:newSleepPre,intakePre:newIntakePre,weight:newWeight,height:newHeight,age:newAge})), props.onClose()}}>{t('home.save')}</Button>
+                <Button textColor='#DA70D6' style={styles.button} onPress={() => { props.save(checkVoids({ sleepPre: newSleepPre, intakePre: newIntakePre, weight: newWeight, height: newHeight, age: newAge })), props.onClose() }}>{t('home.save')}</Button>
             </Card.Content>
         </Card>
     );

@@ -12,20 +12,20 @@ import { Avatar, Surface } from 'react-native-paper';
  * */
 export const TarjetaBebe = (props) => {
     return (
-        <Pressable onLongPress={()=>props.funCom(props.baby)}>
-        <Surface style={styles.container}>
-            <Avatar.Image size={60} source={{uri : props.baby.image}}></Avatar.Image>
-            <Text style={styles.label}>{props.baby.name}</Text>
-        </Surface>
+        <Pressable onLongPress={() => props.funCom(props.baby)}>
+            <Surface style={styles.container}>
+                <Avatar.Image size={60} source={{ uri: props.baby.image }}></Avatar.Image>
+                <Text style={styles.label}>{props.baby.name}</Text>
+            </Surface>
         </Pressable>
     );
 }
 const styles = StyleSheet.create({
     container: {
-        flexDirection:"row",
+        flexDirection: "row",
         borderRadius: 10,
         width: "100%",
-        justifyContent:"space-evenly",
+        justifyContent: "space-evenly",
         alignItems: "center",
         padding: 10,
         marginBottom: 15,

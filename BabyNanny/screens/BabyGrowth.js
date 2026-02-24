@@ -3,13 +3,15 @@ import { View, Text, ScrollView, ImageBackground } from "react-native";
 import {
   Surface, PaperProvider
 } from 'react-native-paper';
-//Comentario a eliminar
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import '../assets/i18n';
 import Baby from "../context/Baby";
 import { averageGrowthData } from "../assets/averageBabyGrowth";
 
 export const BabyGrowth = () => {
   const { baby } = useContext(Baby);
+  const { t } = useTranslation();
   const records = [...baby.featuresRecord].sort((a, b) => {
     return new Date(a.date) - new Date(b.date);
   });
@@ -52,7 +54,7 @@ export const BabyGrowth = () => {
               borderRadius: 20,
               backgroundColor: '#FFF',
             }} elevation={2}>
-              <Text style={{ fontWeight: 'bold', marginBottom: 30 }}>Evolución de Peso (kg)</Text>
+              <Text style={{ fontWeight: 'bold', marginBottom: 30 }}>{t('growthScreen.weightLabel')}</Text>
               <View style={{ flexDirection: "row", alignItems: "center", marginLeft: -15 }}>
                 <View style={{ width: 30, alignItems: 'center', justifyContent: 'center' }}>
                   <Text style={{
@@ -64,7 +66,7 @@ export const BabyGrowth = () => {
                     color: 'gray',
                     transform: [{ rotate: '-90deg' }]
                   }}>
-                    Peso (kg)
+                    {t('growthScreen.weight')}
                   </Text>
                 </View>
                 <LineChart
@@ -97,7 +99,7 @@ export const BabyGrowth = () => {
                 fontWeight: 'bold',
                 color: 'gray'
               }}>
-                Edad del Bebé (meses)
+                {t('growthScreen.age')}
               </Text>
             </Surface>
             <Surface style={{
@@ -107,7 +109,7 @@ export const BabyGrowth = () => {
               borderRadius: 20,
               backgroundColor: '#FFF',
             }} elevation={2}>
-              <Text style={{ fontWeight: 'bold', marginBottom: 30 }}>Evolución de Altura (cm)</Text>
+              <Text style={{ fontWeight: 'bold', marginBottom: 30 }}>{t('growthScreen.heightLabel')}</Text>
               <View style={{ flexDirection: "row", alignItems: "center", marginLeft: -15 }}>
                 <View style={{ width: 30, alignItems: 'center', justifyContent: 'center' }}>
                   <Text style={{
@@ -119,7 +121,7 @@ export const BabyGrowth = () => {
                     color: 'gray',
                     transform: [{ rotate: '-90deg' }]
                   }}>
-                    Altura (cm)
+                    {t('growthScreen.height')}
                   </Text>
                 </View>
                 {console.log(averageWeight)}
@@ -153,7 +155,7 @@ export const BabyGrowth = () => {
                 fontWeight: 'bold',
                 color: 'gray'
               }}>
-                Edad del Bebé (meses)
+                {t('growthScreen.age')}
               </Text>
             </Surface>
           </View>

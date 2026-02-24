@@ -10,7 +10,7 @@ import { DayItem } from "./DayItem"
 
 export const TarjetaDia = (props) => {
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [events, setEvents] = useState(props.events[props.day.dateString]?.dots ?? [])
     const [showForm, setShowForm] = useState(false);
     const [eventName, setEventName] = useState('');
@@ -22,20 +22,16 @@ export const TarjetaDia = (props) => {
     const createEvent = () => {
         let date = props.day.dateString;
         let dots = [...events]
-        let fullName = eventName+";"+formatTime(eventHour)
+        let fullName = eventName + ";" + formatTime(eventHour)
         dots.push({ key: fullName, color: '#Da70D6' })
         let event = { date: date, dots: { dots: dots } }
         return event
     }
 
     const formatTime = (date) => {
-// Verificamos que 'date' sea un objeto Date válido
         if (!(date instanceof Date) || isNaN(date)) return "Seleccionar hora";
-
         const hours = date.getHours();
         const minutes = date.getMinutes();
-        
-        // Formato HH:MM con ceros a la izquierda
         const strHours = hours.toString().padStart(2, '0');
         const strMinutes = minutes.toString().padStart(2, '0');
         console.log("Return de funcion")
@@ -43,10 +39,7 @@ export const TarjetaDia = (props) => {
         return `${strHours}:${strMinutes}`;
     };
     const onTimeChange = (_, selectedDate) => {
-        // En Android, al seleccionar, el picker se debe cerrar
         setShowPicker(false);
-        
-        // Solo actualizamos si el usuario no canceló (selectedDate no es undefined)
         if (selectedDate) {
             setEventHour(selectedDate);
         }
@@ -73,20 +66,19 @@ export const TarjetaDia = (props) => {
                         value={formatTime(eventHour)}
                         editable={false}
                         right={<TextInput.Icon icon="clock" onPress={() => setShowPicker(true)} />}
-                        // onPressIn funciona mejor que onPress cuando editable es false
                         onPressIn={() => setShowPicker(true)}
                     />
                     {
-                        showPicker && <DateTimePicker 
-                            value={eventHour} 
-                            mode='time' 
+                        showPicker && <DateTimePicker
+                            value={eventHour}
+                            mode='time'
                             is24Hour={true}
                             display={'default'}
-                            onChange={onTimeChange} 
+                            onChange={onTimeChange}
                         />
 
                     }
-            <Button onPress={() => props.addEvent(createEvent())}>{t('eventScreen.add')}</Button>
+                    <Button onPress={() => props.addEvent(createEvent())}>{t('eventScreen.add')}</Button>
                 </View>
             )
 

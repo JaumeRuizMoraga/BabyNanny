@@ -5,7 +5,7 @@ const Baby = createContext();
 
 export const BabyProvider = ({ children }) => {
     const [baby, setBaby] = useState({})
-    
+
     return (
         <Baby.Provider value={{ baby, setBaby }}>
             {children}
