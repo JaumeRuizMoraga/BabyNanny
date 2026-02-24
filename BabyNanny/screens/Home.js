@@ -178,6 +178,8 @@ export const Home = (props) => {
     const renderHeader = () => (
         <View style={styles.container}>
             <Surface style={styles.header} elevation={2}>
+                <FAB icon="delete" style={styles.fabDelete} size='small' onPress={() => setDel(true)} />
+                <FAB icon="account" style={styles.fabUser} size='small' onPress={() => goConfig()} />
                 <FAB
                     icon={() => (
                         <Avatar.Image
@@ -196,12 +198,9 @@ export const Home = (props) => {
                     {baby.name}
                 </Text>
             </Surface>
-
-            <BabyCard baby={baby.features} />
-
-            {/* AQUÍ PODRÁS AÑADIR TU GRÁFICA DE CRECIMIENTO EN EL FUTURO */}
-            {/* <TuGrafica baby={baby} /> */}
-
+            <View>
+                <BabyCard baby={baby.features} setEdit = {setEdit}/>
+            </View>
             <SegmentedButtons
                 value={entrys}
                 onValueChange={setEntrys}
@@ -236,7 +235,7 @@ export const Home = (props) => {
                 <FlatList
                     data={entrys}
                     keyExtractor={(item, index) => index.toString()}
-                    ListHeaderComponent={renderHeader} // <--- Metemos el contenido arriba
+                    ListHeaderComponent={renderHeader}
                     refreshControl={
                         <RefreshControl
                             refreshing={refreshing}
@@ -253,16 +252,10 @@ export const Home = (props) => {
                             return <MedicalRecord entry={item} />;
                         }
                     }}
-                    contentContainerStyle={{ paddingBottom: 100 }} // Espacio para que los FAB no tapen el último item
+                    contentContainerStyle={{ paddingBottom: 100 }}
                 />
-
-                {/* LOS FABS Y MODALES SE QUEDAN FUERA DE LA LISTA */}
-                <FAB icon="pencil" style={styles.fabEdit} size='small' onPress={() => setEdit(true)} />
-                <FAB icon="account" style={styles.fabUser} size='small' onPress={() => goConfig()} />
-                <FAB icon="delete" style={styles.fabDelete} size='small' onPress={() => setDel(true)} />
-
                 <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
-                    <EditarDatos baby={baby.features} save={(newChars) => {save(newChars); setEdit(false)}} onClose={() => setEdit(false)} />
+                    <EditarDatos baby={baby.features} save={(newChars) => { save(newChars); setEdit(false) }} onClose={() => setEdit(false)} />
                 </Modal>
                 <Modal visible={del} onDismiss={() => setDel(false)}>
                     <ModalDelete baby={baby.assets} onDelete={() => erraseBaby()} exit={() => setDel(false)} />
@@ -327,14 +320,14 @@ const styles = StyleSheet.create({
     fabDelete: {
         position: 'absolute',
         margin: 16,
-        right: 14,
-        top: 180,
+        right: 5,
+        top: 160,
     },
     fabUser: {
         position: 'absolute',
         margin: 16,
-        right: 325,
-        top: 10,
+        right: 300,
+        top: 3,
     },
     modal: {
         justifyContent: 'center',

@@ -1,7 +1,15 @@
 import { Text, View, StyleSheet, Pressable } from "react-native"
 import { Avatar, Surface } from 'react-native-paper';
-import { default_baby_img } from "../assets/img/baby_icon";
 
+/**
+ * Component used to render the baby that is given for parameter.
+ * If you press on the component, the baby given for parameter became the actual baby.  
+ * @component
+ * @param {Object} props- Component propierties. 
+ * @param {Function} props.funCom- Function to make the baby given for parameter became the actual baby. 
+ * @example <TarjetaBebe baby={item} funCom={props.funCom}></TarjetaBebe>
+ * @returns {JSX.Element}
+ * */
 export const TarjetaBebe = (props) => {
     return (
         <Pressable onLongPress={()=>props.funCom(props.baby)}>

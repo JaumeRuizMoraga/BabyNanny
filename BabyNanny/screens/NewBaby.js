@@ -62,7 +62,7 @@ export const NewBaby = (props) => {
         return {
             name: name,
             image: default_baby_img,
-            tutors: [user.name],
+            tutors: [],
             intakeRecord: [],
             sleepRecord: [],
             medicalRecord: [],

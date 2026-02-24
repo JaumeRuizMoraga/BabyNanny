@@ -3,11 +3,11 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import { Surface, Avatar, Divider, Button, TextInput, List } from 'react-native-paper';
 import { useState, useEffect } from 'react';
+import { changeConfig } from '../services/services';
 import { changeLanguage } from 'i18next';
 
 export const UserData = (props) => {
     const { t } = useTranslation();
-    const [userName, setUserName] = useState(props.user.name);
     const [leng, setLeng] = useState(props.user.config.language);
 
     useEffect(() => {
@@ -18,8 +18,6 @@ export const UserData = (props) => {
         <Surface style={styles.container} elevation={2}>
             <Text style={styles.title}>{t('configScreen.data')}</Text>
             <Divider style={styles.divider} />
-
-            {/* Campo: Idioma */}
             <View style={styles.settingRow}>
                 <Text style={styles.label}>{t('configScreen.lenguage')}</Text>
                 <View style={styles.accordionContainer}>
@@ -29,19 +27,26 @@ export const UserData = (props) => {
                         titleStyle={{ color: '#DA70D6', fontWeight: 'bold' }}
                         left={props => <List.Icon {...props} icon="translate" color="#DA70D6" />}
                     >
-                        <List.Item 
-                            title="Español (ES)" 
-                            onPress={() => setLeng("es")} 
+                        <List.Item
+                            title="Español (ES)"
+                            onPress={() => setLeng("es")}
                             style={styles.listItem}
                         />
-                        <List.Item 
-                            title="English (EN)" 
-                            onPress={() => setLeng("en")} 
+                        <List.Item
+                            title="English (EN)"
+                            onPress={() => setLeng("en")}
                             style={styles.listItem}
                         />
                     </List.Accordion>
                 </View>
             </View>
+            <Button
+                mode="text"
+                onPress={() => changeConfig({ language: leng }, props.user.id, props.token.token)}
+                textColor="#757575"
+            >
+                Save
+            </Button>
         </Surface>
     );
 };
@@ -93,12 +98,12 @@ const styles = StyleSheet.create({
     accordionContainer: {
         flex: 2,
         borderRadius: 12,
-        overflow: 'hidden', // Importante para que el redondeado funcione
+        overflow: 'hidden',
         borderWidth: 1,
         borderColor: '#DA70D6',
     },
     accordion: {
-        backgroundColor: '#FDF7FD', // Un rosa muy sutil
+        backgroundColor: '#FDF7FD',
         paddingVertical: 0,
     },
     listItem: {

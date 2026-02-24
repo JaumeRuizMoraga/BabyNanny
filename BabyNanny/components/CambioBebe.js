@@ -6,6 +6,18 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import Token from "../context/Token";
 
+/**
+ * Component used to render a list of the babies that the user have register on the bd.
+ * If you press on the button, the baby change.  
+ * @component
+ * @param {Object} props- Component propierties. 
+ * @param {Function} props.funCom- Function that change the actual baby for the baby that the user has selected. 
+ * @param {Function} props.goLogin- Function that navigate to the login
+ * @param {Array} props.babies- List of babies to print
+ * @requires module:components/BabyCard.BabyCard
+ * @example <BabyChange goLogin={() => props.navigation.navigate("LoginScreen")} babies={user.babies} funCom={(nameBaby) => changeBaby(nameBaby)} />
+ * @returns {JSX.Element}
+ * */
 
 export const BabyChange = (props) => {
     const [babies,setBabies] = useState(props.babies);

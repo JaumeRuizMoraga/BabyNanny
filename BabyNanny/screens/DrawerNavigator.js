@@ -58,6 +58,7 @@ export const DrawerNavigator = () => {
 
     const draweOptrions = {
         drawerType: 'slide',
+        gestureEnabled: false ,
         drawerActiveTintColor: 'white',
         drawerActiveBackgroundColor: '#DA70D6',
         drawerInactiveBackgroundColor: 'white',
@@ -66,6 +67,7 @@ export const DrawerNavigator = () => {
             width: 240,
         },
         drawerItemStyle: {
+            marginVertical: 10, 
             borderColor: 'black',
             borderWidth: 2,
             borderRadiues: 0,

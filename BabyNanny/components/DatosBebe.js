@@ -5,8 +5,15 @@ import { EditarDatos } from './EditarDatos';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Component used to render the features of the selected baby. 
+ * @component
+ * @param {Object} props- Component propierties. 
+ * @param {Array} props.baby- Features of the selected baby.
+ * @example <BabyCard baby={baby.features} />
+ * @returns {JSX.Element}
+ * */
 export const BabyCard = (props) => {
-
     const [edit,setEdit] = useState(false);
     const {t} = useTranslation()
     return (
@@ -15,7 +22,7 @@ export const BabyCard = (props) => {
                 <Text variant="titleMedium" style={styles.title}>
                     {t('home.babyData')}
                 </Text>
-            
+                 <FAB icon="pencil" style={styles.fabEdit} size='small' onPress={() => props.setEdit(true)} />
                 <Divider style={styles.divider} />
                 <View style={{flexDirection: 'row',justifyContent: "space-between" }}>
                     <View style={{flexDirection: 'column' }}>
@@ -45,6 +52,12 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         marginVertical: 12,
         backgroundColor: '#FFF',
+    },
+    fabEdit: {
+        position: 'absolute',
+        margin: 16,
+        right: 5,
+        top: -8,
     },
     title: {
         fontWeight: 'bold',

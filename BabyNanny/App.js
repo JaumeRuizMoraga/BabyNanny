@@ -15,7 +15,7 @@ const App = () => {
       <BabyProvider>
 
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
         <Stack.Screen name="SplashScreen" options={{headerShown: false}} component={SplashScreen} />
         <Stack.Screen name="LoginScreen" options={{headerShown: false}} component={LoginScreen} />
         <Stack.Screen name="RegisterScreen" options={{headerShown: false}} component={RegisterScreen} />

@@ -12,10 +12,7 @@ export const ModalDelete = ({ visible, exit, onDelete }) => {
             animationType="fade"
             onRequestClose={exit}
         >
-            {/* Overlay: Fondo oscurecido para centrar la atención */}
             <Pressable style={styles.overlay} onPress={exit}>
-                
-                {/* Contenedor del Modal: Aquí controlamos el tamaño */}
                 <View style={styles.modalContainer}>
                     <Text style={styles.modalTitle}>
                         {t('home.deleteConfirmation')}
@@ -51,19 +48,19 @@ export const ModalDelete = ({ visible, exit, onDelete }) => {
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Oscurece el fondo
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
     },
     modalContainer: {
-        width: '85%', // Ocupa casi todo el ancho pero deja márgenes
-        maxWidth: 400, // Evita que se vea gigante en tablets
+        width: '85%',
+        maxWidth: 400,
         backgroundColor: 'white',
         borderRadius: 20,
         padding: 24,
-        elevation: 10, // Sombra en Android
-        shadowColor: '#000', // Sombra en iOS
+        elevation: 10,
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.25,
         shadowRadius: 4,
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-end', // Alinea botones a la derecha (estándar de UI)
+        justifyContent: 'flex-end',
         gap: 10,
     },
     flexButton: {
