@@ -5,10 +5,10 @@ import {
 } from 'react-native-paper';
 import { useContext } from 'react';
 import Baby from "../context/Baby";
+import { averageGrowthData } from "../assets/averageBabyGrowth";
 
 export const BabyGrowth = () => {
   const { baby } = useContext(Baby);
-
   const records = [...baby.featuresRecord].sort((a, b) => {
     return new Date(a.date) - new Date(b.date);
   });
@@ -16,6 +16,16 @@ export const BabyGrowth = () => {
   const weightData = records.map(item => ({
     value: item.features.weight,
     label: `${item.features.age}`,
+  }));
+
+  const averageWeight = averageGrowthData.map(item => ({
+    value: item.weight,
+    label: `${item.age}`,
+  }));
+
+  const averageHeight = averageGrowthData.map(item => ({
+    value: item.height,
+    label: `${item.age}`,
   }));
 
   const heightData = records.map(item => ({
@@ -57,8 +67,14 @@ export const BabyGrowth = () => {
                   </Text>
                 </View>
                 <LineChart
-                  data={weightData}
-                  color="#DA70D6"
+                  data={averageWeight}
+                  data2={weightData}
+                  color1="#7d7192f1"
+                  dataPointsColor1="#7d7192f1"
+                  startFillColor1="#7d7192f1"
+                  color2="#DA70D6"
+                  dataPointsColor2="#dba6da"
+                  startFillColor2="#DA70D6"
                   thickness={3}
                   dataPointsColor="#dba6da"
                   noOfSections={5}
@@ -66,8 +82,7 @@ export const BabyGrowth = () => {
                   xAxisColor={"#dba6da"}
                   yAxisTextStyle={{ fontSize: 12, height: 40 }}
                   xAxisLabelTextStyle={{ fontSize: 12, width: 40 }}
-                  areaChart
-                  startFillColor="#DA70D6"
+                  areaChart2
                   startOpacity={0.2}
                   endOpacity={0.05}
                   curved
@@ -106,18 +121,24 @@ export const BabyGrowth = () => {
                     Altura (cm)
                   </Text>
                 </View>
+                {console.log(averageWeight)}
+                {console.log(averageHeight)}
                 <LineChart
-                  data={heightData}
-                  color='#b8b8f7'
+                  data={averageHeight}
+                  data2={heightData}
+                  color2='#b8b8f7'
                   thickness={3}
-                  dataPointsColor='#9f9ff7'
+                  color1="#7d7192f1"
+                  dataPointsColor1="#7d7192f1"
+                  startFillColor1="#7d7192f1"
+                  dataPointsColor2='#9f9ff7'
                   yAxisColor={'#b8b8f7'}
                   xAxisColor={'#b8b8f7'}
                   noOfSections={5}
                   yAxisTextStyle={{ fontSize: 12, height: 40 }}
                   xAxisLabelTextStyle={{ fontSize: 12, width: 40 }}
                   areaChart
-                  startFillColor='#b8b8f7'
+                  startFillColor2='#b8b8f7'
                   startOpacity={0.2}
                   endOpacity={0.05}
                   curved
