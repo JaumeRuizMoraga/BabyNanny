@@ -11,7 +11,17 @@ import { sendSleep, sendIntake } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
-export const SleepScreen = (props) => {
+/**
+ * SleepScreen Component
+ * * An interactive dashboard designed to manage the baby's rest and feeding. 
+ * It features three main functionalities:
+ * 1. Quick Logging: Sends pre-configured intake and sleep data to the server.
+ * 2. Audio Player: Controls a continuous lullaby loop using `expo-av`.
+ * 3. Manual Entry: Allows adjusting specific values through a selector component in a modal.
+ * * @returns {JSX.Element} Screen with a themed background, quick-action buttons, and audio controls.
+ */
+
+export const SleepScreen = () => {
     const songSleep = (require("../assets/audio/lullaby.mp3"))
     const { t } = useTranslation()
     const [manual, setManual] = useState(false)
@@ -22,22 +32,32 @@ export const SleepScreen = (props) => {
     const { baby, setBaby } = useContext(Baby);
 
 
-
+    /**
+     * postSleep and postIntake functions that are called when the user presses the respective buttons for sleep and intake.
+     */
     const postSleep = async () => {
         sendSleep(baby.features.sleepPre, baby.id, token.token);
 
     }
+    /**
+     * postIntake function that is called when the user presses the intake button. It sends the pre-configured intake data to the backend.
+     */
     const postIntake = async () => {
         sendIntake(baby.features.intakePre, baby.id, token.token);
 
     }
+
+    /**
+     * playAudio function that controls the playback of a lullaby audio file. 
+     * It uses the `expo-av` library to play
+     */
     const playAudio = async () => {
         if (!playing) {
             const { sound } = await Audio.Sound.createAsync(
-                songSleep,{
-                shouldPlay: true, // Empieza a sonar nada más cargar
-                    isLooping: true,  // Activa el bucle infinito
-                }
+                songSleep, {
+                shouldPlay: true, // Reproduce automatically
+                isLooping: true,  // Repite en bucle
+            }
             );
             setSong(sound);
             setPlaying(true)
@@ -48,12 +68,12 @@ export const SleepScreen = (props) => {
         }
     }
     useEffect(() => {
-    return () => {
-        if (song) {
-            song.unloadAsync(); // Detiene y borra el audio al salir de la pantalla
-        }
-    };
-}, [song]);
+        return () => {
+            if (song) {
+                song.unloadAsync(); // stop and unload the sound when the component unmounts
+            }
+        };
+    }, [song]);
 
     return (
         <PaperProvider>

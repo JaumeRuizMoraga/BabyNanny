@@ -31,6 +31,17 @@ import { default_baby_img } from '../assets/img/baby_icon';
 import Baby from '../context/Baby';
 import { ModalDelete } from '../components/ModalDelete';
 
+/**
+ * Home Component
+ * * Principal screen of the application that displays the baby's dashboard,
+ * including their records (intake, sleep, medical) and management options.
+ * * @param {Object} props - Component properties.
+ * @param {Object} props.navigation - React Navigation object used to switch between screens
+ * (e.g., navigating to "NoBaby", "Config", or "LoginScreen").
+ * * @returns {JSX.Element|null} Returns the main dashboard view, a loading indicator, 
+ * or redirects to "NoBaby" if no data is found.
+ */
+
 export const Home = (props) => {
     const [type, setType] = useState();
     const { user, setUser } = useContext(User);
@@ -46,6 +57,10 @@ export const Home = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
 
 
+    /**
+     * useEffect hook that checks if the user has any registered babies. If not, it redirects to the "NoBaby" screen.
+     * It also triggers the initial data loading when the component mounts, ensuring that the baby's data is fetched and displayed correctly.
+     */
     useEffect(() => {
         if (user.babies.length === 0 && (!isLoading && !refreshing)) {
             props.navigation.navigate("NoBaby");
@@ -53,26 +68,50 @@ export const Home = (props) => {
     }, [user.babies, props.navigation]);
     useEffect(() => {
         const cargaInicial = async () => {
-            setIsLoading(true); // Empezamos a cargar
+            setIsLoading(true); // it's important to set loading to true at the beginning of the data fetching process
             await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
         };
         cargaInicial();
-    }, []); // Solo una vez al montar
+    }, []); // only run once when the component mounts
 
 
 
+    /**
+     * Function to open the baby selection modal, allowing the user to switch between different babies if they have more than
+     *  one registered. 
+     * It sets the showModal state to true, which triggers the display of the BabyChange component where users can select a
+     *  different baby or log out.
+     */
     const openModal = () => {
         setShowModal(true)
     }
+
+    /**
+     * changeBaby function that updates the current baby context based on the user's selection from the BabyChange component.
+     * 
+     * @param {Object} baby - The baby object selected by the user.
+     */
     const changeBaby = (baby) => {
         console.log("Bebe cambiado a: ")
         console.log(baby.name)
         setBaby(getLocalBaby(user.babies, baby.id))
         setShowModal(false)
     }
+
+    /**
+     * save function that updates the baby's characteristics based on the user's input from the EditarDatos component.
+     * 
+     * @param {Object} newChars - The updated baby characteristics object.
+     */
     const save = (newChars) => {
         changeFeatures(newChars, baby.id, token.token);
     }
+
+    /**
+     * ereaseBaby function that handles the deletion of the current baby. It sends a request to the backend to
+     *  delete the baby and then updates the local state to reflect this change. If the deletion is successful,
+     *  it reloads the user's data and sets the current baby to the first one in the list (if any).
+     */
     const erraseBaby = async () => {
         let response = await deleteBaby(baby.id, token.token)
         setDel(false)
@@ -87,13 +126,24 @@ export const Home = (props) => {
             console.log("Fallo")
         }
     }
+
+    /**
+     * goConfig function that navigates the user to the configuration screen where they can adjust their settings, such as changing the app's language or updating their profile information.
+     * It uses the navigation prop to switch to the "Config" screen when called.
+     */
     const goConfig = () => {
         props.navigation.navigate("Config");
     }
 
-
+    /**
+     * openCamera function that handles the process of taking a new photo using the device's camera.
+     *  It requests the necessary permissions, launches the camera interface, and if a photo is taken successfully,
+     *  it updates the baby's profile picture by sending the new image data to the backend.
+     * 
+     * @returns It does not return a value but updates the baby's profile picture and closes the modal upon successful photo capture.
+     */
     const openCamera = async () => {
-        // Expo pide los permisos automáticamente con esta función
+        // Expo ImagePicker requires permissions to access the camera, so we request them first
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
         if (permissionResult.granted === false) {
@@ -102,8 +152,8 @@ export const Home = (props) => {
         }
 
         const result = await ImagePicker.launchCameraAsync({
-            allowsEditing: true, // Permite recortar la foto
-            aspect: [1, 1],      // La deja cuadrada para el Avatar
+            allowsEditing: true, // it allows the user to edit the photo after taking it (crop, rotate, etc.)
+            aspect: [1, 1],      // it forces the aspect ratio to be 1:1 (square), which is common for profile pictures
             quality: 1,
             base64: true,
         });
@@ -113,11 +163,17 @@ export const Home = (props) => {
                 image: "data:image/jpeg;base64," + result.assets[0].base64
             }
             changeImage(obj, baby.id, token.token)
-            // Aquí se actualiza el icono del bebé
+            // here it updates the baby's icon
             setModalVisible(false);
         }
     };
 
+    /**
+     * openLibrary function that allows the user to select an existing photo from their device's gallery
+     *  to set as the baby's profile picture.
+     * 
+     * @returns It does not return a value but updates the baby's profile picture and closes the modal upon successful photo selection.
+     */
     const openLibrary = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -135,36 +191,35 @@ export const Home = (props) => {
         });
 
         if (!result.canceled) {
-            //result.assets[0].base64 esto devuelve la imagen en base64
-            //result.assets[0].uri esto devuelve la ruta de la imagen en el movil
+            //result.assets[0].base64 it returns the image on base64
+            //result.assets[0].uri it returns the path of the image on the device
             let obj = {
                 image: "data:image/jpeg;base64," + result.assets[0].base64
             }
             changeImage(obj, baby.id, token.token)
-            // Aquí se actualiza el icono del bebé
+            // here it updates the baby's icon
             setModalVisible(false);
         }
     };
 
-    // useFocusEffect(
-    //     useCallback(() => {
-    //         recargarDatos(token.token,setBaby,setUser,baby,setIsLoading);
-    //         return () => {
-    //             // Opcional: Lógica cuando la pantalla pierde el foco
-    //         };
-    //     }, [token.token, baby?.id, user?.id])
-    // );
 
-
+    /**
+     * onRefresh function that handles the pull-to-refresh action on the home screen. 
+     * It triggers a data reload from the backend to ensure that the displayed information is up-to-date.
+     * 
+     * @returns It does not return a value but updates the baby's data and user information by fetching
+     *  the latest data from the backend, and it also manages the refreshing state to show or hide the loading 
+     * indicator during the refresh process.
+     */
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
         try {
-            // Aquí ejecutas la lógica que tenías antes
+
             await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
         } catch (error) {
             console.error("Error al recargar:", error);
         } finally {
-            // Importante: detener el spinner
+            // stop the spinner
             setRefreshing(false);
         }
     }, [token, baby, user]);
@@ -175,6 +230,16 @@ export const Home = (props) => {
                 <ActivityIndicator size="large" color="#DA70D6" />
             </View>)
     }
+
+    /**
+     * renderHeader function that defines the header component for the home screen, which includes the baby's
+     *  profile picture, name, and a segmented control to switch between different types of records (intake, sleep, medical).
+     *  It also includes a FAB for editing the baby's information and another for opening the baby selection modal.
+     * 
+     * @returns {JSX.Element} Returns the header view containing the baby's profile picture, name, and segmented buttons 
+     * for record types, along with the FABs for editing and changing the baby. This header is used as the
+     *  ListHeaderComponent in the FlatList to ensure it stays at the top of the screen.
+     */
     const renderHeader = () => (
         <View style={styles.container}>
             <Surface style={styles.header} elevation={2}>
@@ -342,7 +407,7 @@ const styles = StyleSheet.create({
     imagePickerModal: {
         backgroundColor: 'white',
         padding: 20,
-        marginHorizontal: 40, // Esto le da el ancho centrado
+        marginHorizontal: 40,
         borderRadius: 20,
         alignItems: 'center',
 

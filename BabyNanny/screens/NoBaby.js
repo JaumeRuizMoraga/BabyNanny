@@ -2,8 +2,21 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Icon, FAB } from 'react-native-paper';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
+
+/**
+ * NoBaby Component
+ * * An "Empty State" screen that is displayed when the application detects 
+ * that the user has no registered babies. It provides a visual cue and 
+ * a direct call to action (CTA) to create a new profile.
+ * * @param {Object} props - Component properties.
+ * @param {Object} props.navigation - React Navigation object used to 
+ * route the user to the "NewBaby" form.
+ * * @returns {JSX.Element} A simplified view featuring descriptive icons, 
+ * a localized message, and a Floating Action Button (FAB).
+ */
+
 export const NoBaby = (props) => {
-     const { t } = useTranslation()
+    const { t } = useTranslation()
     return (
         <View style={styles.layout}>
             <Text style={styles.title}>{t('noBaby.message')}</Text>
