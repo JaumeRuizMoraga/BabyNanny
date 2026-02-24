@@ -109,7 +109,7 @@ export const EditarDatos = (props) => {
                     </View>
                 </View>
                 <Divider style={styles.divider}></Divider>
-                <Button textColor='#DA70D6' style={styles.button} onPress={() => props.save(checkVoids({sleepPre:newSleepPre,intakePre:newIntakePre,weight:newWeight,height:newHeight,age:newAge}))}>{t('home.save')}</Button>
+                <Button textColor='#DA70D6' style={styles.button} onPress={() => {props.save(checkVoids({sleepPre:newSleepPre,intakePre:newIntakePre,weight:newWeight,height:newHeight,age:newAge})), props.onClose()}}>{t('home.save')}</Button>
             </Card.Content>
         </Card>
     );

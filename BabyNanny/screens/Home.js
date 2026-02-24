@@ -262,7 +262,7 @@ export const Home = (props) => {
                 <FAB icon="delete" style={styles.fabDelete} size='small' onPress={() => setDel(true)} />
 
                 <Modal visible={edit} onDismiss={() => setEdit(false)} contentContainerStyle={styles.modal}>
-                    <EditarDatos baby={baby.features} save={(newChars) => save(newChars)} />
+                    <EditarDatos baby={baby.features} save={(newChars) => {save(newChars); setEdit(false)}} onClose={() => setEdit(false)} />
                 </Modal>
                 <Modal visible={del} onDismiss={() => setDel(false)}>
                     <ModalDelete baby={baby.assets} onDelete={() => erraseBaby()} exit={() => setDel(false)} />
