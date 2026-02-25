@@ -21,7 +21,7 @@
         "creatUser": "Create User",
         "error": "The user already exist",
 
-        "mailMessage":"We have sent a code to the mail {mail}. Write it to confirm the mail"
+        "mailMessage":"We have sent a code to the mail. Write it to confirm the mail"
     },
     "home": {
         "babyData": "Baby's Data",

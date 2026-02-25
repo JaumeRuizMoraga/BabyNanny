@@ -20,7 +20,7 @@
         "mail":"Gmail",
         "creatUser": "Crear Usuario",
          "error": "El Usuario ya existe",
-                 "mailMessage":"Hemos enviado un código a la direccion {mail}. Introducelo para confirmar el correo"
+                 "mailMessage":"Hemos enviado un código a la direccion. Introducelo para confirmar el correo"
 
     },
     "home":{
