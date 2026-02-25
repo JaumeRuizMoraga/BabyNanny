@@ -1,5 +1,12 @@
 import { View, Text, StyleSheet } from "react-native"
 import { Surface, IconButton } from "react-native-paper"
+/**
+ * Component that represents an individual event item in the list of events for a specific day.
+ * It displays the event's name and time, and includes a delete button that allows users to remove 
+ * the event from the list.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element}
+ */
 export const DayItem = (props) => {
     let partes = props.item.key.split(';')
     let eventName = partes[0]

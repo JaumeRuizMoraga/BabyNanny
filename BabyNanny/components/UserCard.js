@@ -2,6 +2,11 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Surface, Avatar } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import '../assets/i18n';
+/**
+ * Component that renders a card displaying a user's profile information, including their name and an avatar default icon.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element}
+ */
 export const UserCard = (props) => {
     const { t } = useTranslation();
     return (

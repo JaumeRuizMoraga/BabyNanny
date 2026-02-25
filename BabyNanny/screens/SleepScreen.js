@@ -55,8 +55,8 @@ export const SleepScreen = () => {
         if (!playing) {
             const { sound } = await Audio.Sound.createAsync(
                 songSleep, {
-                shouldPlay: true, // Reproduce automatically
-                isLooping: true,  // Repite en bucle
+                shouldPlay: true, 
+                isLooping: true,  
             }
             );
             setSong(sound);
@@ -70,7 +70,7 @@ export const SleepScreen = () => {
     useEffect(() => {
         return () => {
             if (song) {
-                song.unloadAsync(); // stop and unload the sound when the component unmounts
+                song.unloadAsync(); 
             }
         };
     }, [song]);

@@ -1,5 +1,10 @@
 import { View, Text, StyleSheet } from "react-native"
 import { Surface, FAB, IconButton } from "react-native-paper"
+/**
+ * Component that represents an individual event item in the list of events for a specific day.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element}
+ */
 export const DayItemDate = (props) => {
     let partes = props.item.key.split(';')
     let eventName = partes[0]

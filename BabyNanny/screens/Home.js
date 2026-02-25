@@ -57,10 +57,7 @@ export const Home = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
 
 
-    /**
-     * useEffect hook that checks if the user has any registered babies. If not, it redirects to the "NoBaby" screen.
-     * It also triggers the initial data loading when the component mounts, ensuring that the baby's data is fetched and displayed correctly.
-     */
+
     useEffect(() => {
         if (user.babies.length === 0 && (!isLoading && !refreshing)) {
             props.navigation.navigate("NoBaby");
@@ -68,11 +65,11 @@ export const Home = (props) => {
     }, [user.babies, props.navigation]);
     useEffect(() => {
         const cargaInicial = async () => {
-            setIsLoading(true); // it's important to set loading to true at the beginning of the data fetching process
+            setIsLoading(true); 
             await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
         };
         cargaInicial();
-    }, []); // only run once when the component mounts
+    }, []); 
 
 
 
@@ -143,7 +140,6 @@ export const Home = (props) => {
      * @returns It does not return a value but updates the baby's profile picture and closes the modal upon successful photo capture.
      */
     const openCamera = async () => {
-        // Expo ImagePicker requires permissions to access the camera, so we request them first
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
         if (permissionResult.granted === false) {
@@ -152,8 +148,8 @@ export const Home = (props) => {
         }
 
         const result = await ImagePicker.launchCameraAsync({
-            allowsEditing: true, // it allows the user to edit the photo after taking it (crop, rotate, etc.)
-            aspect: [1, 1],      // it forces the aspect ratio to be 1:1 (square), which is common for profile pictures
+            allowsEditing: true, 
+            aspect: [1, 1],  
             quality: 1,
             base64: true,
         });
@@ -163,7 +159,6 @@ export const Home = (props) => {
                 image: "data:image/jpeg;base64," + result.assets[0].base64
             }
             changeImage(obj, baby.id, token.token)
-            // here it updates the baby's icon
             setModalVisible(false);
         }
     };
@@ -191,13 +186,10 @@ export const Home = (props) => {
         });
 
         if (!result.canceled) {
-            //result.assets[0].base64 it returns the image on base64
-            //result.assets[0].uri it returns the path of the image on the device
             let obj = {
                 image: "data:image/jpeg;base64," + result.assets[0].base64
             }
             changeImage(obj, baby.id, token.token)
-            // here it updates the baby's icon
             setModalVisible(false);
         }
     };
@@ -219,7 +211,6 @@ export const Home = (props) => {
         } catch (error) {
             console.error("Error al recargar:", error);
         } finally {
-            // stop the spinner
             setRefreshing(false);
         }
     }, [token, baby, user]);

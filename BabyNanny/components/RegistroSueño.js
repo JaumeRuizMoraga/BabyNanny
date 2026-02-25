@@ -4,6 +4,11 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import User from '../context/User';
 import { useContext } from 'react';
+/**
+ * Functional component that renders a card displaying a baby's sleep record entry.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element} 
+ */
 export const SleepRecord = (props) => {
     const { t } = useTranslation();
     const { user, setUser } = useContext(User);

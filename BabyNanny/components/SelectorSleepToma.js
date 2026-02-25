@@ -7,7 +7,11 @@ import { sendIntake, sendSleep } from "../utils/utils";
 import Token from "../context/Token";
 import User from "../context/User";
 import Baby from "../context/Baby";
-
+/**
+ * Component that provides an interface for manually entering a baby's intake and sleep data.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element} 
+ */
 export const SelectorSleepToma = (props) => {
     const { t } = useTranslation();
     const { user, setUser } = useContext(User)
@@ -20,7 +24,6 @@ export const SelectorSleepToma = (props) => {
 
     const intakeFormat = /^(\d+)$|^(\d*\.\d+)$/;
     const intakeSleep = /^(\d+)$/;
-
 
     const checkData = (intake, sleep) => {
         if (intakeFormat.test(intake)) {
@@ -48,7 +51,9 @@ export const SelectorSleepToma = (props) => {
         checkData(intake, newSleep)
     }
 
-
+    /**
+     * Function that sends the manually entered intake and sleep data to the server, and then refreshes the user and baby data in the context to reflect the changes.
+     */
     const sendData = async () => {
         sendIntake(intake, baby.id, token.token);
         sendSleep(sleep, baby.id, token.token);

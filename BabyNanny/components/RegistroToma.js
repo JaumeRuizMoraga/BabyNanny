@@ -4,6 +4,12 @@ import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import User from '../context/User';
 import { useContext } from 'react';
+/**
+ * Component that renders a card displaying a baby's intake record entry. 
+ * It shows the date of the intake and the amount consumed in milliliters.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element} 
+ */
 export const IntakeRecord = (props) => {
     const { t } = useTranslation();
     const { user, setUser } = useContext(User);
