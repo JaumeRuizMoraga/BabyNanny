@@ -13,7 +13,6 @@ const App = () => {
     <TokenProvider>
     <UserProvider>
       <BabyProvider>
-
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ gestureEnabled: false }}>
         <Stack.Screen name="SplashScreen" options={{headerShown: false}} component={SplashScreen} />

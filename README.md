@@ -23,6 +23,10 @@
 
 Developed with a focus on practical utility over social networking, the app was inspired by the real-life challenges of parenting. It aims to support anyone—from young parents to grandparents—by streamlining the complex process of infant care through efficient data management and calculation.
 
+### Download
+
+![alt text](image.png)
+
 ---
 
 ### 🎥 Demo Video
