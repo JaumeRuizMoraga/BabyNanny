@@ -1,13 +1,4 @@
 {
-    "screens": {
-        "home": "Home",
-        "growth": "Growth",
-        "sleep": "Sleep",
-        "config": "Config",
-        "newBaby": "New Baby",
-        "events": "Events",
-        "medicalRecord": "Medical Record"
-    },
     "configScreen": {
         "data": "Data",
         "userName": "Username",
@@ -29,42 +20,33 @@
         "mail": "Email",
         "creatUser": "Create User",
         "error": "The user already exist",
-<<<<<<< HEAD
 
         "mailMessage":"We have sent a code to the mail. Write it to confirm the mail"
-=======
-        "mailMessage": "We have sent a code to the mail {mail}. Write it to confirm the mail"
-    },
-    "growthScreen": {
-        "heightLabel": "Height Evolution (cm)",
-        "weightLabel": "Weight Evolution (kg)",
-        "weight": "Weight (kg)",
-        "height": "Height (cm)",
-        "age": "Age (months)"
->>>>>>> 0e5fed19cb1155718d207d8e5004174e20679ad0
     },
     "home": {
         "babyData": "Baby's Data",
-        "logout": "Logout",
-        "deleteConfirmation": "Are you shure you want to delete the baby?",
-        "yes": "Yes",
-        "no": "No",
-        "selectImage": "Select image",
-        "useCamera": "Use camera",
-        "openGaleri": "Local imagen",
-        "cancel": "Cancel",
+
+        "logout":"Logout",
+        "deleteConfirmation":"Are you shure you want to delete the baby?",
+        "yes":"Yes",
+        "no":"No",
+        "selectImage":"Select image",
+        "useCamera":"Use camera",
+        "openGaleri":"Local imagen",
+        "cancel":"Cancel",
+
         "age": "Age",
         "height": "Height",
         "weight": "Weight",
         "avgIntk": "Average Intake",
         "avgSleep": "Default Sleep",
-        "months": "months",
-        "hours": "hours",
-        "errorWeight": "Wrong height format",
-        "errorAge": "Wrong age format",
-        "errorHeight": "Wrong height format",
-        "errorIntk": "Wrong intake format",
-        "errorSleep": "Wrong sleep format",
+        "months":"months",
+        "hours":"hours",
+        "errorWeight":"Wrong height format",
+        "errorAge":"Wrong age format",
+        "errorHeight":"Wrong height format",
+        "errorIntk":"Wrong intake format",
+        "errorSleep":"Wrong sleep format",
         "intk": "Feedings",
         "sleep": "Sleep",
         "med": "Doctor",
@@ -73,7 +55,7 @@
         "dosis": "Dosage",
         "treatTime": "Treatment Duration",
         "selectBaby": "Select another baby",
-        "save": "Save"
+                "save":"Save"
     },
     "sleepScreen": {
         "manual": "M A N U A L"
@@ -81,7 +63,7 @@
     "newBaby": {
         "babyData": "Baby's Data",
         "babyName": "Baby's Name",
-        "optionalData": "This data is not mandatory",
+        "optionalData":"This data is not mandatory",
         "intkSleepPre": "Average intake and sleep",
         "sleepPre": "Average sleep",
         "tomaPre": "Average intake",
@@ -92,14 +74,14 @@
     "noBaby": {
         "message": "Oh...! It looks like you don't have any babies registered"
     },
-    "eventScreen": {
-        "events": "Events",
-        "add": "Add",
-        "title": "Upcoming events"
+    "eventScreen":{
+        "events":"Events",
+        "add":"Add",
+        "title":"Upcoming events"
     },
-    "medicalRecordScreen": {
-        "newEntry": "New health entry",
-        "cancel": "Cancel",
-        "save": "Save"
+    "medicalRecordScreen":{
+        "newEntry":"New health entry",
+        "cancel":"Cancel",
+        "save":"Save"
     }
 }
