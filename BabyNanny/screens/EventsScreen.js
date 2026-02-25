@@ -90,11 +90,6 @@ export const EventScreen = () => {
                     <Text style={styles.title}>{t("eventScreen.title")}</Text>
                 </View>
 
-                {
-                    /**
-                     * FlatList component that displays a list of upcoming events for the baby. It uses the filterEvents function to get the relevant events and renders each event using the DayItemDate component. Users can also delete events directly from this list.
-                     */
-                }
                 <FlatList
                     data={filterEvents(2)}
                     keyExtractor={(item, index) => item + index.toString()}
@@ -113,12 +108,7 @@ export const EventScreen = () => {
                 markingType="multi-dot"
                 style={styles.calendarOut}
             />
-            {
-                /**
-                 * Modal component that displays the events for a specific day.
-                 * It is shown when a user taps on a day in the calendar.
-                 */
-            }
+
             <Modal style={{ flex: 2 }} visible={showModal} onDismiss={() => setShowModal(false)} contentContainerStyle={styles.container}>
                 <TarjetaDia day={day} events={events} deleteEvent={deleteEvent} addEvent={addEvent}></TarjetaDia>
             </Modal>

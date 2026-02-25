@@ -131,11 +131,25 @@ export const getAgeMonth = (stringDate) => {
     }
     return monthAge
 }
+/**
+ * Function used to get the baby object with the id that has been introduced.
+ * @function
+ * @param {Array} arrayBabies Array in witch the function will search
+ * @param {string} idBebe Id of the baby to search in the array
+ * @returns {Object} Baby object with the id that has been introduced
+ */
 export const getLocalBaby = (arrayBabies,idBebe) => {
     let result = arrayBabies.filter((elem)=> elem.id == idBebe);
 
     return result[0]
 }
+/**
+ * Function used to get the position of the baby with the id that has been introduced in the array of babies.
+ * @function
+ * @param {Array} arrayBabies Array in witch the function will search
+ * @param {string} idBebe Id of the baby to search in the array
+ * @returns {number} Index of the baby in the array, or -1 if not found
+ */
 export const getBabyPos = (arrayBabies,idBebe) => {
     let result = arrayBabies.findIndex(elem => elem.id == idBebe)
     console.log(result)
@@ -143,6 +157,16 @@ export const getBabyPos = (arrayBabies,idBebe) => {
     return result
 }
 
+/**
+ * Function used to reload the data of the baby and the user after an update. It sends a request to the backend to get the updated data and then updates the state of the baby and the user in the application.
+ * @function
+ * @param {string} token Token to use in the request header for authentication.
+ * @param {function} setBaby Function to update the baby state in the application.
+ * @param {function} setUser Function to update the user state in the application.
+ * @param {object} baby Current baby object that is being updated.
+ * @param {function} setIsLoading Function to update the loading state in the application, used to indicate when data is completely reloaded.
+    * @returns {Promise} A promise that resolves when the data has been successfully reloaded and the state has been updated, or rejects if there is an error during the process.
+ */
 export const recargarDatos = async (token, setBaby, setUser, baby,setIsLoading) => {
     try {
         const babiesResponse = await getDataBabies(token);
@@ -150,8 +174,6 @@ export const recargarDatos = async (token, setBaby, setUser, baby,setIsLoading) 
         const listaBabies = babiesResponse.babies;
         userReal.babies = listaBabies;
         setUser(userReal);
-        console.log("ID que buscamos:", baby?.id);
-
         let babyToPut = listaBabies.find(elem => String(elem.id) === String(baby?.id));
 
         if (babyToPut) {

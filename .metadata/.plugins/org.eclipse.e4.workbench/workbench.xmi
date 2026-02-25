@@ -2,7 +2,7 @@
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_7aJw0Ad1EfGWYrBsXc9gFA" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_7aJw0Qd1EfGWYrBsXc9gFA" bindingContexts="_7aJw2gd1EfGWYrBsXc9gFA">
   <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Controlador.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/controller/Controlador.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/controller/Controlador.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Usuario.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/model/Usuario.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/model/Usuario.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Bebe.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/model/Bebe.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/model/Bebe.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Cancion.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/model/Cancion.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/model/Cancion.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.PropertiesFileEditor&quot; name=&quot;application.properties&quot; tooltip=&quot;BabyNannyAPI/src/main/resources/application.properties&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/resources/application.properties&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;BabyRepository.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/repository/BabyRepository.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/repository/BabyRepository.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;UserRepository.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/repository/UserRepository.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/repository/UserRepository.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;TokenRepository.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/repository/TokenRepository.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/repository/TokenRepository.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Token.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/model/Token.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/model/Token.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;UsuarioRepository.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/repository/UsuarioRepository.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/repository/UsuarioRepository.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;BebeRepository.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/repository/BebeRepository.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/repository/BebeRepository.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;BabyNannyApiApplication.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/BabyNannyApiApplication.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/BabyNannyApiApplication.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;CorsConfig.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/config/CorsConfig.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/config/CorsConfig.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;Config.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynannyapi/model/Config.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynannyapi/model/Config.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.m2e.editor.MavenPomEditor&quot; name=&quot;pom.xml&quot; tooltip=&quot;BabyNannyAPI/pom.xml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/pom.xml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;BabyNannyApiApplication.java&quot; tooltip=&quot;BabyNannyAPI/src/main/java/babbynanny/babynannyapi/BabyNannyApiApplication.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BabyNannyAPI/src/main/java/babbynanny/babynannyapi/BabyNannyApiApplication.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_7aJw0Qd1EfGWYrBsXc9gFA" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_799ogwd1EfGWYrBsXc9gFA" label="%trimmedwindow.label.eclipseSDK" x="469" y="151" width="781" height="822">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_7aJw0Qd1EfGWYrBsXc9gFA" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_799ogwd1EfGWYrBsXc9gFA" label="%trimmedwindow.label.eclipseSDK" x="0" y="0" width="781" height="822">
     <persistedState key="coolBarVisible" value="true"/>
     <persistedState key="perspectiveBarVisible" value="true"/>
     <persistedState key="isRestored" value="true"/>
@@ -83,11 +83,10 @@
           <tags>persp.editorOnboardingCommand:Show Key Assist$$$Ctrl+Shift+L</tags>
           <tags>persp.editorOnboardingCommand:New$$$Ctrl+N</tags>
           <tags>persp.editorOnboardingCommand:Open Type$$$Ctrl+Shift+T</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_8M5cYwd1EfGWYrBsXc9gFA" selectedElement="_8M5cZAd1EfGWYrBsXc9gFA" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_8M5cYwd1EfGWYrBsXc9gFA" selectedElement="_8M5cbgd1EfGWYrBsXc9gFA" horizontal="true">
             <children xsi:type="basic:PartSashContainer" xmi:id="_8M5cZAd1EfGWYrBsXc9gFA" containerData="2500" selectedElement="_8M5cZQd1EfGWYrBsXc9gFA">
               <children xsi:type="basic:PartStack" xmi:id="_8M5cZQd1EfGWYrBsXc9gFA" elementId="left" containerData="6000" selectedElement="_8M5caAd1EfGWYrBsXc9gFA">
                 <tags>org.eclipse.e4.primaryNavigationStack</tags>
-                <tags>active</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_8M5cZgd1EfGWYrBsXc9gFA" elementId="org.eclipse.jdt.ui.PackageExplorer" toBeRendered="false" ref="_8MyusAd1EfGWYrBsXc9gFA" closeable="true">
                   <tags>View</tags>
                   <tags>categoryTag:Java</tags>
@@ -154,6 +153,7 @@
               <children xsi:type="basic:PartStack" xmi:id="_8M5ceAd1EfGWYrBsXc9gFA" elementId="bottom" containerData="3208" selectedElement="_8M5cfQd1EfGWYrBsXc9gFA">
                 <tags>org.eclipse.e4.secondaryDataStack</tags>
                 <tags>Oomph</tags>
+                <tags>active</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_8M5ceQd1EfGWYrBsXc9gFA" elementId="org.eclipse.ui.views.ProblemView" ref="_8MzVwgd1EfGWYrBsXc9gFA" closeable="true">
                   <tags>View</tags>
                   <tags>categoryTag:General</tags>
@@ -338,7 +338,6 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; currentWorkingSetName=&quot;Aggregate for window 1770833863266&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;>&#xD;&#xA;&lt;lastRecentlyUsedFilters/>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
-      <tags>active</tags>
       <tags>activeOnClose</tags>
       <menus xmi:id="_mPoAoAghEfGpJfdWUK-4gg" elementId="org.eclipse.ui.navigator.ProjectExplorer">
         <tags>ViewMenu</tags>
@@ -382,6 +381,7 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
+      <tags>active</tags>
       <menus xmi:id="_ukz4MAhIEfGpJfdWUK-4gg" elementId="org.eclipse.ui.console.ConsoleView">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -479,7 +479,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_8BRbMAd1EfGWYrBsXc9gFA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_kDNfgA0bEfGspo13qjo58A" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.svg" tooltip="Print" command="_7bcKhAd1EfGWYrBsXc9gFA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_tO30EBHMEfGeI_BgMcM83w" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.svg" tooltip="Print" command="_7bcKhAd1EfGWYrBsXc9gFA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_8BRbMQd1EfGWYrBsXc9gFA" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -487,8 +487,8 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_8BRbMwd1EfGWYrBsXc9gFA" elementId="org.eclipse.ui.workbench.edit">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_kDOtoA0bEfGspo13qjo58A" elementId="undo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.svg" tooltip="Undo" enabled="false" command="_7bZHAAd1EfGWYrBsXc9gFA"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_kDPUsA0bEfGspo13qjo58A" elementId="redo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.svg" tooltip="Redo" enabled="false" command="_7baVVAd1EfGWYrBsXc9gFA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_tO4bIBHMEfGeI_BgMcM83w" elementId="undo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.svg" tooltip="Undo" enabled="false" command="_7bZHAAd1EfGWYrBsXc9gFA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_tO4bIRHMEfGeI_BgMcM83w" elementId="redo" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.svg" tooltip="Redo" enabled="false" command="_7baVVAd1EfGWYrBsXc9gFA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_8BRbNAd1EfGWYrBsXc9gFA" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -512,7 +512,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_8BRbOAd1EfGWYrBsXc9gFA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_kDP7ww0bEfGspo13qjo58A" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.svg" tooltip="Pin Editor" enabled="false" type="Check" command="_7bbjnQd1EfGWYrBsXc9gFA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_tO5pQBHMEfGeI_BgMcM83w" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.svg" tooltip="Pin Editor" enabled="false" type="Check" command="_7bbjnQd1EfGWYrBsXc9gFA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_8BRbOQd1EfGWYrBsXc9gFA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -2644,7 +2644,7 @@
   <addons xmi:id="_7aKX6Ad1EfGWYrBsXc9gFA" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_7aKX6Qd1EfGWYrBsXc9gFA" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_7ag9MAd1EfGWYrBsXc9gFA" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_jmP2sA0bEfGspo13qjo58A" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_IYS0IKimEeS11vbz3f9ezw" elementId="org.eclipse.ui.ide.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_dz0JgGOlEeSMMaPQU2nlzw" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <categories xmi:id="_7bNgwAd1EfGWYrBsXc9gFA" elementId="org.eclipse.team.ui.category.team" name="Version control (Team)" description="Actions that apply when working with a version control system"/>
   <categories xmi:id="_7bNgwQd1EfGWYrBsXc9gFA" elementId="org.eclipse.ui.category.views" name="Views" description="Commands for opening views"/>

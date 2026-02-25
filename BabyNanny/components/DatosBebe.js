@@ -14,31 +14,31 @@ import { useTranslation } from 'react-i18next';
  * @returns {JSX.Element}
  * */
 export const BabyCard = (props) => {
-    const [edit,setEdit] = useState(false);
-    const {t} = useTranslation()
+    const [edit, setEdit] = useState(false);
+    const { t } = useTranslation()
     return (
         <Card style={styles.card} mode="elevated">
             <Card.Content>
                 <Text variant="titleMedium" style={styles.title}>
                     {t('home.babyData')}
                 </Text>
-                 <FAB icon="pencil" style={styles.fabEdit} size='small' onPress={() => props.setEdit(true)} />
+                <FAB icon="pencil" style={styles.fabEdit} size='small' onPress={() => props.setEdit(true)} />
                 <Divider style={styles.divider} />
-                <View style={{flexDirection: 'row',justifyContent: "space-between" }}>
-                    <View style={{flexDirection: 'column' }}>
+                <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
+                    <View style={{ flexDirection: 'column' }}>
 
-                        <Text style={styles.label}>{t('home.age')} <Text style={{color:"#DA70D6"}}>{props.baby.age} {t('home.months')}</Text></Text>
+                        <Text style={styles.label}>{t('home.age')} <Text style={{ color: "#DA70D6" }}>{props.baby.age} {t('home.months')}</Text></Text>
 
-                        <Text style={styles.label}>{t('home.height')}  <Text style={{color:"#DA70D6"}}>{props.baby.height} cm</Text></Text>
+                        <Text style={styles.label}>{t('home.height')}  <Text style={{ color: "#DA70D6" }}>{props.baby.height} cm</Text></Text>
 
-                        <Text style={styles.label}>{t('home.weight')}  <Text style={{color:"#DA70D6"}}>{props.baby.weight} kg</Text></Text>
+                        <Text style={styles.label}>{t('home.weight')}  <Text style={{ color: "#DA70D6" }}>{props.baby.weight} kg</Text></Text>
 
                     </View>
 
-                    <View style={{flexDirection: 'column'}}>
-                        <Text style={styles.label}>{t('home.avgIntk')} <Text style={{color:"#DA70D6"}}>{props.baby.intakePre} .mil</Text></Text>
+                    <View style={{ flexDirection: 'column' }}>
+                        <Text style={styles.label}>{t('home.avgIntk')} <Text style={{ color: "#DA70D6" }}>{props.baby.intakePre} .mil</Text></Text>
 
-                        <Text style={styles.label}>{t('home.avgSleep')}  <Text style={{color:"#DA70D6"}}>{props.baby.sleepPre} .min</Text></Text>
+                        <Text style={styles.label}>{t('home.avgSleep')}  <Text style={{ color: "#DA70D6" }}>{props.baby.sleepPre} .min</Text></Text>
 
                     </View>
                 </View>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         color: '#555',
         margin: '5',
     },
-        fab: {
+    fab: {
         position: 'absolute',
         margin: 16,
         right: 0,

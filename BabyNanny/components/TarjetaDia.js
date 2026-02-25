@@ -7,10 +7,16 @@ import { useTranslation } from 'react-i18next';
 
 import { DayItem } from "./DayItem"
 
-
+/**
+ * Component that renders a card representing a single day in a calendar view, allowing users to view and manage 
+ * events for that day. It includes functionality for adding new events with a name and time, as well as displaying 
+ * existing events in a list format.
+ * @param {Object} props - Component properties.
+ * @returns 
+ */
 export const TarjetaDia = (props) => {
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [events, setEvents] = useState(props.events[props.day.dateString]?.dots ?? [])
     const [showForm, setShowForm] = useState(false);
     const [eventName, setEventName] = useState('');
@@ -22,31 +28,27 @@ export const TarjetaDia = (props) => {
     const createEvent = () => {
         let date = props.day.dateString;
         let dots = [...events]
-        let fullName = eventName+";"+formatTime(eventHour)
+        let fullName = eventName + ";" + formatTime(eventHour)
         dots.push({ key: fullName, color: '#Da70D6' })
         let event = { date: date, dots: { dots: dots } }
         return event
     }
-
+    /**
+     * Function that formats a given date object into a string representation of time in the format "HH:MM".
+     * It checks if the input is a valid date and returns a default string if it is not.
+     * @param {Date} date - The date object to be formatted.
+     * @returns {string} The formatted time string or a default message if the input is invalid.
+     */
     const formatTime = (date) => {
-// Verificamos que 'date' sea un objeto Date válido
         if (!(date instanceof Date) || isNaN(date)) return "Seleccionar hora";
-
         const hours = date.getHours();
         const minutes = date.getMinutes();
-        
-        // Formato HH:MM con ceros a la izquierda
         const strHours = hours.toString().padStart(2, '0');
         const strMinutes = minutes.toString().padStart(2, '0');
-        console.log("Return de funcion")
-        console.log(`${strHours}:${strMinutes}`)
         return `${strHours}:${strMinutes}`;
     };
     const onTimeChange = (_, selectedDate) => {
-        // En Android, al seleccionar, el picker se debe cerrar
         setShowPicker(false);
-        
-        // Solo actualizamos si el usuario no canceló (selectedDate no es undefined)
         if (selectedDate) {
             setEventHour(selectedDate);
         }
@@ -73,20 +75,19 @@ export const TarjetaDia = (props) => {
                         value={formatTime(eventHour)}
                         editable={false}
                         right={<TextInput.Icon icon="clock" onPress={() => setShowPicker(true)} />}
-                        // onPressIn funciona mejor que onPress cuando editable es false
                         onPressIn={() => setShowPicker(true)}
                     />
                     {
-                        showPicker && <DateTimePicker 
-                            value={eventHour} 
-                            mode='time' 
+                        showPicker && <DateTimePicker
+                            value={eventHour}
+                            mode='time'
                             is24Hour={true}
                             display={'default'}
-                            onChange={onTimeChange} 
+                            onChange={onTimeChange}
                         />
 
                     }
-            <Button onPress={() => props.addEvent(createEvent())}>{t('eventScreen.add')}</Button>
+                    <Button onPress={() => props.addEvent(createEvent())}>{t('eventScreen.add')}</Button>
                 </View>
             )
 

@@ -1,17 +1,22 @@
-import { View, Text} from 'react-native';
-import {Card} from 'react-native-paper';
+import { View, Text } from 'react-native';
+import { Card } from 'react-native-paper';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 import User from '../context/User';
 import { useContext } from 'react';
+/**
+ * Functional component that renders a card displaying a baby's sleep record entry.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element} 
+ */
 export const SleepRecord = (props) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const { user, setUser } = useContext(User);
-    const language = () =>{
-        if(user.config.language == "es"){
+    const language = () => {
+        if (user.config.language == "es") {
             return "es-ES"
         }
-        else if(user.config.language == "en"){
+        else if (user.config.language == "en") {
             return "en-EN"
         }
     }
@@ -24,10 +29,10 @@ export const SleepRecord = (props) => {
     };
     return (
         <View>
-            <Card style={{margin:5}}>
+            <Card style={{ margin: 5 }}>
                 <Card.Content>
-                    <Text>{t('home.date')}: <Text style={{color:"#DA70D6"}}>{new Date(props.entry.date).toLocaleDateString(language(), options)}</Text></Text>
-                    <Text>{t('home.sleep')}: <Text style={{color:"#DA70D6"}}>{props.entry.timeSleep} mins</Text></Text>
+                    <Text>{t('home.date')}: <Text style={{ color: "#DA70D6" }}>{new Date(props.entry.date).toLocaleDateString(language(), options)}</Text></Text>
+                    <Text>{t('home.sleep')}: <Text style={{ color: "#DA70D6" }}>{props.entry.timeSleep} mins</Text></Text>
                 </Card.Content>
             </Card>
         </View>

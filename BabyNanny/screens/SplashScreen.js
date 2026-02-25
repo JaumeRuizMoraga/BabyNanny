@@ -17,11 +17,9 @@ export const SplashScreen = (props) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // here you can check if the user is logged in and navigate accordingly
       props.navigation.navigate("LoginScreen");
     }, 2000);
 
-    // cleanup function to clear the timer if the component unmounts before the timeout
     return () => clearTimeout(timer);
   }, []);
   return (

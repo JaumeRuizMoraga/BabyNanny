@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Animated, FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Animated, FlatList,ActivityIndicator, ScrollView } from 'react-native';
 import { Icon, FAB, TextInput, Surface, HelperText, Button } from 'react-native-paper';
 import { RulerPicker } from 'react-native-ruler-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -15,15 +15,15 @@ import User from '../context/User';
 import Baby from '../context/Baby.js';
 
 /**
- * NewBaby Component
- * * Provides a comprehensive form to register a new baby. 
- * Includes data validation for sleep/intake, a date picker for birthdate, 
- * and interactive ruler pickers for physical measurements.
- * * @param {Object} props - Component properties.
- * @param {Object} props.navigation - Navigation object to redirect to "Home" after success.
- * * @returns {JSX.Element} A scrollable form with data validation and interactive UI elements.
+ * Component responsible for creating a new baby profile. It allows users to input the baby's name, date of birth,
+ *  height, weight, and other optional features. The component validates the input data and sends a request to the 
+ * backend to create the new baby profile. After successful creation, it reloads the data and navigates back to the 
+ * home screen.
+ * @component
+ * @param {Object} props - Component properties.
+ * @example <Drawer.Screen name="New Baby" options={{ headerShown: !noBaby }} component={NewBaby} />
+ * @returns {JSX.Element} 
  */
-
 export const NewBaby = (props) => {
     const { t } = useTranslation()
     const [height, setHeight] = useState();
@@ -39,22 +39,16 @@ export const NewBaby = (props) => {
     const [errorIntake, setErrorIntake] = useState(false)
     const [date, setDate] = useState(new Date);
     const [showDate, setShowDate] = useState(false)
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading,setIsLoading] = useState(false);
     const { token, setToken } = useContext(Token);
     const [isName, setIsname] = useState(true);
 
 
-    /**
-     * intakeFormat and sleepFormat are regular expressions used to validate the input for intake and sleep fields.
-     */
     const intakeFormat = /^(\d+)$|^(\d*\.\d+)$/;
     const sleepFormat = /^(\d+)$/;
-
     /**
-     * changeDate function that is called when the user selects a date from the date picker.
-     *  It updates the age state based on the selected date and sets the date state to the selected date.
-     * 
-     * @param {Date} date  - The date selected by the user from the date picker. This function updates the age state based on the selected date and sets the date state to the selected date.
+     * Function that handles the change of the date input for the baby's date of birth. It updates the age state based on the selected date and sets the date state to the selected date.
+     * @param {Object} date - The selected date object from the date picker.
      */
     const changeDate = (date) => {
         setShowDate(false)
@@ -62,30 +56,27 @@ export const NewBaby = (props) => {
         setAge(getAgeMonth(tempData))
         setDate(tempData)
     }
-    const createBaby = async () => {
+    /**
+     * createBaby function that is called when the user presses the save button to create a new baby profile. It assembles the baby data into the required format and sends a request to the backend to create the new baby. If the creation is successful, it reloads the data and navigates back to the home screen. If there is an error, it logs the error message.
+     */
+    const createBaby = async() => {
         let response = await newBaby(assembleBaby(), token.token);
         console.log(response)
-        if (response.status === 200) {
+        if(response.status === 200)
+        {
             console.log("Bebe creado con exito")
             setIsLoading(true)
-            await recargarDatos(token.token, setBaby, setUser, baby, setIsLoading);
+            await recargarDatos(token.token,setBaby,setUser,baby,setIsLoading); 
             props.navigation.navigate("Home");
         }
-        else if (response.status === 401) {
+        else if (response.status === 401){
             console.log("Error al crear al bebe");
         }
     }
-
-    /**
-     * assembleBaby function that constructs a baby object based on the input from the form. 
-     * It gathers all the necessary data such as name, image, tutors, records, and features to create a 
-     * complete baby object that can be sent to the backend for registration.
-     * 
-     * @returns  it returns a baby object that includes the name, default image, tutors (with the current user as the tutor),
-     *  empty records for intake, sleep, medical, and features, and the baby's features such as height, weight, age,
-     *  intakePre, and sleepPre. This object is structured to be compatible with the backend's expected format for creating
-     *  a new baby entry.
-     */
+/**
+ * function that assembles the baby data into the required format for the backend request.
+ * @returns {Object} The assembled baby data object
+ */
     const assembleBaby = () => {
         return {
             name: name,
@@ -94,7 +85,7 @@ export const NewBaby = (props) => {
             intakeRecord: [],
             sleepRecord: [],
             medicalRecord: [],
-            featuresRecord: [],
+            featuresRecord:[],
             features: {
                 height: height,
                 weight: weight,
@@ -102,20 +93,16 @@ export const NewBaby = (props) => {
                 intakePre: intakePre,
                 sleepPre: sleepPre,
             },
-            events: {}
+            events:{}
         }
     }
 
-    /**
-     * 
-     * checkData function that validates the input for intake and sleep fields. 
-     * It uses regular expressions to check if the input matches the expected format for intake 
-     * (which can be a number with or without decimals) and sleep (which should be an integer). 
-     * 
-     * @param {Int16Array} intake intake is the input value for the baby's intake
-     * @param {Int16Array} sleep  sleep is the input value for the baby's sleep
-     */
-
+/**
+ * Function used to check if the data that the user has introduced is correct. It validates the intake and sleep data using regular expressions and updates the error states accordingly to show error messages if the data is incorrect.
+ * @param {double} intake Value of the baby's intake that the user has introduced, expected to be a number (integer or decimal). 
+ * @param {double} sleep Value of the baby's sleep that the user has introduced, expected to be an integer number.
+ * @returns {void} This function does not return a value, but it updates the error states for intake and sleep based on the validation results.
+ */
     const checkData = (intake, sleep) => {
         if (intakeFormat.test(intake)) {
             setErrorIntake(false);
@@ -133,13 +120,6 @@ export const NewBaby = (props) => {
             setErrorSleep(true);
         }
     }
-
-    /**
-     * changeIntake and changeSleep functions that are called when the user changes the input for intake and sleep fields.
-     * 
-     * @param {String} newIntake newIntake is the updated value for the baby's intake, which is passed to this function when the user changes
-     *  the intake input field. 
-     */
     const changeIntake = (newIntake) => {
         setIntakePre(newIntake)
         checkData(newIntake, sleepPre)
@@ -149,17 +129,27 @@ export const NewBaby = (props) => {
         checkData(intakePre, newSleep)
     }
 
-
-
+    
     const changeName = (newName) => {
-
+       
         setName(newName)
-        if (newName === '' || newName === null) {
+        if(newName === '' || newName === null) {
             setIsname(true);
         }
         else {
             setIsname(false);
         }
+    }
+
+    const getImageDeffault = async () => {
+        console.log("Entrando en get img default")
+        return await imageToBase64(require('../assets/img/baby_icon.jpg'))
+    };
+        if (isLoading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#DA70D6" />
+            </View>)
     }
 
     return (
@@ -239,7 +229,7 @@ export const NewBaby = (props) => {
                         shortStepColor='#c9c9db'
                     />
                 </View>
-
+                
                 <Button mode='outlined' textColor='#DA70D6' disabled={isName}
                     style={styles.boton} onPress={() => createBaby()}>{t('newBaby.save')}</Button>
             </ScrollView>

@@ -82,11 +82,9 @@ def enableMinifyInReleaseBuilds = (findProperty('android.enableMinifyInReleaseBu
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
 android {
-    ndkVersion rootProject.ext.ndkVersion
-
+    ndkVersion "25.1.8937393"
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
-
     namespace 'com.adgabo.BabyNanny'
     defaultConfig {
         applicationId 'com.adgabo.BabyNanny'
@@ -98,6 +96,14 @@ android {
         buildConfigField "String", "REACT_NATIVE_RELEASE_LEVEL", "\"${findProperty('reactNativeReleaseLevel') ?: 'stable'}\""
     }
     signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) { 
+                    storeFile file(MYAPP_UPLOAD_STORE_FILE) 
+                    storePassword MYAPP_UPLOAD_STORE_PASSWORD 
+                    keyAlias MYAPP_UPLOAD_KEY_ALIAS 
+                    keyPassword MYAPP_UPLOAD_KEY_PASSWORD 
+                }
+            }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -112,7 +118,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             def enableShrinkResources = findProperty('android.enableShrinkResourcesInReleaseBuilds') ?: 'false'
             shrinkResources enableShrinkResources.toBoolean()
             minifyEnabled enableMinifyInReleaseBuilds

@@ -58,7 +58,7 @@ export const MedicalRecordScreen = (props) => {
         setNewEntry({
             ...newEntry, recipe: {
                 ...newEntry.recipe,
-                medicine: text      // it only changes medicine
+                medicine: text
             }
         })
         if (text === null || text === '') {
@@ -77,14 +77,12 @@ export const MedicalRecordScreen = (props) => {
         } catch (error) {
             console.error("Error al recargar:", error);
         } finally {
-            // stop the spinner
             setRefreshing(false);
         }
     }, [token, baby, user]);
 
     return (
         <View style={styles.layout}>
-            {/* record list */}
             <FlatList
                 data={baby.medicalRecord}
                 keyExtractor={(item, index) => index.toString()}
@@ -92,15 +90,14 @@ export const MedicalRecordScreen = (props) => {
                     <RefreshControl
                         refreshing={refreshing}
                         onRefresh={onRefresh}
-                        colors={['#DA70D6']} // Android
-                        tintColor={'#DA70D6'} // iOS
+                        colors={['#DA70D6']}
+                        tintColor={'#DA70D6'}
                     />
                 }
                 renderItem={({ item }) => <MedicalRecord entry={item} />}
                 style={{ width: '100%' }}
             />
 
-            {/* Modal for new record */}
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -115,7 +112,7 @@ export const MedicalRecordScreen = (props) => {
                             placeholder="Medicine"
                             style={styles.input}
                             value={newEntry.recipe.medicine}
-                            onChangeText={(text) => handlePressMedicine(text)} // it only changes medicine calling a separate function to handle the empty check
+                            onChangeText={(text) => handlePressMedicine(text)} 
                         />
 
                         <TextInput
@@ -126,7 +123,7 @@ export const MedicalRecordScreen = (props) => {
                             onChangeText={(text) => setNewEntry({
                                 ...newEntry, recipe: {
                                     ...newEntry.recipe,
-                                    dosis: text      // it only changes dosis
+                                    dosis: text
                                 }
                             })}
                         />
@@ -139,7 +136,7 @@ export const MedicalRecordScreen = (props) => {
                             onChangeText={(text) => setNewEntry({
                                 ...newEntry, recipe: {
                                     ...newEntry.recipe,
-                                    dosisTime: text      // it only changes dosisTime
+                                    dosisTime: text
                                 }
                             })}
                         />
@@ -160,7 +157,7 @@ export const MedicalRecordScreen = (props) => {
                 icon="plus"
                 style={styles.fab}
                 size='large'
-                onPress={() => setModalVisible(true)} // open modal on press
+                onPress={() => setModalVisible(true)}
             />
         </View>
     );

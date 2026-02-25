@@ -2,6 +2,13 @@ import { View, Text, StyleSheet, Modal, Pressable } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Functional component that renders a modal dialog for confirming the deletion of an item.
+ * @param {boolean} visible - Whether the modal is visible.
+ * @param {Function} exit - Function to close the modal.
+ * @param {Function} onDelete - Function to handle deletion.
+ * @returns {JSX.Element}
+ */
 export const ModalDelete = ({ visible, exit, onDelete }) => {
     const { t } = useTranslation();
 

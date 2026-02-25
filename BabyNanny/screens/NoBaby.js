@@ -29,7 +29,7 @@ export const NoBaby = (props) => {
                 icon="plus"
                 style={styles.fab}
                 size='large'
-                onPress={() => props.navigation.navigate("NewBaby")}
+                onPress={() => props.navigation.navigate("New Baby")}
             />
         </View>
     );
