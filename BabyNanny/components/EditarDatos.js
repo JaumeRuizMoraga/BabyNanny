@@ -5,6 +5,11 @@ import { checkDataFull } from '../utils/utils';
 import '../assets/i18n';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * Component that provides an interface for editing the baby's data It includes input validation and error handling to ensure that the data entered is within acceptable ranges.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element}
+ */
 export const EditarDatos = (props) => {
     const { t } = useTranslation()
     const [newAge, setNewAge] = useState(props.baby.age);
@@ -43,6 +48,13 @@ export const EditarDatos = (props) => {
     const String = (value) => {
         return '' + value + ''
     }
+    /**
+     * Function that checks for empty input fields and fills them with the current baby data if they are left blank. 
+     * This ensures that when the user saves the changes, any fields they did not modify will retain their original 
+     * values instead of being overwritten with empty strings.
+     * @param {Object} chars - The character data to be checked for empty values.
+     * @returns {Object} - The updated character data with any empty fields filled with the original baby data.
+     */
     const checkVoids = (chars) => {
         if (chars.intakePre === '') {
             chars.intakePre = props.baby.intakePre

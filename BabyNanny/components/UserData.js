@@ -6,6 +6,12 @@ import { useState, useEffect } from 'react';
 import { changeConfig } from '../services/services';
 import { changeLanguage } from 'i18next';
 
+/**
+ * Component that renders a card displaying the user's configuration data, allowing them to change their
+ * language preference.
+ * @param {Object} props - Component properties.
+ * @returns {JSX.Element}
+ */
 export const UserData = (props) => {
     const { t } = useTranslation();
     const [leng, setLeng] = useState(props.user.config.language);

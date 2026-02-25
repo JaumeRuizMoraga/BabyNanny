@@ -8,7 +8,11 @@ import { useTranslation } from 'react-i18next';
 import '../assets/i18n';
 import Baby from "../context/Baby";
 import { averageGrowthData } from "../assets/averageBabyGrowth";
-
+/**
+ * Component that displays the baby's growth data in terms of weight and height over time.
+ *  It uses line charts to visualize the baby's growth compared to average growth data.
+ * @returns {JSX.Element}
+ */
 export const BabyGrowth = () => {
   const { baby } = useContext(Baby);
   const { t } = useTranslation();

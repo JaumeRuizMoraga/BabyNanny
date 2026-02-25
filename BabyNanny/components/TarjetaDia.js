@@ -7,7 +7,13 @@ import { useTranslation } from 'react-i18next';
 
 import { DayItem } from "./DayItem"
 
-
+/**
+ * Component that renders a card representing a single day in a calendar view, allowing users to view and manage 
+ * events for that day. It includes functionality for adding new events with a name and time, as well as displaying 
+ * existing events in a list format.
+ * @param {Object} props - Component properties.
+ * @returns 
+ */
 export const TarjetaDia = (props) => {
 
     const { t } = useTranslation()
@@ -27,15 +33,18 @@ export const TarjetaDia = (props) => {
         let event = { date: date, dots: { dots: dots } }
         return event
     }
-
+    /**
+     * Function that formats a given date object into a string representation of time in the format "HH:MM".
+     * It checks if the input is a valid date and returns a default string if it is not.
+     * @param {Date} date - The date object to be formatted.
+     * @returns {string} The formatted time string or a default message if the input is invalid.
+     */
     const formatTime = (date) => {
         if (!(date instanceof Date) || isNaN(date)) return "Seleccionar hora";
         const hours = date.getHours();
         const minutes = date.getMinutes();
         const strHours = hours.toString().padStart(2, '0');
         const strMinutes = minutes.toString().padStart(2, '0');
-        console.log("Return de funcion")
-        console.log(`${strHours}:${strMinutes}`)
         return `${strHours}:${strMinutes}`;
     };
     const onTimeChange = (_, selectedDate) => {

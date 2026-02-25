@@ -14,6 +14,16 @@ import { default_baby_img } from '../assets/img/baby_icon.js';
 import User from '../context/User';
 import Baby from '../context/Baby.js';
 
+/**
+ * Component responsible for creating a new baby profile. It allows users to input the baby's name, date of birth,
+ *  height, weight, and other optional features. The component validates the input data and sends a request to the 
+ * backend to create the new baby profile. After successful creation, it reloads the data and navigates back to the 
+ * home screen.
+ * @component
+ * @param {Object} props - Component properties.
+ * @example <Drawer.Screen name="New Baby" options={{ headerShown: !noBaby }} component={NewBaby} />
+ * @returns {JSX.Element} 
+ */
 export const NewBaby = (props) => {
     const { t } = useTranslation()
     const [height, setHeight] = useState();
@@ -36,13 +46,19 @@ export const NewBaby = (props) => {
 
     const intakeFormat = /^(\d+)$|^(\d*\.\d+)$/;
     const sleepFormat = /^(\d+)$/;
-
+    /**
+     * Function that handles the change of the date input for the baby's date of birth. It updates the age state based on the selected date and sets the date state to the selected date.
+     * @param {Object} date - The selected date object from the date picker.
+     */
     const changeDate = (date) => {
         setShowDate(false)
         let tempData = new Date(date.nativeEvent.timestamp)
         setAge(getAgeMonth(tempData))
         setDate(tempData)
     }
+    /**
+     * createBaby function that is called when the user presses the save button to create a new baby profile. It assembles the baby data into the required format and sends a request to the backend to create the new baby. If the creation is successful, it reloads the data and navigates back to the home screen. If there is an error, it logs the error message.
+     */
     const createBaby = async() => {
         let response = await newBaby(assembleBaby(), token.token);
         console.log(response)
@@ -57,7 +73,10 @@ export const NewBaby = (props) => {
             console.log("Error al crear al bebe");
         }
     }
-
+/**
+ * function that assembles the baby data into the required format for the backend request.
+ * @returns {Object} The assembled baby data object
+ */
     const assembleBaby = () => {
         return {
             name: name,
@@ -78,6 +97,12 @@ export const NewBaby = (props) => {
         }
     }
 
+/**
+ * Function used to check if the data that the user has introduced is correct. It validates the intake and sleep data using regular expressions and updates the error states accordingly to show error messages if the data is incorrect.
+ * @param {double} intake Value of the baby's intake that the user has introduced, expected to be a number (integer or decimal). 
+ * @param {double} sleep Value of the baby's sleep that the user has introduced, expected to be an integer number.
+ * @returns {void} This function does not return a value, but it updates the error states for intake and sleep based on the validation results.
+ */
     const checkData = (intake, sleep) => {
         if (intakeFormat.test(intake)) {
             setErrorIntake(false);
