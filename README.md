@@ -25,7 +25,9 @@ Developed with a focus on practical utility over social networking, the app was 
 
 ### Download
 
-![alt text](image.png)
+![alt text](./Doc/image.png)
+
+[Download link](https://expo.dev/accounts/tierpo/projects/BabyNanny/builds/20d965e3-58fb-4c16-9d4c-5e278cbdd392)
 
 ---
 
